@@ -1,10 +1,75 @@
+<!-- created by wirefire Spring 19 -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
+
 <head>
     <meta charset="UTF-8">
-    <title>Home</title>
+    <title>Home | BeatYourTask</title>
+    <!-- include the header -->
+    <th:block th:include="fragments/header_not_singed_in"></th:block>
+    <!-- End -->
 </head>
-<body>
-<p th:text="'Dies ist Ihre Test-Startseite'"></p>
+<body class="shards-app-promo-page--1">
+<!-- background -->
+<div class="welcome d-flex justify-content-center flex-column">
+
+    <!-- first element -->
+    <div class="example col-lg-8 col-md-10 ml-auto mr-auto">
+        <!-- the Heading -->
+        <h3 class="welcome-heading display-3 text-white">Our Mission</h3>
+
+        <div id="our-services" class="card">
+            <!-- Features -->
+            <div class="features py-4 mb-4">
+                <div class="container">
+                    <div class="row">
+                        <div class="feature py-4 col-md-6 d-flex">
+                            <div class="icon text-primary mr-3"><i class="fa fa-project-diagram"></i></div>
+                            <div class="px-4">
+                                <h5>Project Management</h5>
+                                <p>With BeatYourTask your employees will do a better job in project management!</p>
+                            </div>
+                        </div>
+                        <div class="feature py-4 col-md-6 d-flex">
+                            <div class="icon text-primary mr-3"><i class="fa fa-users"></i></div>
+                            <div class="px-4">
+                                <h5>Motivation</h5>
+                                <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus
+                                    purus
+                                    duis
+                                    sensibus signiferumque.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="feature py-4 col-md-6 d-flex">
+                            <div class="icon text-primary mr-3"><i class="fa fa-gamepad"></i></div>
+                            <div class="px-4">
+                                <h5>Gamifikation</h5>
+                                <p>Quisque mollis mi ac aliquet accumsan. Sed sed dapibus libero. Nullam luctus
+                                    purus
+                                    duis
+                                    sensibus signiferumque.</p>
+                            </div>
+                        </div>
+                        <div class="feature py-4 col-md-6 d-flex">
+                            <div class="icon text-primary mr-3"><i class="fa fa-support"></i></div>
+                            <div class="px-4">
+                                <h5>...</h5>
+                                <p>...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / Features -->
+
+        </div>
+    </div>
+</div>
 </body>
+<!-- include the header -->
+<th:block th:include="fragments/footer"></th:block>
+<!-- End -->
 </html>
