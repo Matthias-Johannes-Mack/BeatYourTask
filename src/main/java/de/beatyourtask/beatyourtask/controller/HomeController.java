@@ -1,4 +1,4 @@
-package de.beatyourtask.beatyourtask.Controller;
+package de.beatyourtask.beatyourtask.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
