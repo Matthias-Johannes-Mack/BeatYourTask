@@ -30,7 +30,8 @@
             integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
             crossorigin="anonymous"></script>
     <script th:src="@{/js/shards.min.js}"></script>
-    <script th:src="@{/js/demo.js}"></script>
+    <script th:src="@{/js/demo}"></script>
+    <script th:src="@{/js/OwnScripts}"></script>
     <!-- End Java-Script -->
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-danger mb-1">
@@ -44,10 +45,14 @@
                 class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse mr-auto" id="navbarNavDropdown-5">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active"><a class="nav-link" href="/Projektverwaltung/Projektübersicht/">Projects <span class="sr-only">(current)</span></a>
+                <li class="nav-item active"><a class="nav-link" href="/Projektverwaltung/Projektübersicht/">Projects
+                    <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="/Projektübersicht/">Lists</a></li>
-            <li class="ml-2"><form><input th:type="text" placeholder="Enter your searchtext" class="form-control" name="search"/></form></li>
+                <li class="ml-2">
+                    <form><textarea placeholder="Enter your searchtext" class="form-control " name="search" cols="80"
+                                    rows="1" style="resize:none;" ></textarea></form>
+                </li>
 
 
             </ul>
@@ -64,9 +69,9 @@
             </ul>
         </div>
     </nav>
+
     <!-- End Nav -->
 </head>
 <body>
-
 </body>
 </html>

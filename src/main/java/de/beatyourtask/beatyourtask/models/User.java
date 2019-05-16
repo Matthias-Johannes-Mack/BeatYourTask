@@ -5,8 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Class for the User / wirefire / Spring 19
+ */
 @Entity
 public class User {
+    /**
+     * Variables
+     */
     @Id
     @GeneratedValue
     private int id;
@@ -14,13 +20,59 @@ public class User {
     private String lastName;
     private String eMail;
     private String password;
+    private int level;
+    private String Skin;
+    private int erfahrungspunkte;
+    private int angriff;
+    private int lebenspunkte;
 
-    public User(String firstName, String lastName, String eMail, String password) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.eMail = eMail;
-        this.password = password;
+    public User() {
+
     }
+
+
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
+
+    public String getSkin() {
+        return Skin;
+    }
+
+    public void setSkin(String skin) {
+        Skin = skin;
+    }
+
+    public int getErfahrungspunkte() {
+        return erfahrungspunkte;
+    }
+
+    public void setErfahrungspunkte(int erfahrungspunkte) {
+        this.erfahrungspunkte = erfahrungspunkte;
+    }
+
+    public int getAngriff() {
+        return angriff;
+    }
+
+    public void setAngriff(int angriff) {
+        this.angriff = angriff;
+    }
+
+    public int getLebenspunkte() {
+        return lebenspunkte;
+    }
+
+    public void setLebenspunkte(int lebenspunkte) {
+        this.lebenspunkte = lebenspunkte;
+    }
+
+
+
 
     public String geteMail() {
         return eMail;
