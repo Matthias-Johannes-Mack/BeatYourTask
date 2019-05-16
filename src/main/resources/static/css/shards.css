@@ -433,12 +433,12 @@ pre {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #007bff;
+  border-color: #C4183C;
   box-shadow: 0 0.313rem 0.719rem rgba(0, 123, 255, 0.1), 0 0.156rem 0.125rem rgba(0, 0, 0, 0.06);
 }
 
 .form-control:focus:hover {
-  border-color: #007bff;
+  border-color: #C4183C;
 }
 
 .form-control::-webkit-input-placeholder {

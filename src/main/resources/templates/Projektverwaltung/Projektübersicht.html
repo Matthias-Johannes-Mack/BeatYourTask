@@ -12,9 +12,6 @@
 <body class="shards-app-promo-page--1">
 <!-- background -->
 <div class="welcome d-flex justify-content-center flex-column">
-    <!-- first element -->
-
-
     <!-- Features -->
     <!-- begin of the field where the projects are displayed -->
     <div id="cards" class="container mb-2">
@@ -22,39 +19,24 @@
             <h3 class="welcome-heading display-4 text-white ml-5">Project Overview</h3>
             <div class="row">
                 <!-- dynamic insertion of projects -->
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-4">
-                    <div class="card">
-                        <!-- <img class="card-img-top" th:src="@{/images/selfmade/fancy.jpg}">  If we like to be fancy :D -->
-                        <div class="card-body">
-                            <h4 class="card-title">{Project 1}</h4>
-                            <p class="card-text">{Projectdescription}</p>
-                            <a href="#" class="btn btn-danger">Open Project</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-4 sm-hidden">
-                    <div class="card">
-                        <div class="card-body">
-                            <h4 class="card-title">Project 2</h4>
-                            <p class="card-text">Projectdescription</p>
-                            <a href="#" class="btn btn-danger">Open Project</a>
-                        </div>
-                    </div>
-                </div>
+                <th:block th:include="/fragments/ProjectFragement"></th:block>
                 <!-- end dynamic insertion -->
 
-                    <input type="button" class="btn btn-danger mb-4" value="+" name="addProject" />
+                <!-- the button to add a new project -->
+                <input type="button" class="btn btn-danger mb-4" value="+" name="addProject" data-toggle="modal"
+                       data-target="#newProjectModal"/>
+                <!-- end add button -->
 
+                <!-- includes the popup dialog -->
+                <th:block th:include="/fragments/Modal"></th:block>
+                <!-- end popup dialog -->
             </div>
+            <!-- End button -->
         </div>
     </div>
-
     <!-- end project field -->
-
-
     <!-- / Features -->
-</div>
-
+    </div>
 </div>
 </body>
 <!-- include the header -->

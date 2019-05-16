@@ -1,0 +1,60 @@
+
+<div class="modal fade mt-5" id="newProjectModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger">
+                <h4 class="text-white mt-1" id="exampleModalLabel">Create Project</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- the form -->
+                <form name="createProject">
+                    <div class="row">
+                        <input type="text" class="form-control" id="projectTitle"
+                               placeholder="Projecttitel" required>
+                    </div>
+                    <br>
+                    <div class="row">
+                                            <textarea id="projectDescription" class="form-control mb-4 color-danger"
+                                                      rows="10"
+                                                      placeholder="Enter your Projectdescription..."
+                                                      name="projecdescription" style="resize: none;"></textarea>
+                    </div>
+                    <!-- calendar function -->
+                    <div class="row">
+                        <div class="input-group with-addon-icon-left">
+                                            <span class="input-group-append">
+                                        <span class="input-group-text">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                      </span>
+                            <input type="text" class="form-control" id="datepicker-example-2"
+                                   placeholder="Project Deadline">
+
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="row">
+                        <select class="custom-select" id="projectLabel">
+                            <option value="1">High</option>
+                            <option value="2">Middle</option>
+                            <option value="3">Low</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div class="row border-dark">
+                        <button type="submit" class="btn btn-danger" data-dismiss="modal">
+                            Create Project
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
