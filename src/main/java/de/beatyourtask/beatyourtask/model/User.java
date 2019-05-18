@@ -20,6 +20,10 @@ public class User {
 
     private String password;
 
+    private String surname;
+
+    private String lastname;
+
     private boolean enabled = true;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -78,5 +82,21 @@ public class User {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 }
