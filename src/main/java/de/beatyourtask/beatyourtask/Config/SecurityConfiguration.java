@@ -57,7 +57,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // jeder kann sich ausloggen über den simplen /logout request ausloggen
                 .and().logout().permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login?logout");
+                .logoutSuccessUrl("/?logout");
 
         // Deaktiviert header security. Ermöglicht Nutzung der H2 Console.
         http.headers().frameOptions().sameOrigin().disable();
