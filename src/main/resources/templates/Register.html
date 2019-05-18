@@ -1,0 +1,81 @@
+<!-- created by wirefire Spring 19 -->
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | BeatYourTask</title>
+    <!-- include the header -->
+    <th:block th:include="fragments/header_not_singed_in"></th:block>
+    <!-- End -->
+</head>
+<body class="shards-app-promo-page--1">
+<!-- background -->
+<div class="welcome d-flex justify-content-center flex-column">
+    <!-- first element -->
+    <div class="example col-lg-8 col-md-10 ml-auto mr-auto">
+            <h3 class="welcome-heading display-3 text-white">Sign Up</h3>
+                <div class="container py-1">
+                    <div class="row justify-content-md-center px-4">
+                        <div class="contact-form col-sm-12 col-md-10 col-lg-7 p-4 mb-4 card">
+                            <form name="RegisterForm" method="Get">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <h6>First Name</h6>
+                                            <input type="email" class="form-control" id="contactFormFullName"
+                                                   placeholder="Enter your first name">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <h6>Last Name</h6>
+                                            <input type="text" class="form-control" placeholder="Enter your last name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <h6>E-Mail Address</h6>
+                                            <input type="email" class="form-control" id="contactFormEmail"
+                                                   placeholder="Enter your email address">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="form-group">
+                                            <h6>Password</h6>
+                                            <input type="password" class="form-control"
+                                                   placeholder="Enter your password" name="password">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <fieldset>
+                                        <div class="custom-control custom-toggle d-block my-2">
+                                            <input
+                                                    type="checkbox" id="customToggle1" name="checkTermsCond"
+                                                    class="custom-control-input">
+                                            <small class="custom-control-label"
+                                                   for="customToggle1">Please toggle the button if you agree to
+                                                BeatYourTasks
+                                                <a>Conditions of Use</a> and <a>Privacy Notice</a>.
+                                            </small>
+                                        </div>
+                                    </fieldset>
+                                </div>
+
+                                <input class="btn btn-primary btn-danger d-flex ml-auto mr-auto" type="submit"
+                                       value="Create new Account">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- include the header -->
+<th:block th:include="fragments/footer"></th:block>
+<!-- End -->
+</html>

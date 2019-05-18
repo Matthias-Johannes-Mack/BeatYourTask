@@ -1,0 +1,45 @@
+<!-- created by wirefire Spring 19 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Project Overview | BeatYourTask</title>
+    <!-- include the  header -->
+    <th:block th:include="/fragments/header_singed_in"></th:block>
+    <!-- End -->
+</head>
+<body class="shards-app-promo-page--1">
+<!-- background -->
+<div class="welcome d-flex justify-content-center flex-column">
+    <!-- Features -->
+    <!-- begin of the field where the projects are displayed -->
+    <div id="cards" class="container mb-2">
+        <div class="example col-md-12 ml-auto mr-auto">
+            <h3 class="welcome-heading display-4 text-white ml-5">Project Overview</h3>
+            <div class="row">
+                <!-- dynamic insertion of projects -->
+                <th:block th:include="/fragments/ProjectFragement"></th:block>
+                <!-- end dynamic insertion -->
+
+                <!-- the button to add a new Project -->
+                <input type="button" class="btn btn-danger mb-4" value="+" name="addProject" data-toggle="modal"
+                       data-target="#newProjectModal"/>
+                <!-- end add button -->
+
+                <!-- includes the popup dialog -->
+                <th:block th:include="/fragments/Modal"></th:block>
+                <!-- end popup dialog -->
+            </div>
+            <!-- End button -->
+        </div>
+    </div>
+    <!-- end Project field -->
+    <!-- / Features -->
+    </div>
+</div>
+</body>
+<!-- include the header -->
+<th:block th:include="/fragments/footer"></th:block>
+<!-- End -->
+</html>
