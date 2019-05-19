@@ -1,6 +1,9 @@
 package de.beatyourtask.beatyourtask.controller;
 
 import de.beatyourtask.beatyourtask.model.User;
+import de.beatyourtask.beatyourtask.services.DatabaseInitialiser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -13,6 +16,9 @@ import javax.validation.Valid;
 
 @Controller
 public class CompleteController {
+
+    // added a logger
+    private static final Logger logger = LoggerFactory.getLogger(CompleteController.class);
 
     @GetMapping("/")
     public String showHome() {
@@ -43,8 +49,7 @@ public class CompleteController {
 
     @PostMapping("/regist")
     public String showPage(@ModelAttribute("User") User user) {
-
-        System.out.println("Date planted: " + user.getEmail()); //in reality, you'd use a logger instead :)
+        logger.info("Date planted: " + user.getEmail());
         return "/";
     }
 }
