@@ -24,6 +24,6 @@ public class ProjectviewController {
     @GetMapping("/Project/")
     public String loadLists(Model model) {
         model.addAttribute("tasklists", tasklistService.getAllTaskLists());
-        return "Projektansicht";
+        return "Projectview";
     }
 }

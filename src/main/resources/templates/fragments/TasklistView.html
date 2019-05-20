@@ -1,22 +1,22 @@
+<!-- Fragment that shows the lists and tasks of a project -->
+<!-- TODO currently shows all lists in database -->
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-
-
-
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-
     <title>Tasklistview with jQuery UI Sortable</title>
 
     <!-- Dependencys -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
-
-
+    <!-- Style for this fragment -->
     <style>
+        /* contains all lists */
         #sortableListContainer {
             list-style-type: none;
             padding: 0;
@@ -117,13 +117,15 @@
         }
     </style>
 
+    <!-- jquerry functions for this fragment -->
     <script>
+        /*making sortable(drag and drop) work */
         $(function () {
             $("#sortableListContainer").sortable({
                 placeholder: "highlightSpalte",
             });
 
-            <!-- Connecte alle taskconatainer-->
+            /* Connecte alle taskconatainer */
             $(".taskContainer").sortable({
                 connectWith: ".taskContainer",
                 placeholder: "highlightTask"
@@ -160,23 +162,19 @@
         });
 
     </script>
-
-
-
-
-
 </head>
+
 <body>
 
-
 <!--container der Spalten -->
-<ul id="sortableListContainer" class="sortableListContainer" >
+<ul id="sortableListContainer" class="sortableListContainer">
 
     <!--
-    Loads Lists from databas
+    Loads Lists from database
     TODO: add Parameterizable fragment signatures to Projektübersicht when calling Tasklistview
-    uses contextvariable tasklists from Projektansicht when called in Projektansicht
+    uses contextvariable tasklists from Projectview when called in Projectview
      -->
+
     <li
             th:each="list: ${tasklists}" th:include="/fragments/list :: listFragment"
             th:with="Titel=${list.listName}"
@@ -184,21 +182,19 @@
     />
 
 
-
-
-    <!-- Mock Listen -->
+    <!-- Mock Listen zur veranschaulichung-->
 
     <!--Spalte (Listenelemnt des Containers)-->
     <li id="idspalte1" class="spalte">
         <div class="spaltenkopf">
             <p id="idSpaltenkopfTitel">Mock Spalte 1</p>
         </div>
-                <!--container der Tasks -->
-                <ul id="sortableTaskContainer-1" class="taskContainer">
-                    <!-- Tasks (Listenelemnt des Containers)-->
-                    <li id="idtask1" class="task">Test1</li>
-                    <li id="idtask2" class="task">Test2</li>
-                </ul>
+        <!--container der Tasks -->
+        <ul id="sortableTaskContainer-1" class="taskContainer">
+            <!-- Tasks (Listenelemnt des Containers)-->
+            <li id="idtask1" class="task">Test1</li>
+            <li id="idtask2" class="task">Test2</li>
+        </ul>
     </li>
 
     <!--Spalte (Listenelemnt des Containers)-->
@@ -206,16 +202,17 @@
         <div class="spaltenkopf">
             <p id="idSpaltenkopfTitel2">Mock Spalte 2</p>
         </div>
-                <!--container der Tasks -->
-                <ul id="sortableTaskContainer-2" class="taskContainer">
-                    <!-- Tasks (Listenelemnt des Containers)-->
-                    <li id="idtask3" class="task">Test3</li>
-                    <li id="idtask4" class="task">Test4</li>
-                </ul>
+        <!--container der Tasks -->
+        <ul id="sortableTaskContainer-2" class="taskContainer">
+            <!-- Tasks (Listenelemnt des Containers)-->
+            <li id="idtask3" class="task">Test3</li>
+            <li id="idtask4" class="task">Test4</li>
+        </ul>
     </li>
 
-     <!-- Ende Mock Listen -->
+    <!-- Ende Mock Listen -->
 
+    <!-- button zum hinzufügen einer neuen Liste -->
     <button class="listButton"> +</button>
 
 </ul>
