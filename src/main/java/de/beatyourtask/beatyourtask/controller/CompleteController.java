@@ -22,7 +22,7 @@ public class CompleteController {
 
     @GetMapping("/")
     public String showHome() {
-        return "home";
+        return "Home";
     }
 
     @GetMapping("/Projektuebersicht/")
