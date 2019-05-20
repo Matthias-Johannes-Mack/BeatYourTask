@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<span th:fragment="listFragment">
+    <li class="spalte" >
+         <div class="spaltenkopf">
+              <p class = "Spaltentitel" th:text="${Titel}"></p>
+        </div>
+        <!--container der Tasks -->
+        <ul class="taskContainer">
+        </ul>
+    </li>
+</span>
+
+</body>
+</html>

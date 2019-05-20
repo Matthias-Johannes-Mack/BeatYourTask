@@ -1,6 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
-<link rel="stylesheet" href="../../static/css/TasklistView.css">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -10,26 +13,122 @@
     <!-- Dependencys -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <link
-            rel="stylesheet"
-            type="text/css"
-            th:href="@{static/css/TasklistView.css}"/>
+
+
+
+    <style>
+        #sortableListContainer {
+            list-style-type: none;
+            padding: 0;
+            float: left;
+            margin-right: -999em;
+        }
+
+        /* horizontale ausrichtung des ListenContainers*/
+        #sortableListContainer > li {
+            float: left;
+        }
+
+        /*Task */
+        .task {
+            background: #fff;
+            border: 1px solid #DDDDDD;
+            margin: 0 3px 3px 3px;
+            padding: 0.4em;
+            font-size: 17px;
+            height: 100px;
+            min-height: 100px;
+            box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
+        }
+
+        /* Spalte in der TaskContainer drinnen*/
+        .spalte {
+            background: #dfe1e6;
+            border: 1px solid #DDDDDD;
+            margin: 3px 3px 3px 3px;
+            padding-left: 0.4em;
+            padding-right: 0.4em;
+            padding-top: 0%;
+            font-size: 17px;
+            min-height: 500px;
+            width: 270px;
+            vertical-align: top;
+        }
+
+        /*Spalte rechts mit button*/
+        .nonmovable {
+            margin: 3px 3px 3px 3px;
+            padding: 0.4em;
+            font-size: 17px;
+            height: 500px;
+            width: 150px;
+        }
+
+        /* Vorschau beim bewegen von Tasks */
+        .highlightTask {
+            border: 3px solid red;
+            font-weight: bold;
+            font-size: 45px;
+            background-color: #333333;
+            /* Wie Task */
+            margin: 3px 3px 3px 3px;
+            padding: 0.4em;
+            font-size: 17px;
+            height: 100px;
+            min-height: 100px;
+        }
+
+        /* Vorschau beim bewegen von Spalten */
+        .highlightSpalte {
+            border: 3px solid red;
+            font-weight: bold;
+            font-size: 45px;
+            background-color: #333333;
+            /* Wie spalte */
+            margin: 3px 3px 3px 3px;
+            padding: 0.4em;
+            font-size: 17px;
+            height: 500px;
+            width: 270px;
+        }
+
+        /*container für Tasks */
+        .taskContainer {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 500px;
+            min-width: 150px;
+        }
+
+        .spaltenkopf {
+            height: 30px;
+            background: rgba(0, 0, 0, .15);
+
+            margin-left: -0.4em;
+            margin-right: -0.4em;
+
+            padding: 10px 8px 8px;
+        }
+
+        .listButton {
+            margin-top: 1em;
+        }
+    </style>
+
     <script>
         $(function () {
             $("#sortableListContainer").sortable({
                 placeholder: "highlightSpalte",
             });
 
-            <!-- Mock Listen -->
-            $("#sortableTaskContainer-1").sortable({
-                placeholder: "highlightTask",
-                connectWith: "#sortableTaskContainer-2"
-            });
+            <!-- Connecte alle taskconatainer-->
+            $(".taskContainer").sortable({
+                connectWith: ".taskContainer",
+                placeholder: "highlightTask"
 
-            $("#sortableTaskContainer-2").sortable({
-                placeholder: "highlightTask",
-                connectWith: "#sortableTaskContainer-1"
-            });
+            }).disableSelection();
         });
 
         <!-- Button gedrückt -->
@@ -42,29 +141,50 @@
 
                 if (titel == null || titel == "") {
                     /* TODO Validierung das nichts eingegeben --> */
+                } else {
+                    /* TODO dynamische IDs hinzufügen und im system abspeichern*/
+                    var newspalte = $("<li id = 'idspalteXXX' class = 'spalte'> <div class = 'spaltenkopf'> <p id = 'idSpaltenkopfTitel'> " + titel + " </p> <div><ul id = 'sortableTaskContainer-XXX' class = 'taskContainer'> <li id = 'idtask1' class = 'task'>Test1</li> <li id = 'idtask1' class = 'task'>Test1</li> </ul> </li>");
+
+                    /* neue spalte vor button einfügen */
+                    $('.listButton').before(newspalte);
+
+                    /* Stellt Verbindung zwischen TaskContainern für Task Drag and Drop her */
+                    $(".taskContainer").sortable({
+                        connectWith: ".taskContainer",
+                        placeholder: "highlightTask"
+                    }).disableSelection();
                 }
 
-                /* TODO dynamische IDs hinzufügen */
-                var newspalte = $("<li id = 'idspalteXXX' class = 'spalte'> <div class = 'spaltenkopf'> <p id = 'idSpaltenkopfTitel'> " + titel + " </p> <div><ul id = 'sortableTaskContainer-XXX' class = 'taskContainer'> <li id = 'idtask1' class = 'task'>Test1</li> <li id = 'idtask1' class = 'task'>Test1</li> </ul> </li>");
 
-                /* neue spalte vor button einfügen */
-                $('.listButton').before(newspalte);
-
-                /* Stellt Verbindung zwischen TaskContainern für Task Drag and Drop her */
-                $(".taskContainer").sortable({
-                    connectWith: ".taskContainer",
-                    placeholder: "highlightTask"
-                }).disableSelection();
             });
         });
 
     </script>
 
 
+
+
+
 </head>
 <body>
+
+
 <!--container der Spalten -->
-<ul id="sortableListContainer" class="sortableListContainer">
+<ul id="sortableListContainer" class="sortableListContainer" >
+
+    <!--
+    Loads Lists from databas
+    TODO: add Parameterizable fragment signatures to Projektübersicht when calling Tasklistview
+    uses contextvariable tasklists from Projektansicht when called in Projektansicht
+     -->
+    <li
+            th:each="list: ${tasklists}" th:include="/fragments/list :: listFragment"
+            th:with="Titel=${list.listName}"
+            th:remove="tag"
+    />
+
+
+
 
     <!-- Mock Listen -->
 
@@ -94,17 +214,9 @@
                 </ul>
     </li>
 
-    <!-- Ende Mock Listen -->
+     <!-- Ende Mock Listen -->
+
     <button class="listButton"> +</button>
-
-    <!-- the button to add a new Project -->
-    <input type="button" class="btn btn-danger mb-4" value="+" name="addProject" data-toggle="modal"
-           data-target="#newProjectModal"/>
-    <!-- end add button -->
-
-    <!-- includes the popup dialog -->
-    <th:block th:include="/fragments/Modal"></th:block>
-    <!-- end popup dialog -->
 
 </ul>
 

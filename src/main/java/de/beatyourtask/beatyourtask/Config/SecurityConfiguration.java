@@ -38,8 +38,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests()
+                //TODO Delete /Project/
                 // alle Requests die ohne Login erreichbar sind
-                .antMatchers("/", "/Register/", "/console/**", "static/**").permitAll()
+                .antMatchers("/", "/Register/", "/console/**", "static/**", "/Project/").permitAll()
                 // definiere alle URLs die nur für eine bestimmte Rolle zugänglich sind
                 // Achtung: Spring Security fügt automatisch das Prefix "ROLE_" für die Überprüfung ein. Daher verwenden wir
                 // hier nicht "ROLE_ADMIN", wie bspw. im DataLoader angegeben.

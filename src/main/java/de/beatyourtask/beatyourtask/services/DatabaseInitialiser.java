@@ -3,6 +3,7 @@ package de.beatyourtask.beatyourtask.services;
 
 import de.beatyourtask.beatyourtask.model.Project;
 import de.beatyourtask.beatyourtask.model.Role;
+import de.beatyourtask.beatyourtask.model.Tasklist;
 import de.beatyourtask.beatyourtask.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +33,9 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
   @Autowired
   private BCryptPasswordEncoder passwordEncoder;
 
+  @Autowired
+  private TasklistService tasklistService;
+
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
     logger.info("Initialisiere Datenbank mit Testdaten...");
@@ -60,6 +64,14 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     Project seminar = new Project();
     seminar.setProjectName("Seminar");
     projectService.saveProject(seminar);
+
+    Tasklist liste1 = new Tasklist();
+    liste1.setListName("Liste aus DB");
+    tasklistService.saveList(liste1);
+
+    Tasklist liste2 = new Tasklist();
+    liste2.setListName("Liste aus DB 2");
+    tasklistService.saveList(liste2);
 
 
   }
