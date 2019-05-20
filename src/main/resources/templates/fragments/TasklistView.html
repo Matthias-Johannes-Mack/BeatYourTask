@@ -176,7 +176,7 @@
      -->
 
     <li
-            th:each="list: ${tasklists}" th:include="/fragments/list :: listFragment"
+            th:each="list: ${tasklists}" th:include="/fragments/listFragments :: listFragment"
             th:with="Titel=${list.listName}"
             th:remove="tag"
     />
