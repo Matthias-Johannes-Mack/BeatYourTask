@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
+<link rel="stylesheet" href="../../static/css/TasklistView.css">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <title>Tasklistview with jQuery UI Sortable</title>
+
+    <!-- Dependencys -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <link
+            rel="stylesheet"
+            type="text/css"
+            th:href="@{static/css/TasklistView.css}"/>
+    <script>
+        $(function () {
+            $("#sortableListContainer").sortable({
+                placeholder: "highlightSpalte",
+            });
+
+            <!-- Mock Listen -->
+            $("#sortableTaskContainer-1").sortable({
+                placeholder: "highlightTask",
+                connectWith: "#sortableTaskContainer-2"
+            });
+
+            $("#sortableTaskContainer-2").sortable({
+                placeholder: "highlightTask",
+                connectWith: "#sortableTaskContainer-1"
+            });
+        });
+
+        <!-- Button gedrückt -->
+        $(function () {
+            /* Button neue Spalte hinzufügen: neue Spalte mit Taskcontainer */
+            $('.listButton').click(function () {
+
+                /*TODO change to modal in bootstrap*/
+                var titel = prompt("Please enter a titel:", "No Titel");
+
+                if (titel == null || titel == "") {
+                    /* TODO Validierung das nichts eingegeben --> */
+                }
+
+                /* TODO dynamische IDs hinzufügen */
+                var newspalte = $("<li id = 'idspalteXXX' class = 'spalte'> <div class = 'spaltenkopf'> <p id = 'idSpaltenkopfTitel'> " + titel + " </p> <div><ul id = 'sortableTaskContainer-XXX' class = 'taskContainer'> <li id = 'idtask1' class = 'task'>Test1</li> <li id = 'idtask1' class = 'task'>Test1</li> </ul> </li>");
+
+                /* neue spalte vor button einfügen */
+                $('.listButton').before(newspalte);
+
+                /* Stellt Verbindung zwischen TaskContainern für Task Drag and Drop her */
+                $(".taskContainer").sortable({
+                    connectWith: ".taskContainer",
+                    placeholder: "highlightTask"
+                }).disableSelection();
+            });
+        });
+
+    </script>
+
+
+</head>
+<body>
+<!--container der Spalten -->
+<ul id="sortableListContainer" class="sortableListContainer">
+
+    <!-- Mock Listen -->
+
+    <!--Spalte (Listenelemnt des Containers)-->
+    <li id="idspalte1" class="spalte">
+        <div class="spaltenkopf">
+            <p id="idSpaltenkopfTitel">Mock Spalte 1</p>
+        </div>
+                <!--container der Tasks -->
+                <ul id="sortableTaskContainer-1" class="taskContainer">
+                    <!-- Tasks (Listenelemnt des Containers)-->
+                    <li id="idtask1" class="task">Test1</li>
+                    <li id="idtask2" class="task">Test2</li>
+                </ul>
+    </li>
+
+    <!--Spalte (Listenelemnt des Containers)-->
+    <li id="idspalte2" class="spalte">
+        <div class="spaltenkopf">
+            <p id="idSpaltenkopfTitel2">Mock Spalte 2</p>
+        </div>
+                <!--container der Tasks -->
+                <ul id="sortableTaskContainer-2" class="taskContainer">
+                    <!-- Tasks (Listenelemnt des Containers)-->
+                    <li id="idtask3" class="task">Test3</li>
+                    <li id="idtask4" class="task">Test4</li>
+                </ul>
+    </li>
+
+    <!-- Ende Mock Listen -->
+    <button class="listButton"> +</button>
+
+    <!-- the button to add a new Project -->
+    <input type="button" class="btn btn-danger mb-4" value="+" name="addProject" data-toggle="modal"
+           data-target="#newProjectModal"/>
+    <!-- end add button -->
+
+    <!-- includes the popup dialog -->
+    <th:block th:include="/fragments/Modal"></th:block>
+    <!-- end popup dialog -->
+
+</ul>
+
+
+</body>
+</html>

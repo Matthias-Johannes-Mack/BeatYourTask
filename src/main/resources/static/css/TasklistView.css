@@ -1,0 +1,98 @@
+#sortableListContainer {
+    list-style-type: none;
+    padding: 0;
+    float: left;
+    margin-right: -999em;
+}
+
+/* horizontale ausrichtung des ListenContainers*/
+#sortableListContainer > li {
+    float: left;
+}
+
+/*Task */
+.task {
+    background: #fff;
+    border: 1px solid #DDDDDD;
+    margin: 0 3px 3px 3px;
+    padding: 0.4em;
+    font-size: 17px;
+    height: 100px;
+    min-height: 100px;
+    box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
+}
+
+/* Spalte in der TaskContainer drinnen*/
+.spalte {
+    background: #dfe1e6;
+    border: 1px solid #DDDDDD;
+    margin: 3px 3px 3px 3px;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+    padding-top: 0%;
+    font-size: 17px;
+    min-height: 500px;
+    width: 270px;
+    vertical-align: top;
+}
+
+/*Spalte rechts mit button*/
+.nonmovable {
+    margin: 3px 3px 3px 3px;
+    padding: 0.4em;
+    font-size: 17px;
+    height: 500px;
+    width: 150px;
+}
+
+/* Vorschau beim bewegen von Tasks */
+.highlightTask {
+    border: 3px solid red;
+    font-weight: bold;
+    font-size: 45px;
+    background-color: #333333;
+    /* Wie Task */
+    margin: 3px 3px 3px 3px;
+    padding: 0.4em;
+    font-size: 17px;
+    height: 100px;
+    min-height: 100px;
+}
+
+/* Vorschau beim bewegen von Spalten */
+.highlightSpalte {
+    border: 3px solid red;
+    font-weight: bold;
+    font-size: 45px;
+    background-color: #333333;
+    /* Wie spalte */
+    margin: 3px 3px 3px 3px;
+    padding: 0.4em;
+    font-size: 17px;
+    height: 500px;
+    width: 270px;
+}
+
+/*container für Tasks */
+.taskContainer {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 500px;
+    min-width: 150px;
+}
+
+.spaltenkopf {
+    height: 30px;
+    background: rgba(0, 0, 0, .15);
+
+    margin-left: -0.4em;
+    margin-right: -0.4em;
+
+    padding: 10px 8px 8px;
+}
+
+.listButton {
+    margin-top: 1em;
+}
