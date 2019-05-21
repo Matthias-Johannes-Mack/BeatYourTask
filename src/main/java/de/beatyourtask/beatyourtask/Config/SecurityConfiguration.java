@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/console/**")
                 // Request zum Aufruf der Login-Seite
                 .and().formLogin().loginPage("/").failureUrl("/?error=true").permitAll()
-                .defaultSuccessUrl("/Projektuebersicht/")
+                .defaultSuccessUrl("/Projectoverview/")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // jeder kann sich ausloggen über den simplen /logout request ausloggen

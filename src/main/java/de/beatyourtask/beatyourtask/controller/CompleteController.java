@@ -1,17 +1,9 @@
 package de.beatyourtask.beatyourtask.controller;
 
-import de.beatyourtask.beatyourtask.model.User;
-import de.beatyourtask.beatyourtask.services.DatabaseInitialiser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.validation.Valid;
 
 
 @Controller
@@ -25,9 +17,9 @@ public class CompleteController {
         return "Home";
     }
 
-    @GetMapping("/Projektuebersicht/")
+    @GetMapping("/Projectoverview/")
     public String showLogin() {
-        return "Projektuebersicht";
+        return "Projectoverview";
     }
 
 

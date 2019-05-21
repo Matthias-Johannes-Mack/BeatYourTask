@@ -176,7 +176,7 @@
             </div>
             <div class="modal-body">
                 <!-- the form -->
-                <form name="createProject">
+                <form action="#" th:action="@{/Projectoverview}" th:object="${Project}" method="post" role="form">
                     <div class="row">
                         <input type="text" class="form-control" id="projectTitle"
                                placeholder="Projecttitel" required>
