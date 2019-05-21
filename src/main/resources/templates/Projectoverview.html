@@ -1,6 +1,6 @@
 <!-- created by wirefire Spring 19 -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb"  xmlns:mvc="http://www.springframework.org/schema/mvc">
 <script type="text/javascript"></script>
 <head>
     <meta charset="UTF-8">
@@ -19,6 +19,8 @@
             <h3 class="welcome-heading display-4 text-white ml-5">Project Overview</h3>
             <div class="row">
                 <!-- dynamic insertion of projects -->
+                <th:block th:each="listPrj : ${listProjects}" > <tr> <td th:text="${listPrj.projectName}"></td> </tr></th:block>
+
                 <th:block th:include="/fragments/ProjectFragement"></th:block>
                 <!-- end dynamic insertion -->
 
@@ -38,6 +40,8 @@
     <!-- / Features -->
     </div>
 </div>
+
+
 </body>
 <!-- include the header -->
 <th:block th:include="/fragments/footer"></th:block>
