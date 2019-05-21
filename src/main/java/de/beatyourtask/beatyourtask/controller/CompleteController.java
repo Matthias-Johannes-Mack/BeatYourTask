@@ -22,7 +22,7 @@ public class CompleteController {
 
     @GetMapping("/")
     public String showHome() {
-        return "home";
+        return "Home";
     }
 
     @GetMapping("/Projektuebersicht/")
@@ -30,28 +30,8 @@ public class CompleteController {
         return "Projektuebersicht";
     }
 
-    @GetMapping("/Register/")
-    public String showRegister() {
-        return "Register";
-    }
 
-    @RequestMapping(value = "/employee", method = RequestMethod.GET)
-    public ModelAndView showForm() {
-        return new ModelAndView("Users", "User", new User());
-    }
 
-    // get the mapping
-    @GetMapping("/regist")
-    public String registSubmit(Model model) {
-        model.addAttribute("User", new User());
-        return "/";
-    }
-
-    @PostMapping("/regist")
-    public String showPage(@ModelAttribute("User") User user) {
-        logger.info("Date planted: " + user.getEmail());
-        return "/";
-    }
 }
 
 

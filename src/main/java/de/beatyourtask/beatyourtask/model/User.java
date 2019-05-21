@@ -1,20 +1,18 @@
 package de.beatyourtask.beatyourtask.model;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import java.util.Set;
 
+/**
+ * Class for the user / wirefire / Spring 19
+ */
 @Entity
+@Table
 public class User {
 
     @Id
     @GeneratedValue
     private Integer id;
-
-    private String username;
 
     private String email;
 
@@ -28,6 +26,7 @@ public class User {
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
+    
 
     /**
      * No-Argument Konstruktor für Hibernate.
@@ -42,14 +41,6 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getEmail() {
@@ -99,4 +90,5 @@ public class User {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+    
 }

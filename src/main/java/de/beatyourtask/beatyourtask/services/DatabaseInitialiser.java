@@ -45,9 +45,8 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
 
 
     User user1 = new User();
-    user1.setUsername("user");
     user1.setPassword(passwordEncoder.encode("password"));
-    user1.setEmail("st154919@stud.uni-stuttgart.de");
+    user1.setEmail("user@test.de");
     user1.setRoles(userRoles);
     userService.saveUser(user1);
 
