@@ -48,7 +48,7 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active"><a class="nav-link" href="/../">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item"><a class="nav-link" href="/Register/">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="/Register">Register</a></li>
 
                 <ul class="ml-9">
                     <!-- Begin Login -->
@@ -94,6 +94,32 @@
         </button>
         <i class="fa fa-exclamation-circle"></i>
         <strong>Logout successful!</strong>
+    </div>
+    <!-- end -->
+    <!-- logout sucessfull -->
+    <div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <i class="fa fa-exclamation-circle"></i>
+        <strong>Logout successful!</strong>
+    </div>
+    <!-- end -->
+    <!-- registration sucessfull / failed -->
+    <div th:if="${param.registersuccessfull}" class="alert alert-success alert-dismissible fade show mb-0" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <i class="fa fa-exclamation-circle"></i>
+        <strong>Registration successful!</strong>
+    </div>
+
+    <div th:if="${param.registerfailed}" class="alert alert-danger alert-dismissible fade show mb-0" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <i class="fa fa-exclamation-circle"></i>
+        <strong>Registration failed! E-Mail-Adress is alredy registered!</strong>
     </div>
     <!-- end -->
 </head>

@@ -17,20 +17,21 @@
         <div class="container py-1">
             <div class="row justify-content-md-center px-4">
                 <div class="contact-form col-sm-12 col-md-10 col-lg-7 p-4 mb-4 card">
-                    <form th:action="@{/regist}" th:object="${User}" method="post">
+                   <!-- begin registeration form -->
+                    <form action="#" th:action="@{/Register}" th:object="${User}" method="post" role="form">
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <h6>First Name</h6>
                                     <input type="text" class="form-control"
-                                           placeholder="Enter your first name" id="surname">
+                                           placeholder="Enter your first name" th:field="*{surname}" required>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <h6>Last Name</h6>
                                     <input type="text" class="form-control" placeholder="Enter your last name"
-                                           id="lasname">
+                                           id="lastname" th:field="*{lastname}" required>
                                 </div>
                             </div>
                         </div>
@@ -39,14 +40,14 @@
                                 <div class="form-group">
                                     <h6>E-Mail Address</h6>
                                     <input type="email" class="form-control" id="email"
-                                           placeholder="Enter your email address">
+                                           placeholder="Enter your email address" th:field="*{email}" required>
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <h6>Password</h6>
                                     <input type="password" class="form-control"
-                                           placeholder="Enter your password" name="password" id="password">
+                                           placeholder="Enter your password" name="password" id="password" th:field="*{password}" required>
                                 </div>
                             </div>
                         </div>
@@ -63,6 +64,7 @@
                         <input class="btn btn-primary btn-danger d-flex ml-auto mr-auto" type="submit"
                                value="Create new Account">
                     </form>
+                    <!-- end -->
                 </div>
             </div>
         </div>
