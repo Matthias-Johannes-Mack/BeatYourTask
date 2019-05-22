@@ -14,6 +14,8 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
+    <th:block th:include="/fragments/AddNewListModal"></th:block>
+
     <!-- Style for this fragment -->
     <style>
         /* contains all lists */
@@ -135,11 +137,11 @@
 
         <!-- Button gedrückt -->
         $(function () {
-            /* Button neue Spalte hinzufügen: neue Spalte mit Taskcontainer */
-            $('.listButton').click(function () {
+            /* Button neue Spalte hinzufügen auf Modal gedrückt: neue Spalte mit Taskcontainer */
+            $('#newListModal #newListModalButton').click(function () {
 
-                /*TODO change to modal in bootstrap*/
-                var titel = prompt("Please enter a titel:", "No Titel");
+
+                var titel = $("#newListModal #listTitle").val().trim();
 
                 if (titel == null || titel == "") {
                     /* TODO Validierung das nichts eingegeben --> */
@@ -148,7 +150,7 @@
                     var newspalte = $("<li id = 'idspalteXXX' class = 'spalte'> <div class = 'spaltenkopf'> <p id = 'idSpaltenkopfTitel'> " + titel + " </p> </div><ul id = 'sortableTaskContainer-XXX' class = 'taskContainer'> <li id = 'idtask1' class = 'task'>Test1</li> <li id = 'idtask1' class = 'task'>Test1</li> </ul> </li>");
 
                     /* neue spalte vor button einfügen */
-                    $('.listButton').before(newspalte);
+                    $('#addNewListButton').before(newspalte);
 
                     /* Stellt Verbindung zwischen TaskContainern für Task Drag and Drop her */
                     $(".taskContainer").sortable({
@@ -156,8 +158,6 @@
                         placeholder: "highlightTask"
                     }).disableSelection();
                 }
-
-
             });
         });
 
@@ -212,8 +212,10 @@
 
     <!-- Ende Mock Listen -->
 
-    <!-- button zum hinzufügen einer neuen Liste -->
-    <button class="listButton"> +</button>
+    <!-- button zum öffnen des Modals zum hinzufügen einer neuen Liste -->
+    <input type="button" class="btn btn-secondary btn-pill btn-sm" id="addNewListButton" value="+" name="addList" data-toggle="modal"
+           data-target="#newListModal"/>
+
 
 </ul>
 
