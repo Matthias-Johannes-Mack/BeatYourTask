@@ -175,6 +175,8 @@
     uses contextvariable tasklists from Projectview when called in Projectview
      -->
 
+    <!--/*@thymesVar id="tasklists" type="de.beatyourtask.beatyourtask.model.Tasklist"*/-->
+    <!--suppress ThymeleafVariablesResolveInspection -->
     <li
             th:each="list: ${tasklists}" th:include="/fragments/listFragments :: listFragment"
             th:with="Titel=${list.listName}"

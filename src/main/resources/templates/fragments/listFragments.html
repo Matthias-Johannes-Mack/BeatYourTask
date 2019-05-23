@@ -11,6 +11,8 @@
 <span th:fragment="listFragment">
     <li class="spalte" >
          <div class="spaltenkopf">
+                <!--uses contextvariable tasklists from TasklistView when called in TasklistView-->
+              <!--/*@thymesVar id="Titel" type="java.lang.String"*/-->
               <p class = "Spaltentitel" th:text="${Titel}"></p>
         </div>
         <!--container der Tasks -->
