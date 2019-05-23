@@ -1,12 +1,13 @@
 <!-- created by wirefire Spring 19 -->
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb" >
 <head>
     <meta charset="UTF-8">
     <title>Register | BeatYourTask</title>
     <!-- include the header -->
     <th:block th:include="fragments/header_not_singed_in"></th:block>
     <!-- End -->
+
 </head>
 <body class="shards-app-promo-page--1">
 <!-- background -->
@@ -24,14 +25,14 @@
                                 <div class="form-group">
                                     <h6>First Name</h6>
                                     <input type="text" class="form-control"
-                                           placeholder="Enter your first name" th:field="*{surname}" required>
+                                           placeholder="Enter your first name" th:field="*{surname}" required minlength="3">
                                 </div>
                             </div>
                             <div class="col-md-6 col-sm-12">
                                 <div class="form-group">
                                     <h6>Last Name</h6>
                                     <input type="text" class="form-control" placeholder="Enter your last name"
-                                           id="lastname" th:field="*{lastname}" required>
+                                           id="lastname" th:field="*{lastname}" required minlength="3">
                                 </div>
                             </div>
                         </div>
@@ -47,17 +48,17 @@
                                 <div class="form-group">
                                     <h6>Password</h6>
                                     <input type="password" class="form-control"
-                                           placeholder="Enter your password" name="password" id="password" th:field="*{password}" required>
+                                           placeholder="Enter your password" name="password" id="password" th:field="*{password}" required minlength="8">
                                 </div>
                             </div>
                         </div>
                         <fieldset>
                             <div class="custom-control custom-toggle d-block my-2">
                                 <input type="checkbox" id="customToggle2" name="customToggle2"
-                                       class="custom-control-input">
+                                       class="custom-control-input" required>
                                 <label class="custom-control-label" for="customToggle2">By toggling this button you
                                     agree with our <a data-toggle="modal" data-target="#terms" class="action-links">Terms and Conditions</a> and our <a
-                                            data-toggle="modal" data-target="#policy" class="action-links">Privacy Policy</a></label>
+                                            data-toggle="modal" data-target="#policy" class="action-links" >Privacy Policy</a></label>
                             </div>
                         </fieldset>
 
@@ -76,7 +77,6 @@
 <!-- include the data for the privacy agreement -->
 <th:block th:include="/fragments/terms_conditions_privacy"></th:block>
 <!-- End -->
-
 </body>
 <!-- include the header -->
 <th:block th:include="/fragments/footer"></th:block>

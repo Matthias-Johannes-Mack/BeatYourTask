@@ -1,73 +1,109 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
-<script>/******/ (function(modules) { // webpackBootstrap
+<script>/******/
+(function (modules) { // webpackBootstrap
     /******/ 	// The module cache
-    /******/ 	var installedModules = {};
+    /******/
+    var installedModules = {};
     /******/
     /******/ 	// The require function
-    /******/ 	function __webpack_require__(moduleId) {
+    /******/
+    function __webpack_require__(moduleId) {
         /******/
         /******/ 		// Check if module is in cache
-        /******/ 		if(installedModules[moduleId]) {
-            /******/ 			return installedModules[moduleId].exports;
-            /******/ 		}
+        /******/
+        if (installedModules[moduleId]) {
+            /******/
+            return installedModules[moduleId].exports;
+            /******/
+        }
         /******/ 		// Create a new module (and put it into the cache)
-        /******/ 		var module = installedModules[moduleId] = {
-            /******/ 			i: moduleId,
-            /******/ 			l: false,
-            /******/ 			exports: {}
-            /******/ 		};
+        /******/
+        var module = installedModules[moduleId] = {
+            /******/            i: moduleId,
+            /******/            l: false,
+            /******/            exports: {}
+            /******/
+        };
         /******/
         /******/ 		// Execute the module function
-        /******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+        /******/
+        modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
         /******/
         /******/ 		// Flag the module as loaded
-        /******/ 		module.l = true;
+        /******/
+        module.l = true;
         /******/
         /******/ 		// Return the exports of the module
-        /******/ 		return module.exports;
-        /******/ 	}
+        /******/
+        return module.exports;
+        /******/
+    }
+
     /******/
     /******/
     /******/ 	// expose the modules object (__webpack_modules__)
-    /******/ 	__webpack_require__.m = modules;
+    /******/
+    __webpack_require__.m = modules;
     /******/
     /******/ 	// expose the module cache
-    /******/ 	__webpack_require__.c = installedModules;
+    /******/
+    __webpack_require__.c = installedModules;
     /******/
     /******/ 	// define getter function for harmony exports
-    /******/ 	__webpack_require__.d = function(exports, name, getter) {
-        /******/ 		if(!__webpack_require__.o(exports, name)) {
-            /******/ 			Object.defineProperty(exports, name, {
-                /******/ 				configurable: false,
-                /******/ 				enumerable: true,
-                /******/ 				get: getter
-                /******/ 			});
-            /******/ 		}
-        /******/ 	};
+    /******/
+    __webpack_require__.d = function (exports, name, getter) {
+        /******/
+        if (!__webpack_require__.o(exports, name)) {
+            /******/
+            Object.defineProperty(exports, name, {
+                /******/                configurable: false,
+                /******/                enumerable: true,
+                /******/                get: getter
+                /******/
+            });
+            /******/
+        }
+        /******/
+    };
     /******/
     /******/ 	// getDefaultExport function for compatibility with non-harmony modules
-    /******/ 	__webpack_require__.n = function(module) {
-        /******/ 		var getter = module && module.__esModule ?
-            /******/ 			function getDefault() { return module['default']; } :
-            /******/ 			function getModuleExports() { return module; };
-        /******/ 		__webpack_require__.d(getter, 'a', getter);
-        /******/ 		return getter;
-        /******/ 	};
+    /******/
+    __webpack_require__.n = function (module) {
+        /******/
+        var getter = module && module.__esModule ?
+            /******/            function getDefault() {
+                return module['default'];
+            } :
+            /******/            function getModuleExports() {
+                return module;
+            };
+        /******/
+        __webpack_require__.d(getter, 'a', getter);
+        /******/
+        return getter;
+        /******/
+    };
     /******/
     /******/ 	// Object.prototype.hasOwnProperty.call
-    /******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+    /******/
+    __webpack_require__.o = function (object, property) {
+        return Object.prototype.hasOwnProperty.call(object, property);
+    };
     /******/
     /******/ 	// __webpack_public_path__
-    /******/ 	__webpack_require__.p = "";
+    /******/
+    __webpack_require__.p = "";
     /******/
     /******/ 	// Load entry module and return exports
-    /******/ 	return __webpack_require__(__webpack_require__.s = 5);
-    /******/ })
+    /******/
+    return __webpack_require__(__webpack_require__.s = 5);
+    /******/
+})
 /************************************************************************/
-/******/ ({
+/******/({
 
     /***/ 5:
-    /***/ (function(module, exports) {
+    /***/ (function (module, exports) {
 
         /**
          * Shards — Main demo page script.
@@ -75,12 +111,12 @@
 
 // Main demo script.
         (function ($) {
-            $(document).ready(function() {
+            $(document).ready(function () {
 
                 // Hide the loader and show the elements.
                 setTimeout(function () {
                     $('.loader').addClass('hidden').delay(200).remove();
-                    $('.slide-in').each(function() {
+                    $('.slide-in').each(function () {
                         $(this).addClass('visible');
                     });
                 }, 1900);
@@ -92,12 +128,12 @@
                 $('[data-toggle="tooltip"]').tooltip();
 
                 // Disable example anchors scroll to top action.
-                $('.example a').click(function(event) {
+                $('.example a').click(function (event) {
                     event.target.getAttribute('href') === '#' && event.preventDefault();
                 });
 
                 // Hook the "Learn More" button event to scroll to content.
-                $('#scroll-to-content').click(function(ev) {
+                $('#scroll-to-content').click(function (ev) {
                     ev.preventDefault();
                     if (typeof ev.target.dataset.scrollTo === 'undefined') {
                         return;
@@ -158,9 +194,11 @@
         })(jQuery);
 
 
-        /***/ })
+        /***/
+    })
 
-    /******/ });</script>
+    /******/
+});</script>
 <body>
 <div class="modal fade mt-5" id="newProjectModal" tabindex="-1" role="dialog"
      aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -176,7 +214,7 @@
             </div>
             <div class="modal-body">
                 <!-- the form -->
-                <form name="createProject">
+                <form action="#" th:action="@{/Projectoverview/}" th:object="${cPrj}" method="post" role="form">
                     <div class="row">
                         <input type="text" class="form-control" id="projectTitle"
                                placeholder="Projecttitel" required>
@@ -202,14 +240,7 @@
                         </div>
                     </div>
 
-                    <br>
-                    <div class="row">
-                        <select class="custom-select" id="projectLabel">
-                            <option value="1">High</option>
-                            <option value="2">Middle</option>
-                            <option value="3">Low</option>
-                        </select>
-                    </div>
+
                     <br>
                     <div class="row border-dark">
                         <button type="submit" class="btn btn-danger" data-dismiss="modal">

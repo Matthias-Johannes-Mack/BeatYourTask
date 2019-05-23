@@ -1,6 +1,6 @@
 <!-- created by wirefire Spring 19 -->
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
+<html xmlns:th="http://thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
 <script type="text/javascript"></script>
 <head>
     <meta charset="UTF-8">
@@ -19,7 +19,18 @@
             <h3 class="welcome-heading display-4 text-white ml-5">Project Overview</h3>
             <div class="row">
                 <!-- dynamic insertion of projects -->
-                <th:block th:include="/fragments/ProjectFragement"></th:block>
+
+                <div th:each="listProjects : ${listProjects}" class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card">
+                        <!-- <img class="card-img-top" th:src="@{/images/selfmade/fancy.jpg}">  If we like to be fancy :D -->
+                        <div class="card-body">
+                            <h3 class="card-title" th:text="${listProjects.projectName}"></h3>
+                            <p class="card-text" th:text="${listProjects.projectDescription}"></p>
+                            <a th:href="@{/Project(ProjectId=${listProjects.projectId})}" class="btn btn-danger">Open Project</a>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- end dynamic insertion -->
 
                 <!-- the button to add a new Project -->
@@ -36,8 +47,10 @@
     </div>
     <!-- end Project field -->
     <!-- / Features -->
-    </div>
 </div>
+</div>
+
+
 </body>
 <!-- include the header -->
 <th:block th:include="/fragments/footer"></th:block>

@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.
                 authorizeRequests()
                 // alle Requests die ohne Login erreichbar sind
-                .antMatchers("/", "/Register", "/console/**", "static/**", "/Registerprocess").permitAll()
+                .antMatchers("/", "/Register", "/console/**", "static/**", "/Registerprocess", "images/**", "scss/**").permitAll()
                 // definiere alle URLs die nur für eine bestimmte Rolle zugänglich sind
                 // Achtung: Spring Security fügt automatisch das Prefix "ROLE_" für die Überprüfung ein. Daher verwenden wir
                 // hier nicht "ROLE_ADMIN", wie bspw. im DataLoader angegeben.
@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/console/**")
                 // Request zum Aufruf der Login-Seite
                 .and().formLogin().loginPage("/").failureUrl("/?error=true").permitAll()
-                .defaultSuccessUrl("/Projektuebersicht/")
+                .defaultSuccessUrl("/Projectoverview/")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // jeder kann sich ausloggen über den simplen /logout request ausloggen
@@ -67,7 +67,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/static/js/**");
+                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/static/js/**", "/fragments/**");
     }
 
     /**
