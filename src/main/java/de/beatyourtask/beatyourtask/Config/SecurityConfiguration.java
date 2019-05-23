@@ -38,6 +38,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.
                 authorizeRequests()
+                //TODO Delete /Project/
                 // alle Requests die ohne Login erreichbar sind
                 .antMatchers("/", "/Register", "/console/**", "static/**", "/Registerprocess", "images/**", "scss/**").permitAll()
                 // definiere alle URLs die nur für eine bestimmte Rolle zugänglich sind
