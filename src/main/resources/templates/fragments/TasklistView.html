@@ -134,34 +134,8 @@
 
             }).disableSelection();
         });
-
-        <!-- Button gedrückt -->
-        $(function () {
-            /* Button neue Spalte hinzufügen auf Modal gedrückt: neue Spalte mit Taskcontainer */
-            $('#newListModal #newListModalButton').click(function () {
-
-
-                var titel = $("#newListModal #listTitle").val().trim();
-
-                if (titel == null || titel == "") {
-                    /* TODO Validierung das nichts eingegeben --> */
-                } else {
-                    /* TODO dynamische IDs hinzufügen und im system abspeichern*/
-                    var newspalte = $("<li id = 'idspalteXXX' class = 'spalte'> <div class = 'spaltenkopf'> <p id = 'idSpaltenkopfTitel'> " + titel + " </p> </div><ul id = 'sortableTaskContainer-XXX' class = 'taskContainer'> <li id = 'idtask1' class = 'task'>Test1</li> <li id = 'idtask1' class = 'task'>Test1</li> </ul> </li>");
-
-                    /* neue spalte vor button einfügen */
-                    $('#addNewListButton').before(newspalte);
-
-                    /* Stellt Verbindung zwischen TaskContainern für Task Drag and Drop her */
-                    $(".taskContainer").sortable({
-                        connectWith: ".taskContainer",
-                        placeholder: "highlightTask"
-                    }).disableSelection();
-                }
-            });
-        });
-
     </script>
+
 </head>
 
 <body>
@@ -169,11 +143,7 @@
 <!--container der Spalten -->
 <ul id="sortableListContainer" class="sortableListContainer">
 
-    <!--
-    Loads Lists from database
-    TODO: add Parameterizable fragment signatures to Projektübersicht when calling Tasklistview
-    uses contextvariable tasklists from Projectview when called in Projectview
-     -->
+    <!-- Loads Lists from database: uses contextvariable tasklists from Projectview when called in Projectview -->
 
     <!--/*@thymesVar id="tasklists" type="de.beatyourtask.beatyourtask.model.Tasklist"*/-->
     <!--suppress ThymeleafVariablesResolveInspection -->
