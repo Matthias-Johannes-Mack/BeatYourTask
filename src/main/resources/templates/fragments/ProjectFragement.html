@@ -1,11 +1,13 @@
-<div class="col-lg-4 col-md-6 col-sm-12 mb-4" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<div class="col-lg-4 col-md-6 col-sm-12 mb-4" th:fragement="prjFrag">
     <div class="card">
         <!-- <img class="card-img-top" th:src="@{/images/selfmade/fancy.jpg}">  If we like to be fancy :D -->
         <div class="card-body">
-            <h4 class="card-title">{Project 1}</h4>
+            <h3 class="card-title" th:text="${listProjects.projectName}"></h3>
             <p class="card-text">{Projectdescription}</p>
             <a href="#" class="btn btn-danger">Open Project</a>
         </div>
     </div>
 </div>
-
+</html>

@@ -53,11 +53,13 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
 
 
     Project sopra = new Project();
-    sopra.setProjectName("Softwarepraktikum");
+    sopra.setProjectName("Testproject 1");
+    sopra.setProjectDescription("I´am a Testproject");
     projectService.saveProject(sopra);
 
     Project seminar = new Project();
-    seminar.setProjectName("Seminar");
+    seminar.setProjectName("Testproject 2");
+    seminar.setProjectDescription("I´am a Testproject");
     projectService.saveProject(seminar);
 
 

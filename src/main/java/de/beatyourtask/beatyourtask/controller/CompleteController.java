@@ -17,10 +17,6 @@ public class CompleteController {
         return "Home";
     }
 
-    @GetMapping("/Projectoverview/")
-    public String showLogin() {
-        return "Projectoverview";
-    }
 
 
 
