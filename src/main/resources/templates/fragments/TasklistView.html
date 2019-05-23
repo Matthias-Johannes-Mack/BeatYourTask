@@ -35,21 +35,19 @@
         .task {
             background: #fff;
             border: 1px solid #DDDDDD;
-            margin: 0 3px 3px 3px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            margin-left: 15px;
+            margin-right: 15px;
             padding: 0.4em;
             font-size: 17px;
-            height: 100px;
-            min-height: 100px;
+            min-height: 75px;
             box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
+            border-radius: 5px;
         }
 
         /* Spalte in der TaskContainer drinnen*/
         .spalte {
-            background: #dfe1e6;
-            border: 1px solid #DDDDDD;
-            margin: 3px 3px 3px 3px;
-            padding-left: 0.4em;
-            padding-right: 0.4em;
             padding-top: 0%;
             font-size: 17px;
             min-height: 500px;
@@ -57,40 +55,26 @@
             vertical-align: top;
         }
 
-        /*Spalte rechts mit button*/
-        .nonmovable {
-            margin: 3px 3px 3px 3px;
-            padding: 0.4em;
-            font-size: 17px;
-            height: 500px;
-            width: 150px;
-        }
-
         /* Vorschau beim bewegen von Tasks */
         .highlightTask {
-            border: 3px solid red;
-            font-weight: bold;
-            font-size: 45px;
+            opacity: 0.5;
             background-color: #333333;
             /* Wie Task */
-            margin: 3px 3px 3px 3px;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            margin-left: 15px;
+            margin-right: 15px;
             padding: 0.4em;
-            font-size: 17px;
-            height: 100px;
-            min-height: 100px;
+            min-height: 75px;
+            border-radius: 5px;
         }
 
         /* Vorschau beim bewegen von Spalten */
         .highlightSpalte {
-            border: 3px solid red;
-            font-weight: bold;
-            font-size: 45px;
+            opacity: 0.5;
             background-color: #333333;
             /* Wie spalte */
-            margin: 3px 3px 3px 3px;
-            padding: 0.4em;
-            font-size: 17px;
-            height: 500px;
+            height: 550px;
             width: 270px;
         }
 
@@ -105,18 +89,10 @@
         }
 
         .spaltenkopf {
-            height: 30px;
-            background: rgba(0, 0, 0, .15);
-
-            margin-left: -0.4em;
-            margin-right: -0.4em;
-
-            padding: 10px 8px 8px;
+            height: 50px;
+            background: rgba(25, 25, 25, .1);
         }
 
-        .listButton {
-            margin-top: 1em;
-        }
     </style>
 
     <!-- jquerry functions for this fragment -->
@@ -138,7 +114,7 @@
 
 </head>
 
-<body>
+<body style="background-color:DimGray;">
 
 <!--container der Spalten -->
 <ul id="sortableListContainer" class="sortableListContainer">
@@ -149,7 +125,7 @@
     <!--suppress ThymeleafVariablesResolveInspection -->
     <li
             th:each="list: ${tasklists}" th:include="/fragments/listFragments :: listFragment"
-            th:with="Titel=${list.listName}"
+            th:with="Titel=${list.listName}, Color=${list.color}"
             th:remove="tag"
     />
 
@@ -157,9 +133,9 @@
     <!-- Mock Listen zur veranschaulichung-->
 
     <!--Spalte (Listenelemnt des Containers)-->
-    <li id="idspalte1" class="spalte">
+    <li id="idspalte1" class="spalte" style="background-color:Tomato;">
         <div class="spaltenkopf">
-            <p id="idSpaltenkopfTitel">Mock Spalte 1</p>
+            <p id="idSpaltenkopfTitel" style="color:white;">Mock Spalte 1</p>
         </div>
         <!--container der Tasks -->
         <ul id="sortableTaskContainer-1" class="taskContainer">
@@ -170,9 +146,9 @@
     </li>
 
     <!--Spalte (Listenelemnt des Containers)-->
-    <li id="idspalte2" class="spalte">
+    <li id="idspalte2" class="spalte" style="background-color:Orange;">
         <div class="spaltenkopf">
-            <p id="idSpaltenkopfTitel2">Mock Spalte 2</p>
+            <p id="idSpaltenkopfTitel2" style="color:white;">Mock Spalte 2</p>
         </div>
         <!--container der Tasks -->
         <ul id="sortableTaskContainer-2" class="taskContainer">

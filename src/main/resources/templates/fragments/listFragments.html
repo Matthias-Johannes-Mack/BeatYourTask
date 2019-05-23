@@ -9,11 +9,12 @@
 <body>
 
 <span th:fragment="listFragment">
-    <li class="spalte">
+    <!--/*@thymesVar id="Color" type="java.lang.String"*/-->
+    <li class="spalte" th:style="${Color}">
          <div class="spaltenkopf">
                 <!--uses contextvariable tasklists from TasklistView when called in TasklistView-->
              <!--/*@thymesVar id="Titel" type="java.lang.String"*/-->
-              <p class="Spaltentitel" th:text="${Titel}"></p>
+              <p class="Spaltentitel" th:text="${Titel}" style="color: white;"></p>
         </div>
         <!--container der Tasks -->
         <ul class="taskContainer">

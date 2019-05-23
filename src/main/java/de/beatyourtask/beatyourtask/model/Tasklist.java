@@ -18,11 +18,27 @@ public class Tasklist {
     /** name of tasklist */
     private String listName;
 
+    /** color of a list given in htm color names*/
+    private String color;
+
     /**
      * constructor Tasklist
      */
     public Tasklist() {
 
+    }
+
+    /**
+     * set the background color
+     * @param color of the list
+     */
+    public void setColor(String color) {
+        this.color = "background-color:"+color+";";
+    }
+
+    /**returns the color of this list */
+    public String getColor() {
+        return this.color;
     }
 
     /**

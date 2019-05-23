@@ -68,10 +68,12 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
 
     Tasklist liste1 = new Tasklist();
     liste1.setListName("Liste aus DB");
+    liste1.setColor("LightGreen");
     tasklistService.saveList(liste1);
 
     Tasklist liste2 = new Tasklist();
     liste2.setListName("Liste aus DB 2");
+    liste2.setColor("SlateBlue");
     tasklistService.saveList(liste2);
 
 
