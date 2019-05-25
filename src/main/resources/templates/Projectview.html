@@ -162,26 +162,32 @@
     <input type="button" class="btn btn-secondary btn-pill btn-sm" id="addNewListButton" value="+" name="addList" data-toggle="modal"
            data-target="#newListModal"/>
 
-   <!-- modal -->
-    <div class="modal fade mt-5" id="newListModal" tabindex="-1" role="dialog" data-keyboard="true" data-backdrop="true" >
+</ul>
 
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
+<!-- modal -->
+<div class="modal fade mt-5" id="newListModal" tabindex="-1" role="dialog" data-keyboard="true" data-backdrop="true" >
 
-                <div class="modal-header bg-danger">
-                    <h4 class="text-white mt-1">Create a new list</h4>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
 
-                <!--   <form name="createList">
-                      <div class="row">
-                          <input type="text" class="form-control" id="listTitle"
-                                 placeholder="list titel" required>
-                      </div>
-                      <br>
-                      <select class="custom-select" id="SelectColorDropdown">
+            <div class="modal-header bg-danger">
+                <h4 class="text-white mt-1">Create a new list</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <form th:action="@{/addList}"  method="post"
+                  th:object="${newTaskListAttribute}" >
+
+                <div class="modal-body">
+                    <label>Titel</label>
+                    <input type="text" class="form-control"
+                           name="tiel" id="titel" th:field="*{listName}" >
+
+                    <br>
+
+                    <select class="custom-select" id="SelectColorDropdown">
                         HTML Colors
                         <option selected>Select the color of the list</option>
                         <option value="1">LightGreen</option>
@@ -195,37 +201,15 @@
                     </select>
                     <br>
                     <br>
-                    <div class="row border-dark">
-                        <button type="submit" id="newListModalButton" class="btn btn-danger" data-dismiss="modal">
-                            Add
-                        </button>
-                    </div>
-                </form> -->
+
+                    <input type="submit" value="Submit" />
+                </div>
+            </form>
 
 
-
-                <form th:action="@{/addList}"  method="post"
-                      th:object="${newTaskListAttribute}" >
-
-                    <div class="modal-body">
-                        <!--
-                                                    <label for="name">Name</label> <input type="text"
-                                                                                          class="form-control" id="name" th:field="*{listName}"/>
-                        -->
-                        <input type="text" class="form-control"
-                               name="tiel" id="titel" th:field="*{listName}" >
-
-                        <input type="submit" value="Submit" />
-                    </div>
-                </form>
-
-
-            </div>
         </div>
     </div>
-
-
-</ul>
+</div>
 
 
 </body>

@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.view.RedirectView;
 
 /**
  * Controller for the ProjectView
@@ -48,14 +50,14 @@ public class ProjectviewController {
 
     /*TODO beim bestätigen des Modals wird micht addList aufgerufen?! */
     @RequestMapping(value = "/addList", method = RequestMethod.POST)
-    public String processRegistrationForm(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute) {
+    public View addList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute) {
 
         System.out.println("in Post");
 
         tasklistService.saveList(newTaskListAttribute);
 
 
-        return "Projectview";
+         return new RedirectView("/Project");
     }
 
 
