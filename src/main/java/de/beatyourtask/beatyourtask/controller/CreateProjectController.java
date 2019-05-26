@@ -22,10 +22,11 @@ public class CreateProjectController {
     private ProjectService projectService;
 
 
-    @Autowired
-    public CreateProjectController(ProjectService projectService) {
-        this.projectService = this.projectService;
-    }
+ // is this code needed?
+//    @Autowired
+//    public CreateProjectController(ProjectService projectService) {
+//        this.projectService = this.projectService;
+//    }
 
 
     // Process form input data

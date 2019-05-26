@@ -47,14 +47,11 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     userRoles.add(userRole);
 
 
-
     User user1 = new User();
     user1.setPassword(passwordEncoder.encode("password"));
     user1.setEmail("user@test.de");
     user1.setRoles(userRoles);
     userService.saveUser(user1);
-
-
 
     Project sopra = new Project();
     sopra.setProjectName("Testproject 1");
@@ -75,7 +72,5 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     liste2.setListName("Liste aus DB 2");
     liste2.setColor("SlateBlue");
     tasklistService.saveList(liste2);
-
-
   }
 }

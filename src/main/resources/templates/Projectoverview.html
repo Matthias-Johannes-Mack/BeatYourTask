@@ -4,7 +4,7 @@
 <script type="text/javascript"></script>
 <head>
     <meta charset="UTF-8">
-    <title>Project Overview | BeatYourTask</title>
+    <title th:text="${title}">Default Title</title>
     <!-- include the  header -->
     <th:block th:include="/fragments/header_singed_in"></th:block>
     <!-- End -->
@@ -16,7 +16,7 @@
     <!-- begin of the field where the projects are displayed -->
     <div id="cards" class="container mb-2">
         <div class="example col-md-12 ml-auto mr-auto">
-            <h3 class="welcome-heading display-4 text-white ml-5">Project Overview</h3>
+            <h3 class="welcome-heading display-4 text-white ml-5" th:text="${title}">Default Title</h3>
             <div class="row">
                 <!-- dynamic insertion of projects -->
 
