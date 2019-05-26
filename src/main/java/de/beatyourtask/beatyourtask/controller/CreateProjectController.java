@@ -2,7 +2,6 @@ package de.beatyourtask.beatyourtask.controller;
 
 
 import de.beatyourtask.beatyourtask.model.Project;
-import de.beatyourtask.beatyourtask.model.User;
 import de.beatyourtask.beatyourtask.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
