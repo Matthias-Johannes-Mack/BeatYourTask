@@ -1,0 +1,54 @@
+<!-- created by wirefire Spring 19 -->
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
+<script type="text/javascript"></script>
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Default Title</title>
+    <!-- include the  header -->
+    <th:block th:include="/fragments/header_singed_in"></th:block>
+    <!-- End -->
+</head>
+<body class="shards-app-promo-page--1">
+<!-- background -->
+<div class="welcome d-flex justify-content-center flex-column">
+    <!-- Features -->
+    <!-- begin of the field where the projects are displayed -->
+    <div id="cards" class="container mb-2">
+        <div class="example col-md-12 ml-auto mr-auto">
+            <h3 class="welcome-heading display-4 text-white ml-5" th:text="${title}">Default Title</h3>
+            <div class="row">
+                <!-- dynamic insertion of projects -->
+
+                <div th:each="listProjects : ${listProjects}" class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card">
+                        <!-- <img class="card-img-top" th:src="@{/images/selfmade/fancy.jpg}">  If we like to be fancy :D -->
+                        <div class="card-body">
+                            <h3 class="card-title" th:text="${listProjects.projectName}"></h3>
+                            <p class="card-text" th:text="${listProjects.projectDescription}"></p>
+                            <a th:href="@{/Project(ProjectId=${listProjects.projectId})}" class="btn btn-danger">Open Project</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end dynamic insertion -->
+
+                <!-- the button to add a new Project -->
+                <a href="/projectoverview/add" class="btn btn-danger mb-4">+</a>
+                <!-- end add button -->
+
+            </div>
+            <!-- End button -->
+        </div>
+    </div>
+    <!-- end Project field -->
+    <!-- / Features -->
+</div>
+</div>
+
+
+</body>
+<!-- include the header -->
+<th:block th:include="/fragments/footer"></th:block>
+<!-- End -->
+</html>

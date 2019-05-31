@@ -52,13 +52,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .ignoringAntMatchers("/console/**")
                 // Request zum Aufruf der Login-Seite
                 .and().formLogin().loginPage("/").failureUrl("/?error=true").permitAll()
-                .defaultSuccessUrl("/Projectoverview/")
+                .defaultSuccessUrl("/projectoverview")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 // jeder kann sich ausloggen über den simplen /logout request ausloggen
                 .and().logout().permitAll()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/?logout");
+                .logoutSuccessUrl("/?logout").and().csrf().disable();// CSRF Abgestellt für testen
 
         // Deaktiviert header security. Ermöglicht Nutzung der H2 Console.
         http.headers().frameOptions().sameOrigin().disable();
