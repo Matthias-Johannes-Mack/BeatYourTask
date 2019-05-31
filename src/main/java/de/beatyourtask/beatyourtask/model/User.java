@@ -26,7 +26,7 @@ public class User {
 
     private boolean enabled = true;
 
-    @ManyToMany(cascade = {CascadeType.ALL})
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(name = "user_project",
             joinColumns = { @JoinColumn(name = "fk_user") },
             inverseJoinColumns = { @JoinColumn(name = "fk_project") })

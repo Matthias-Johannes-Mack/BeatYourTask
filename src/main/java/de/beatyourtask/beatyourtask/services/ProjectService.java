@@ -5,11 +5,12 @@ import de.beatyourtask.beatyourtask.model.Project;
 import de.beatyourtask.beatyourtask.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class ProjectService {
 
     @Autowired
@@ -18,11 +19,17 @@ public class ProjectService {
     public ProjectService() {
     }
 
-    public Project saveProject(Project project) {
+    public Project save(Project project) {
         return projectRepository.save(project);
     }
-    @Transactional
-    public List<Project> getAllProjects() {
+
+        public List<Project> getAll() {
         return projectRepository.findAll();
     }
+
+    public Project findById(int projectId){
+        return projectRepository.findById(projectId).get();
+    }
+
+
 }

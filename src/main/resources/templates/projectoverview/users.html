@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/">
+<head th:replace="projectoverview/dependencies::head"></head>
+<body class="shards-app-promo-page--1">
+<!--Background-->
+<div class="welcome d-flex justify-content-center flex-column">
+
+
+    <!-- Panel for showing the users-->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" th:text="${title}">Default Title</h4>
+
+
+                <table class="table">
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+
+                    <!––repeat current element for each cheese dann was damit getan werden soll (hier text)-->
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.surname}"></td>
+                        <td th:text="${user.lastname}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td><a class="btn btn-danger" th:href=@{/projectoverview/users/delete(userId=${user.id})}><i class="fa fa-minus-circle"></i></a></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<!-- include the Footer -->
+<th:block th:include="/fragments/footer"></th:block>
+</html>

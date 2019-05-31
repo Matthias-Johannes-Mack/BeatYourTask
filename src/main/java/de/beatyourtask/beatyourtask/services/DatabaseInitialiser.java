@@ -55,12 +55,12 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     Project sopra = new Project();
     sopra.setProjectName("Testproject 1");
     sopra.setProjectDescription("I´am a Testproject");
-    projectService.saveProject(sopra);
+    projectService.save(sopra);
 
     Project seminar = new Project();
     seminar.setProjectName("Testproject 2");
     seminar.setProjectDescription("I´am a Testproject");
-    projectService.saveProject(seminar);
+    projectService.save(seminar);
 
     Tasklist liste1 = new Tasklist();
     liste1.setListName("Liste aus DB");
@@ -80,6 +80,8 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     User user2 = new User();
     user2.setPassword(passwordEncoder.encode("pw"));
     user2.setEmail("user");
+    user2.setSurname("Max");
+    user2.setLastname("Mustermann");
     user2.setRoles(userRoles);
     user2.addProject(test_user2);
 

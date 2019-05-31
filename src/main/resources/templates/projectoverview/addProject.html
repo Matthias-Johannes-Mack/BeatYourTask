@@ -6,11 +6,11 @@
 <div class="welcome d-flex justify-content-center flex-column">
 
 
-    <!-- Pannel for adding projects-->
+    <!-- Panel for adding projects-->
     <div class="col-md-6">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Add Project</h4>
+            <h4 class="card-title" th:text="${title}">Default Title</h4>
             <!--Form for adding projects-->
             <form method="post" th:object="${project}">
 
@@ -25,7 +25,10 @@
                     <label th:for="projectDescription">Description</label>
                     <input class="form-control" th:field="*{projectDescription}"/>
                 </div>
+
+                <!-- Submit Button-->
                 <input  class="btn btn-primary" type="submit" value="Add" />
+            </form>
         </div>
     </div>
     </div>

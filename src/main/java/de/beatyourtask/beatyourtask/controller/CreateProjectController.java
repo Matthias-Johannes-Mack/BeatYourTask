@@ -29,12 +29,12 @@ public class CreateProjectController {
 //    }
 
 
-    // Process form input data
-    @RequestMapping(value = "/Projectoverview", method = RequestMethod.POST)
-    public String processRegistrationForm(ModelAndView modelAndView, @ModelAttribute("Project") Project project) {
-
-    projectService.saveProject(project);
-        return "redirect:/?registersuccessfull";
-    }
+//    // Process form input data
+//    @RequestMapping(value = "/Projectoverview", method = RequestMethod.POST)
+//    public String processRegistrationForm(ModelAndView modelAndView, @ModelAttribute("Project") Project project) {
+//
+//    projectService.save(project);
+//        return "redirect:/?registersuccessfull";
+//    }
 
 }
