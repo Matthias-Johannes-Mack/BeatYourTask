@@ -46,16 +46,9 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     Set<Role> userRoles = new HashSet<>();
     userRoles.add(userRole);
 
-
     User user1 = new User();
     user1.setPassword(passwordEncoder.encode("password"));
     user1.setEmail("user@test.de");
-    user1.setRoles(userRoles);
-    userService.saveUser(user1);
-
-    User user2 = new User();
-    user1.setPassword(passwordEncoder.encode("pw"));
-    user1.setEmail("user");
     user1.setRoles(userRoles);
     userService.saveUser(user1);
 
@@ -78,5 +71,19 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     liste2.setListName("Liste aus DB 2");
     liste2.setColor("SlateBlue");
     tasklistService.saveList(liste2);
+
+    // ----------- Data for Testing Projectoverview ------------------------ //
+    Project test_user2 = new Project();
+    test_user2.setProjectName("test user2");
+    test_user2.setProjectDescription("test for user2");
+
+    User user2 = new User();
+    user2.setPassword(passwordEncoder.encode("pw"));
+    user2.setEmail("user");
+    user2.setRoles(userRoles);
+    user2.addProject(test_user2);
+
+    userService.saveUser(user2);
+
   }
 }

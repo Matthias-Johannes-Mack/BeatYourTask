@@ -1,8 +1,8 @@
 package de.beatyourtask.beatyourtask.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Project {
@@ -15,10 +15,25 @@ public class Project {
 
     private String projectDescription;
 
+    @ManyToMany(mappedBy = "projects")
+    private List<User> users = new ArrayList<>();
+
     public Project() {
 
     }
 
+    public void addUser(User user) {
+        this.users.add(user);
+        user.getProjects().add(this);
+    }
+
+    public void removeUser(User user) {
+        this.users.remove(user);
+        user.getProjects().remove(this);
+    }
+
+
+    //Getters and Setters
     public Integer getProjectId() {
         return projectId;
     }
@@ -41,5 +56,13 @@ public class Project {
 
     public void setProjectDescription(String projectDescription) {
         this.projectDescription = projectDescription;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
     }
 }

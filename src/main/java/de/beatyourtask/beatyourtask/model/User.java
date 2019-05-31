@@ -1,6 +1,8 @@
 package de.beatyourtask.beatyourtask.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -24,6 +26,12 @@ public class User {
 
     private boolean enabled = true;
 
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(name = "user_project",
+            joinColumns = { @JoinColumn(name = "fk_user") },
+            inverseJoinColumns = { @JoinColumn(name = "fk_project") })
+    private List<Project> projects = new ArrayList<>();
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
     
@@ -35,6 +43,17 @@ public class User {
 
     }
 
+    public void addProject(Project project) {
+        this.projects.add(project);
+        project.getUsers().add(this);
+    }
+
+    public void removeProject(Project project) {
+        this.projects.remove(project);
+        project.getUsers().remove(this);
+    }
+
+    //Getters and Setters
     public Integer getId() {
         return id;
     }
@@ -90,5 +109,12 @@ public class User {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
 }
