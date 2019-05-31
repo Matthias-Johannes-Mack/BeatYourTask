@@ -48,9 +48,6 @@ public class ProjectoverviewController {
     public String processDisplayAddForm(@ModelAttribute Project project, Model model){
         model.addAttribute("title", "Projectoverview");
 
-        //Testing
-        System.out.println(project);
-
         //Saving to current user
         project.addUser(userService.getCurrentUser());
         projectService.saveProject(project);

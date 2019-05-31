@@ -10,32 +10,47 @@
     <!-- End -->
 </head>
 <body class="shards-app-promo-page--1">
+
+<!-- enabaling Tooltips-->
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
 <!-- background -->
 <div class="welcome d-flex justify-content-center flex-column">
+
     <!-- Features -->
     <!-- begin of the field where the projects are displayed -->
     <div id="cards" class="container mb-2">
         <div class="example col-md-12 ml-auto mr-auto">
             <h3 class="welcome-heading display-4 text-white ml-5" th:text="${title}">Default Title</h3>
-            <div class="row">
-                <!-- dynamic insertion of projects -->
+            <!-- the button to add a new Project -->
+            <a href="/projectoverview/add" class="btn btn-primary mb-4"><i class="fa fa-plus mr-2"></i>Add a new Project</a>
+            <!-- end add button -->
 
+            <div class="row">
+
+                <!-- dynamic insertion of projects -->
                 <div th:each="listProjects : ${listProjects}" class="col-lg-4 col-md-6 col-sm-12 mb-4">
                     <div class="card">
-                        <!-- <img class="card-img-top" th:src="@{/images/selfmade/fancy.jpg}">  If we like to be fancy :D -->
                         <div class="card-body">
                             <h3 class="card-title" th:text="${listProjects.projectName}"></h3>
                             <p class="card-text" th:text="${listProjects.projectDescription}"></p>
-                            <a th:href="@{/Project(ProjectId=${listProjects.projectId})}" class="btn btn-danger">Open Project</a>
+
+                            <!-- Buttons to manipulate and open project -->
+                            <div class="btn-group" role="group">
+                                <a th:href="@{/Project(ProjectId=${listProjects.projectId})}" class="btn btn-primary"><i class="fa fa-eye mr-2"></i>Open</a>
+                                <a th:href="@{/Project(ProjectId=${listProjects.projectId})}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit"></i></a>
+                                <a th:href="@{/Project(ProjectId=${listProjects.projectId})}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="Users"><i class="fa fa-users"></i></a>
+                                <a th:href="@{/Project(ProjectId=${listProjects.projectId})}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash-alt"></i></a>
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- end dynamic insertion -->
-
-                <!-- the button to add a new Project -->
-                <a href="/projectoverview/add" class="btn btn-danger mb-4">+</a>
-                <!-- end add button -->
 
             </div>
             <!-- End button -->
