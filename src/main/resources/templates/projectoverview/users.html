@@ -40,7 +40,7 @@
                         <td th:text="${user.surname}"></td>
                         <td th:text="${user.lastname}"></td>
                         <td th:text="${user.email}"></td>
-                        <td><a class="btn btn-danger" th:href=@{/projectoverview/users/delete(userId=${user.id})}><i class="fa fa-minus-circle"></i></a></td>
+                        <td><a class="btn btn-danger" th:href=@{/projectoverview/users/delete(projectId=${project},userId=${user.id})}><i class="fa fa-minus-circle"></i></a></td>
                     </tr>
                 </table>
 

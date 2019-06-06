@@ -90,6 +90,7 @@ public class ProjectoverviewController {
         model.addAttribute("title", "Users");
         model.addAttribute("users", projectService.findById(id).getUsers());
         model.addAttribute("user", new User());
+        model.addAttribute("project", id);
 
         return "projectoverview/users";
     }
@@ -98,16 +99,17 @@ public class ProjectoverviewController {
     public String processDisplayUsersForm(@RequestParam("projectId") Integer id, @ModelAttribute User user){
 
         projectService.findById(id).addUser(userService.getUserByEmail(user.getEmail()));
-        projectService.save(projectService.findById(id)); // saving changes
+        projectService.save(projectService.findById(id));
 
         return "redirect:/projectoverview/users?projectId=" + id;
     }
 
-    @GetMapping("users{projectId}/delete{userId}")
+    @GetMapping("users/delete{projectId, userId}")
     public String processDeleteUser(@RequestParam("userId") Integer userId, @RequestParam("projectId") Integer projectId){
 
+        System.out.println("in User Löschen");
         projectService.findById(projectId).removeUser(userService.getUserById(userId));
-        projectService.save(projectService.findById(projectId)); // saving changes
+        projectService.save(projectService.findById(projectId));
 
         return "redirect:/projectoverview/users?projectId=" + projectId;
     }
