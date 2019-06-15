@@ -107,23 +107,26 @@
 
                 //saves the new position when a list is moved
                 update: function (event, ui) {
-                     var listOrder = $(this).sortable('serialize');
+                    var listOrder = $(this).sortable('serialize');
+
+                    var jsonfile={json:JSON.stringify(listOrder)};
+
+                    console.log("Liste bewegt!");
+                    console.log("Data: "+listOrder);
 
 
-                       var jsonfile={json:JSON.stringify(listOrder)};
+                    /* Post  */
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ajax',
 
-                       console.log("Liste bewegt!");
-                       console.log("Data: "+listOrder);
+                        data: jsonfile,
+
+                        dataType: "json"
 
 
-                       // Post
-                       $.ajax({
-                           type: 'POST',
-                           url: '/ajaxMovedList',
-                           data: jsonfile,
-                           dataType: "json"
-                       });
-                       console.log("ajax send!");
+                    });
+                    console.log("ajax send!");
 
                 }
 
@@ -144,7 +147,7 @@
                     $.ajax({
                         data: data,
                         type: 'POST',
-                        url: '/TODO'
+                        url: '/ajax'
                     });
                     */
 
