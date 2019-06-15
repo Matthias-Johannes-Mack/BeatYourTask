@@ -171,7 +171,7 @@
     <!--suppress ThymeleafVariablesResolveInspection -->
     <li
             th:each="list: ${tasklists}" th:include="/fragments/listFragments :: listFragment"
-            th:with="Titel=${list.listName}, Color=${list.color}"
+            th:with="Titel=${list.listName}, Color=${list.color}, Id=idspalte_+${list.listId}"
             th:remove="tag"
     />
 
