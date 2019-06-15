@@ -14,6 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
+
     <th:block th:include="/fragments/AddNewListModal"></th:block>
 
     <!-- Style for this fragment -->
@@ -95,20 +96,68 @@
 
     </style>
 
+
+
     <!-- jquerry functions for this fragment -->
     <script>
         /*making sortable(drag and drop) work */
         $(function () {
             $("#sortableListContainer").sortable({
                 placeholder: "highlightSpalte",
+
+                //saves the new position when a list is moved
+                update: function (event, ui) {
+                    var listOrder = $(this).sortable('serialize');
+
+                    var jsonfile={json:JSON.stringify(listOrder)};
+
+                    console.log("Liste bewegt!");
+                    console.log("Data: "+listOrder);
+
+
+                    /* Post  */
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ajax',
+
+                        data: jsonfile,
+
+                        dataType: "json"
+
+
+                    });
+                    console.log("ajax send!");
+
+                }
+
             });
 
             /* Connecte alle taskconatainer */
             $(".taskContainer").sortable({
                 connectWith: ".taskContainer",
-                placeholder: "highlightTask"
+                placeholder: "highlightTask",
+
+                //saves the new position when a task is moved
+                update: function (event, ui) {
+                    var data = $(this).sortable('serialize');
+
+                    console.log("Task bewegt!");
+
+                    /* Post
+                    $.ajax({
+                        data: data,
+                        type: 'POST',
+                        url: '/ajax'
+                    });
+                    */
+
+                }
 
             }).disableSelection();
+
+
+
+
         });
     </script>
 
@@ -133,7 +182,7 @@
     <!-- Mock Listen zur veranschaulichung-->
 
     <!--Spalte (Listenelemnt des Containers)-->
-    <li id="idspalte1" class="spalte" style="background-color:Tomato;">
+    <li id="idspalte_1" class="spalte" style="background-color:Tomato;">
         <div class="spaltenkopf">
             <p id="idSpaltenkopfTitel" style="color:white;">Mock Spalte 1</p>
         </div>
@@ -146,7 +195,7 @@
     </li>
 
     <!--Spalte (Listenelemnt des Containers)-->
-    <li id="idspalte2" class="spalte" style="background-color:Orange;">
+    <li id="idspalte_2" class="spalte" style="background-color:Orange;">
         <div class="spaltenkopf">
             <p id="idSpaltenkopfTitel2" style="color:white;">Mock Spalte 2</p>
         </div>
