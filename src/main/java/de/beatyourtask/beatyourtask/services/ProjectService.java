@@ -9,6 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ *  Class for handling projects in the database
+ */
 @Service
 @Transactional
 public class ProjectService {
@@ -19,14 +22,28 @@ public class ProjectService {
     public ProjectService() {
     }
 
+    /**
+     * saves a project in the database
+     * @param project project to be saved
+     * @return
+     */
     public Project save(Project project) {
         return projectRepository.save(project);
     }
 
-        public List<Project> getAll() {
+    /**
+     * gets all existing Projects
+     * @return List of all project
+     */
+    public List<Project> getAll() {
         return projectRepository.findAll();
     }
 
+    /**
+     * Returns a project by id
+     * @param projectId id of project
+     * @return project with given id
+     */
     public Project findById(int projectId){
         return projectRepository.findById(projectId).get();
     }

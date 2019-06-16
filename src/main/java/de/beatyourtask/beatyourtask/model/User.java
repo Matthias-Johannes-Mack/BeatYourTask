@@ -47,17 +47,25 @@ public class User {
 
     }
 
+    /**
+     * adds project to project list
+     * @param project project to be added
+     */
     public void addProject(Project project) {
         this.projects.add(project);
         project.getUsers().add(this);
     }
 
+    /**
+     * removes project from project list
+     * @param project project to be removed
+     */
     public void removeProject(Project project) {
         this.projects.remove(project);
         project.getUsers().remove(this);
     }
 
-    //Getters and Setters
+    // getters and setters
     public Integer getId() {
         return id;
     }

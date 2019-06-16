@@ -10,6 +10,9 @@ import org.springframework.validation.Validator;
 
 import java.util.Objects;
 
+/**
+ * Class for Validation of the addUser form
+ */
 @Component
 public class ProjectAddUserValidator implements Validator {
 
@@ -22,17 +25,22 @@ public class ProjectAddUserValidator implements Validator {
         return AddUserDTO.class.isAssignableFrom(clazz);
     }
 
+    /**
+     * Validation of the input data from the addUser form
+     * @param target addUserDTO object that contains email and projectId
+     * @param errors contains errors of validation
+     */
     @Override
     public void validate(Object target, Errors errors) {
 
         AddUserDTO addUserDTO = (AddUserDTO) target;
-
         User user = userService.getUserByEmail(addUserDTO.getUser().getEmail());
-        // Checks if user with email exists
+
+        // checks if user with email exists
         if(Objects.isNull(user)){
             errors.rejectValue("email","email-not-exist","email doesn´t exist");
         }else{
-            // Checks if user is already part of the project
+            // checks if user is already part of the project
             boolean flag = false;
             for (Project prj: user.getProjects()) {
                 if(prj.getProjectId() == addUserDTO.getProjectId()){

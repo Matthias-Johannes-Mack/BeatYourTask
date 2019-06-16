@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Class that represents projects with corresponding data
+ */
 @Entity
 public class Project {
 
@@ -22,22 +25,31 @@ public class Project {
     @ManyToMany(mappedBy = "projects")
     private List<User> users = new ArrayList<>();
 
+    // no-argument constructor for hibernate
     public Project() {
 
     }
 
+    /**
+     * adds User to user list
+     * @param user user to be added
+     */
     public void addUser(User user) {
         this.users.add(user);
         user.getProjects().add(this);
     }
 
+    /**
+     * removes user from user list
+     * @param user user to be removed
+     */
     public void removeUser(User user) {
         this.users.remove(user);
         user.getProjects().remove(this);
     }
 
 
-    //Getters and Setters
+    // getters and setters
     public Integer getProjectId() {
         return projectId;
     }

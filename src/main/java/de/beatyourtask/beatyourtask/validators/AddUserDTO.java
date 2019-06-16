@@ -2,6 +2,9 @@ package de.beatyourtask.beatyourtask.validators;
 
 import de.beatyourtask.beatyourtask.model.User;
 
+/**
+ * Class that represents objects that carry data for add user validation
+ */
 public class AddUserDTO {
 
     private User user;
@@ -13,11 +16,12 @@ public class AddUserDTO {
         setProjectId(projectId);
     }
 
+    // getters and setters
     public User getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    private void setUser(User user) {
         this.user = user;
     }
 
@@ -25,7 +29,7 @@ public class AddUserDTO {
         return projectId;
     }
 
-    public void setProjectId(int projectId) {
+    private void setProjectId(int projectId) {
         this.projectId = projectId;
     }
 }
