@@ -27,23 +27,20 @@ public class ProjectAddUserValidator implements Validator {
 
         AddUserDTO addUserDTO = (AddUserDTO) target;
 
+        User user = userService.getUserByEmail(addUserDTO.getUser().getEmail());
         // Checks if user with email exists
-        if(Objects.isNull(userService.findByEmail(addUserDTO.getUser().getEmail()))){
+        if(Objects.isNull(user)){
             errors.rejectValue("email","email-not-exist","email doesn´t exist");
         }else{
-
             // Checks if user is already part of the project
-            User user = userService.getUserByEmail(addUserDTO.getUser().getEmail());
-
             boolean flag = false;
             for (Project prj: user.getProjects()) {
                 if(prj.getProjectId() == addUserDTO.getProjectId()){
                     flag = true;
                 }
             }
-
             if(flag){
-                errors.rejectValue("email","part-of-project","user already part of project");
+                errors.rejectValue("email","part-of-project","already part of project");
             }
         }
 
