@@ -79,7 +79,7 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
 
     User user2 = new User();
     user2.setPassword(passwordEncoder.encode("pw"));
-    user2.setEmail("user");
+    user2.setEmail("user@angelo");
     user2.setSurname("Max");
     user2.setLastname("Mustermann");
     user2.setRoles(userRoles);
@@ -90,7 +90,7 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
 
     User user3 = new User();
     user3.setPassword(passwordEncoder.encode("pw"));
-    user3.setEmail("us");
+    user3.setEmail("us@test");
     user3.setSurname("Maxima");
     user3.setLastname("Musterfrau");
     user3.setRoles(userRoles);

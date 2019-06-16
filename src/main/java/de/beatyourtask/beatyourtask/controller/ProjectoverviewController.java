@@ -4,16 +4,15 @@ import de.beatyourtask.beatyourtask.model.Project;
 import de.beatyourtask.beatyourtask.model.User;
 import de.beatyourtask.beatyourtask.services.ProjectService;
 import de.beatyourtask.beatyourtask.services.UserService;
-import de.beatyourtask.beatyourtask.validators.ProjectOverviewValidator;
+import de.beatyourtask.beatyourtask.validators.AddUserDTO;
+import de.beatyourtask.beatyourtask.validators.ProjectAddUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 /**
@@ -31,7 +30,7 @@ public class ProjectoverviewController {
     UserService userService;
 
     @Autowired
-    ProjectOverviewValidator projectOverviewValidator;
+    ProjectAddUserValidator projectAddUserValidator;
 
     /**
      * Loads the Projectoverview with all projects in the database
@@ -115,7 +114,17 @@ public class ProjectoverviewController {
     }
 
     @PostMapping("users{projectId}")
-    public String processDisplayUsersForm(@RequestParam("projectId") Integer id, @ModelAttribute User user){
+    public String processDisplayUsersForm(@RequestParam("projectId") Integer id, @Valid @ModelAttribute User user, BindingResult result, Model model){
+
+
+        projectAddUserValidator.validate(new AddUserDTO(user,id), result);
+
+        if(result.hasErrors()){
+            model.addAttribute("title", "Users");
+            model.addAttribute("users", projectService.findById(id).getUsers());
+            model.addAttribute("project", id);
+            return "projectoverview/users";
+        }
 
         projectService.findById(id).addUser(userService.getUserByEmail(user.getEmail()));
         projectService.save(projectService.findById(id));
@@ -125,6 +134,7 @@ public class ProjectoverviewController {
 
     @GetMapping("users/delete{projectId, userId}")
     public String processDeleteUser(@RequestParam("userId") Integer userId, @RequestParam("projectId") Integer projectId){
+
 
         projectService.findById(projectId).removeUser(userService.getUserById(userId));
         projectService.save(projectService.findById(projectId));

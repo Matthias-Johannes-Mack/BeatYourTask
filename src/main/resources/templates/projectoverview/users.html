@@ -19,7 +19,8 @@
                         <!--Project Name-->
                         <div class="form-group">
                             <label th:for="email">Email</label>
-                            <input class="form-control" th:field="*{email}"/>
+                            <input th:errorclass="is-invalid" class="form-control" th:field="*{email}"/>
+                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
                         </div>
 
                         <!-- Submit Button-->

@@ -1,6 +1,8 @@
 package de.beatyourtask.beatyourtask.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +18,8 @@ public class User {
     @GeneratedValue
     private Integer id;
 
+    @NotEmpty(message = "Please provide a valid email address")
+    @Email(message="Please provide a valid email address")
     private String email;
 
     private String password;
