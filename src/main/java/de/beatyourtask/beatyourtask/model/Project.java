@@ -1,6 +1,7 @@
 package de.beatyourtask.beatyourtask.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,8 +13,10 @@ public class Project {
     @GeneratedValue
     private Integer projectId;
 
+    @Size(min=3,max=20, message="The project name should be between 3 and 20 characters long.")
     private String projectName;
 
+    @Size(min=5,max=30, message="The project description should be between 5 and 30 characters long.")
     private String projectDescription;
 
     @ManyToMany(mappedBy = "projects")

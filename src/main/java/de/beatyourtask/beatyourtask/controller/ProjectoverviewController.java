@@ -4,11 +4,15 @@ import de.beatyourtask.beatyourtask.model.Project;
 import de.beatyourtask.beatyourtask.model.User;
 import de.beatyourtask.beatyourtask.services.ProjectService;
 import de.beatyourtask.beatyourtask.services.UserService;
+import de.beatyourtask.beatyourtask.validators.ProjectOverviewValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Controller;
 
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -25,6 +29,9 @@ public class ProjectoverviewController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    ProjectOverviewValidator projectOverviewValidator;
 
     /**
      * Loads the Projectoverview with all projects in the database
@@ -48,7 +55,14 @@ public class ProjectoverviewController {
     }
 
     @PostMapping("add")
-    public String processDisplayAddForm(@ModelAttribute Project project){
+    public String processDisplayAddForm(@Valid @ModelAttribute Project project, BindingResult result, Model model){
+
+        if(result.hasErrors()){
+            model.addAttribute("project",project);
+            model.addAttribute("title", "Add Project");
+            return "projectoverview/addProject";
+        }
+
         //Saving to current user
         project.addUser(userService.getCurrentUser());
         projectService.save(project);
@@ -66,7 +80,13 @@ public class ProjectoverviewController {
     }
 
     @PostMapping("editProject")
-    public String processDisplayEditForm(@ModelAttribute Project project){
+    public String processDisplayEditForm(@Valid @ModelAttribute Project project,BindingResult result, Model model){
+
+        if(result.hasErrors()){
+            model.addAttribute("project",project);
+            model.addAttribute("title", "Edit Project");
+            return "projectoverview/editProject";
+        }
 
         //Saving edited Project
         projectService.save(project);
@@ -77,7 +97,6 @@ public class ProjectoverviewController {
     @GetMapping("leaveProject{projectId}")
     public String leaveProject(@RequestParam("projectId") Integer id){
 
-        System.out.println("in leave");
         userService.getCurrentUser().removeProject(projectService.findById(id));
         userService.saveUser(userService.getCurrentUser()); // saving changes to database
 
@@ -107,7 +126,6 @@ public class ProjectoverviewController {
     @GetMapping("users/delete{projectId, userId}")
     public String processDeleteUser(@RequestParam("userId") Integer userId, @RequestParam("projectId") Integer projectId){
 
-        System.out.println("in User Löschen");
         projectService.findById(projectId).removeUser(userService.getUserById(userId));
         projectService.save(projectService.findById(projectId));
 
