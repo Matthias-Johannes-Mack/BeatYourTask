@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/">
+<head th:replace="projectoverview/dependencies::head"></head>
+<body class="shards-app-promo-page--1">
+<!--Background-->
+<div class="welcome d-flex justify-content-center flex-column">
+
+
+    <!-- Panel for showing the users-->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" th:text="${title}">Default Title</h4>
+
+                <!--Form for adding a user-->
+                <div style="margin-bottom: 1rem;">
+                    <form method="post" th:object="${user}">
+
+                        <!--Project Name-->
+                        <div class="form-group">
+                            <label th:for="email">Email</label>
+                            <input th:errorclass="is-invalid" class="form-control" th:field="*{email}"/>
+                            <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></p>
+                        </div>
+
+                        <!-- Submit Button-->
+                        <input  class="btn btn-primary" type="submit" value="Add User" />
+                    </form>
+                </div>
+
+                <!--table that displays all users of the project-->
+                <table class="table">
+                    <tr>
+                        <th>Firstname</th>
+                        <th>Lastname</th>
+                        <th>Email</th>
+                        <th></th>
+                    </tr>
+
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.surname}"></td>
+                        <td th:text="${user.lastname}"></td>
+                        <td th:text="${user.email}"></td>
+                        <td><a class="btn btn-danger" th:href=@{/projectoverview/users/delete(projectId=${project},userId=${user.id})}><i class="fa fa-minus-circle"></i></a></td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<!-- include the Footer -->
+<th:block th:include="/fragments/footer"></th:block>
+</html>

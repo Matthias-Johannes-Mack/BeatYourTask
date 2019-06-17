@@ -1,6 +1,10 @@
 package de.beatyourtask.beatyourtask.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,6 +18,8 @@ public class User {
     @GeneratedValue
     private Integer id;
 
+    @NotEmpty(message = "Please provide a valid email address")
+    @Email(message="Please provide a valid email address")
     private String email;
 
     private String password;
@@ -23,6 +29,12 @@ public class User {
     private String lastname;
 
     private boolean enabled = true;
+
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinTable(name = "user_project",
+            joinColumns = { @JoinColumn(name = "fk_user") },
+            inverseJoinColumns = { @JoinColumn(name = "fk_project") })
+    private List<Project> projects = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
@@ -35,6 +47,25 @@ public class User {
 
     }
 
+    /**
+     * adds project to project list
+     * @param project project to be added
+     */
+    public void addProject(Project project) {
+        this.projects.add(project);
+        project.getUsers().add(this);
+    }
+
+    /**
+     * removes project from project list
+     * @param project project to be removed
+     */
+    public void removeProject(Project project) {
+        this.projects.remove(project);
+        project.getUsers().remove(this);
+    }
+
+    // getters and setters
     public Integer getId() {
         return id;
     }
@@ -90,5 +121,12 @@ public class User {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
-    
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
 }
