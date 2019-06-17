@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Class for the user / wirefire / Spring 19
- */
 @Entity
 @Table
 public class User {

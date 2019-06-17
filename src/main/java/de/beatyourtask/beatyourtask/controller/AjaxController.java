@@ -1,5 +1,8 @@
 package de.beatyourtask.beatyourtask.controller;
 
+import de.beatyourtask.beatyourtask.model.Project;
+import de.beatyourtask.beatyourtask.services.ProjectService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -13,6 +16,11 @@ import java.util.ArrayList;
 @Controller
 public class AjaxController {
 
+
+
+
+    @Autowired
+    private ProjectService projectService;
     /**
      *Class for updating the order of lists in a project when a list was moved
      * @param jsonOrder JsonString of the Ajax Post with the order of the listsids(jquerry ui sortable serialize)
@@ -23,9 +31,6 @@ public class AjaxController {
     public String changeOrderOfList(@RequestParam("json") String jsonOrder, @RequestHeader(value = "referer", required = false) final String referer) {
         //Id des Projektes in dem eine Liste bewegt wurde
         String projectId;
-        //Arraylist mit Reihenfolge der Listen
-        ArrayList<Integer> order;
-
         System.out.println("in changeOrderOfList");
         System.out.println("JsonString: "+jsonOrder);
         System.out.println("Referer: "+referer);
@@ -33,9 +38,21 @@ public class AjaxController {
         projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
         System.out.println("ProjectId: "+projectId);
 
-        order = getListOrderFromJsonString(jsonOrder);
 
-        //TODO Project mit neuer Arrayliste Updaten
+        try {
+            System.out.println("In try");
+            Integer projectIdInt = Integer.parseInt(projectId);
+            Project project = projectService.findById(projectIdInt);
+            project.setOrders(getListOrderFromJsonString(jsonOrder));
+            projectService.save(project);
+            System.out.println("________" + projectService.findById(projectIdInt).getOrders());
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+
+
+        }
+
+
 
         return "Home";
     }
