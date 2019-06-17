@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/">
+<head th:replace="projectoverview/dependencies::head"></head>
+<body class="shards-app-promo-page--1">
+<!--Background-->
+<div class="welcome d-flex justify-content-center flex-column">
+
+
+    <!-- Panel for adding projects-->
+    <div class="col-md-6">
+    <div class="card">
+        <div class="card-body">
+            <h4 class="card-title" th:text="${title}">Default Title</h4>
+            <!--Form for adding projects-->
+            <form method="post" th:object="${project}">
+
+                <!--Project Name-->
+                <div class="form-group">
+                    <label th:for="projectName">Name</label>
+                    <input th:errorclass="is-invalid" class="form-control" th:field="*{projectName}"/>
+                    <p th:if="${#fields.hasErrors('projectName')}" th:errors="*{projectName}" class="text-danger"></p>
+                </div>
+
+                <!--Description-->
+                <div class="form-group">
+                    <label th:for="projectDescription">Description</label>
+                    <input th:errorclass="is-invalid" class="form-control" th:field="*{projectDescription}"/>
+                    <p th:if="${#fields.hasErrors('projectDescription')}" th:errors="*{projectDescription}" class="text-danger"></p>
+                </div>
+
+                <!-- Submit Button-->
+                <input  class="btn btn-primary" type="submit" value="Add" />
+            </form>
+        </div>
+    </div>
+    </div>
+
+
+</div>
+</body>
+<!-- include the Footer -->
+<th:block th:include="/fragments/footer"></th:block>
+</html>

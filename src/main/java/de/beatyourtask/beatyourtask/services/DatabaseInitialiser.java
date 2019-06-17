@@ -46,34 +46,55 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     Set<Role> userRoles = new HashSet<>();
     userRoles.add(userRole);
 
-
-
     User user1 = new User();
     user1.setPassword(passwordEncoder.encode("password"));
     user1.setEmail("user@test.de");
     user1.setRoles(userRoles);
     userService.saveUser(user1);
 
-
-
     Project sopra = new Project();
     sopra.setProjectName("Testproject 1");
     sopra.setProjectDescription("I´am a Testproject");
-    projectService.saveProject(sopra);
+    projectService.save(sopra);
 
     Project seminar = new Project();
     seminar.setProjectName("Testproject 2");
     seminar.setProjectDescription("I´am a Testproject");
-    projectService.saveProject(seminar);
+    projectService.save(seminar);
 
     Tasklist liste1 = new Tasklist();
     liste1.setListName("Liste aus DB");
+    liste1.setColor("LightGreen");
     tasklistService.saveList(liste1);
 
     Tasklist liste2 = new Tasklist();
     liste2.setListName("Liste aus DB 2");
+    liste2.setColor("SlateBlue");
     tasklistService.saveList(liste2);
 
+    // ----------- Data for Testing Projectoverview ------------------------ //
+    Project test_user2 = new Project();
+    test_user2.setProjectName("test user2");
+    test_user2.setProjectDescription("test for user2");
 
+    User user2 = new User();
+    user2.setPassword(passwordEncoder.encode("pw"));
+    user2.setEmail("user@angelo");
+    user2.setSurname("Max");
+    user2.setLastname("Mustermann");
+    user2.setRoles(userRoles);
+    user2.addProject(test_user2);
+
+    userService.saveUser(user2);
+
+
+    User user3 = new User();
+    user3.setPassword(passwordEncoder.encode("pw"));
+    user3.setEmail("us@test");
+    user3.setSurname("Maxima");
+    user3.setLastname("Musterfrau");
+    user3.setRoles(userRoles);
+
+    userService.saveUser(user3);
   }
 }

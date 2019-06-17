@@ -1,0 +1,69 @@
+<!-- created by wirefire Spring 19 -->
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
+<script type="text/javascript"></script>
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}">Default Title</title>
+    <!-- include the  header -->
+    <th:block th:include="/fragments/header_singed_in"></th:block>
+    <!-- End -->
+</head>
+<body class="shards-app-promo-page--1">
+
+<!-- enabaling Tooltips-->
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>
+
+<!-- background -->
+<div class="welcome d-flex justify-content-center flex-column">
+
+    <!-- Features -->
+    <!-- begin of the field where the projects are displayed -->
+    <div id="cards" class="container">
+        <div class="example col-md-12 ml-auto mr-auto">
+            <h3 class="welcome-heading display-4 text-white ml-5" th:text="${title}">Default Title</h3>
+            <!-- the button to add a new Project -->
+            <a href="/projectoverview/add" class="btn btn-primary mb-4"><i class="fa fa-plus mr-2"></i>Add a new Project</a>
+            <!-- end add button -->
+
+            <div class="row">
+
+                <!-- dynamic insertion of projects -->
+                <div th:each="project : ${projects}" class="col-lg-4 col-md-6 col-sm-12 mb-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h3 class="card-title" th:text="${project.projectName}"></h3>
+                            <p class="card-text" th:text="${project.projectDescription}"></p>
+
+                            <!-- Buttons to manipulate and open project -->
+                            <div class="btn-group" role="group">
+                                <a th:href="@{/Project(ProjectId=${project.projectId})}" class="btn btn-primary"><i class="fa fa-eye mr-2"></i>Open</a>
+                                <a th:href="@{/projectoverview/editProject(projectId=${project.projectId})}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="edit"><i class="fa fa-edit"></i></a>
+                                <a th:href="@{/projectoverview/users(projectId=${project.projectId})}" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="users"><i class="fa fa-users"></i></a>
+                                <a th:href="@{/projectoverview/leaveProject(projectId=${project.projectId})}" class="btn btn-danger" data-toggle="tooltip" data-placement="top" title="leave project"><i class="fa fa-sign-out-alt"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end dynamic insertion -->
+
+            </div>
+            <!-- End button -->
+        </div>
+    </div>
+    <!-- end Project field -->
+    <!-- / Features -->
+</div>
+</div>
+
+
+</body>
+<!-- include the footer -->
+<th:block th:include="/fragments/footer"></th:block>
+<!-- End -->
+</html>

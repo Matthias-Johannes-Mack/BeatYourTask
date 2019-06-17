@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+/**
+ * Class that represents the role of an user
+ */
 @Entity
 public class Role {
 
@@ -13,9 +16,8 @@ public class Role {
 
     private String rolename;
 
-    /**
-     * No-Argument Konstruktor für Hibernate.
-     */
+
+    // no-argument constructor for Hibernate.
     public Role() {
     }
 
@@ -23,6 +25,7 @@ public class Role {
         this.rolename = rolename;
     }
 
+    // getters and setters
     public Integer getId() {
         return id;
     }
