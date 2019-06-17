@@ -14,6 +14,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
+
     <th:block th:include="/fragments/AddNewListModal"></th:block>
 
     <!-- Style for this fragment -->
@@ -25,12 +26,10 @@
             float: left;
             margin-right: -999em;
         }
-
         /* horizontale ausrichtung des ListenContainers*/
         #sortableListContainer > li {
             float: left;
         }
-
         /*Task */
         .task {
             background: #fff;
@@ -45,7 +44,6 @@
             box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
             border-radius: 5px;
         }
-
         /* Spalte in der TaskContainer drinnen*/
         .spalte {
             padding-top: 0%;
@@ -54,7 +52,6 @@
             width: 270px;
             vertical-align: top;
         }
-
         /* Vorschau beim bewegen von Tasks */
         .highlightTask {
             opacity: 0.5;
@@ -68,7 +65,6 @@
             min-height: 75px;
             border-radius: 5px;
         }
-
         /* Vorschau beim bewegen von Spalten */
         .highlightSpalte {
             opacity: 0.5;
@@ -77,7 +73,6 @@
             height: 550px;
             width: 270px;
         }
-
         /*container für Tasks */
         .taskContainer {
             list-style-type: none;
@@ -87,13 +82,13 @@
             min-height: 500px;
             min-width: 150px;
         }
-
         .spaltenkopf {
             height: 50px;
             background: rgba(25, 25, 25, .1);
         }
-
     </style>
+
+
 
     <!-- jquerry functions for this fragment -->
     <script>
@@ -156,7 +151,6 @@
         });
     </script>
 
-
 </head>
 
 <body style="background-color:DimGray;">
@@ -170,7 +164,7 @@
     <!--suppress ThymeleafVariablesResolveInspection -->
     <li
             th:each="list: ${tasklists}" th:include="/fragments/listFragments :: listFragment"
-            th:with="Titel=${list.listName}, Color=${list.color}"
+            th:with="Titel=${list.listName}, Color=${list.color}, Id=idspalte_+${list.listId}"
             th:remove="tag"
     />
 
@@ -178,7 +172,7 @@
     <!-- Mock Listen zur veranschaulichung-->
 
     <!--Spalte (Listenelemnt des Containers)-->
-    <li id="idspalte1" class="spalte" style="background-color:Tomato;">
+    <li id="idspalte_1" class="spalte" style="background-color:Tomato;">
         <div class="spaltenkopf">
             <p id="idSpaltenkopfTitel" style="color:white;">Mock Spalte 1</p>
         </div>
@@ -191,7 +185,7 @@
     </li>
 
     <!--Spalte (Listenelemnt des Containers)-->
-    <li id="idspalte2" class="spalte" style="background-color:Orange;">
+    <li id="idspalte_2" class="spalte" style="background-color:Orange;">
         <div class="spaltenkopf">
             <p id="idSpaltenkopfTitel2" style="color:white;">Mock Spalte 2</p>
         </div>

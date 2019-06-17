@@ -10,7 +10,8 @@
 
 <span th:fragment="listFragment">
     <!--/*@thymesVar id="Color" type="java.lang.String"*/-->
-    <li class="spalte" th:style="${Color}">
+    <!--/*@thymesVar id="Id" type="java.lang.String"*/-->
+    <li class="spalte" th:style="${Color}" th:id="${Id}">
          <div class="spaltenkopf">
                 <!--uses contextvariable tasklists from TasklistView when called in TasklistView-->
              <!--/*@thymesVar id="Titel" type="java.lang.String"*/-->
