@@ -98,17 +98,78 @@
     <!-- jquerry functions for this fragment -->
     <script>
         /*making sortable(drag and drop) work */
-        $(function () {
+        $(document).ready(function() {
+            /* Connect all lists */
             $("#sortableListContainer").sortable({
                 placeholder: "highlightSpalte",
+
+                //saves the new position when a list is moved
+                update: function sendAjaxWhenListMoved(event, ui) {
+                    var listOrder = $(this).sortable('serialize');
+                    var jsonfile={json:JSON.stringify(listOrder)};
+
+                    console.log("Liste bewegt!");
+                    console.log("Data: "+listOrder);
+
+                    // Post
+                    $.ajax({
+                        type: 'POST',
+                        url: '/ajaxMovedList',
+                        data: jsonfile,
+                        dataType: "json"
+                    });
+
+                    console.log("ajax send!");
+                }
+
             });
 
-            /* Connecte alle taskconatainer */
+            // send intial order of lists when page is loaded(when list is added/deleted)
+            $(function sendInitalListPosition() {
+                var listOrder = $("#sortableListContainer").sortable('serialize');
+                var jsonfile={json:JSON.stringify(listOrder)};
+
+                console.log("Initale Listen Position!");
+                console.log("Data: "+listOrder);
+
+                // Post ajax
+                $.ajax({
+                    type: 'POST',
+                    url: '/ajaxMovedList',
+                    data: jsonfile,
+                    dataType: "json"
+                });
+
+                console.log("ajax send!");
+            });
+
+
+            /* Connect all taskconatainer */
             $(".taskContainer").sortable({
                 connectWith: ".taskContainer",
                 placeholder: "highlightTask"
 
+                //saves the new position when a task is moved
+                update: function sendAjaxWhenTaskMoved(event, ui) {
+                    var data = $(this).sortable('serialize');
+
+                    console.log("Task bewegt!");
+
+                    /* Post
+                    $.ajax({
+                        data: data,
+                        type: 'POST',
+                        url: '/TODO'
+                    });
+                    */
+                }
+
             }).disableSelection();
+
+            $(function sendInitalTaskPosition() {
+                //TODO
+            });
+
         });
     </script>
 
