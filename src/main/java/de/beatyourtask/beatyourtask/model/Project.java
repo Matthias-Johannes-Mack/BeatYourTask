@@ -25,6 +25,9 @@ public class Project {
     @ManyToMany(mappedBy = "projects")
     private List<User> users = new ArrayList<>();
 
+    @ElementCollection
+    private List<Integer> orders = new ArrayList<>();
+
     // no-argument constructor for hibernate
     public Project() {
 
@@ -50,6 +53,16 @@ public class Project {
 
 
     // getters and setters
+
+
+    public List<Integer> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Integer> orders) {
+        this.orders = orders;
+    }
+
     public Integer getProjectId() {
         return projectId;
     }
