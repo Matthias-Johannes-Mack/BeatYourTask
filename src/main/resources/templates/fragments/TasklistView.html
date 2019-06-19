@@ -16,6 +16,9 @@
 
 
     <th:block th:include="/fragments/AddNewListModal"></th:block>
+    <th:block th:include="/fragments/editListModal"></th:block>
+    <th:block th:include="/fragments/deleteListModal"></th:block>
+
 
     <!-- Style for this fragment -->
     <style>
@@ -147,6 +150,28 @@
             }).disableSelection();
             $(function sendInitalTaskPosition() {
                 //TODO
+            });
+
+            $( ".listbutton").click(function() {
+                console.log("button clicked");
+                var parentID = $(this).closest('li').attr('id');
+                console.log(parentID);
+                var idString = parentID.replace("idspalte_","");
+                console.log(idString);
+                var idInt = parseInt(idString);
+
+                $("#editListModal #listID").val(idInt);
+            });
+
+            $( ".listbuttondelete").click(function() {
+                console.log("button clicked");
+                var parentID = $(this).closest('li').attr('id');
+                console.log(parentID);
+                var idString = parentID.replace("idspalte_","");
+                console.log(idString);
+                var idInt = parseInt(idString);
+
+                $("#deleteListModal #listID").val(idInt);
             });
         });
     </script>

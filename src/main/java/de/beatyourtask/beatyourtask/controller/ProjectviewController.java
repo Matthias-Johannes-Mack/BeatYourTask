@@ -1,6 +1,8 @@
 package de.beatyourtask.beatyourtask.controller;
 
+import de.beatyourtask.beatyourtask.model.Project;
 import de.beatyourtask.beatyourtask.model.User;
+import de.beatyourtask.beatyourtask.services.ProjectService;
 import de.beatyourtask.beatyourtask.services.TasklistService;
 import de.beatyourtask.beatyourtask.model.Tasklist;
 import org.springframework.scheduling.config.Task;
@@ -27,6 +29,10 @@ public class ProjectviewController {
     @Autowired
     private TasklistService tasklistService;
 
+    @Autowired
+    private ProjectService projectService;
+
+
     @ModelAttribute(value = "newTaskListAttribute")
     public Tasklist newTasklist()
     {
@@ -39,12 +45,29 @@ public class ProjectviewController {
      * Loads the Projectview with all tasklists in the database
      * @param model model containing all the tasklist in the database
      * @return projectview with all tasklist in database
-     */
     @GetMapping("/Project")
     public ModelAndView loadLists(Model model) {
         model.addAttribute("tasklists", tasklistService.getAllTaskLists());
 
-        System.out.println("in Get");
+        System.out.println("in /Project");
+
+
+        String view = "Projectview";
+        return new ModelAndView(view, "command", model);
+    }
+*/
+
+    /**
+     * Loads the Projectview with the responding tasklists in the database
+     * @param model model containing all the tasklist in the database
+     * @return projectview with all tasklist in database
+     * */
+    @GetMapping("/Project{ProjectId}")
+    public ModelAndView loadListsID(Model model, @RequestParam("ProjectId") Integer id) {
+        model.addAttribute("tasklists", projectService.findById(id).getLists());
+        System.out.println(id);
+        //Project?ProjectId=10
+        System.out.println("in /ProjectID");
 
 
         String view = "Projectview";
@@ -58,58 +81,72 @@ public class ProjectviewController {
      * @return reirekt to Projekt
      */
     @RequestMapping(value = "/addList", method = RequestMethod.POST)
-    public View addList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute) {
+    public String addList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute, @RequestHeader(value = "referer", required = false) final String referer) {
 
-        System.out.println("in Post");
-
+        System.out.println("in add List");
+        String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
+        System.out.println("ProjectId: "+projectId);
         tasklistService.saveList(newTaskListAttribute);
+        System.out.println("saved tasklist");
+        System.out.println("saved tasklist with id: "+newTaskListAttribute.getListId());
 
-        return new RedirectView("/Project");
-    }
 
-    @GetMapping("editList{listId}")
-    public String displayEditForm(@RequestParam("listId") Integer id, Model model){
 
-        model.addAttribute("title", "Edit List");
-        model.addAttribute("list", tasklistService.loadTasklistById(id));
+        try {
+            System.out.println("In try");
+            Integer projectIdInt = Integer.parseInt(projectId);
 
-        return "/editList";
+
+
+            projectService.findById(projectIdInt).addTasklist(tasklistService.loadTasklistById(newTaskListAttribute.getListId()));
+
+            projectService.save(projectService.findById(projectIdInt));
+
+        } catch (NumberFormatException e){
+            e.printStackTrace();
+        }
+
+
+
+
+       // return new RedirectView("/Project");
+        return "redirect:/Project?ProjectId="+projectId;
+
     }
 
     /**
-     * Processes form for editing an existing project
-     * @param list tasklist with changed values
-     * @param result contains (if present) errors of project validation
-     * @param model contains the edited project
-     * @return redirect to projectoverview
+     * Edit a list in the database
+     * @param newTaskListAttribute new Tasklist Object from View
+     * @return reirekt to Projekt
      */
-    @PostMapping("editList")
-    public View processDisplayEditForm(@Valid @ModelAttribute Tasklist list, BindingResult result, Model model){
-
-        /**
-         if(result.hasErrors()){
-         model.addAttribute("list",list);
-         model.addAttribute("title", "Edit List");
-         return "/editList";
-         }
-         */
-
-        // saving edited project
+    @RequestMapping(value = "/editList", method = RequestMethod.POST)
+    public View editList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute) {
+        int id = newTaskListAttribute.getListId();
+        System.out.println(id);
+        System.out.println("in Edit");
+        System.out.println(newTaskListAttribute.getColor());
+        Tasklist list = tasklistService.loadTasklistById(id);
+        String color=newTaskListAttribute.getColor().replaceFirst("background-color:","");
+        System.out.println(color);
+        list.setColor(color);
+        list.setListName(newTaskListAttribute.getListName());
         tasklistService.saveList(list);
 
+
+
         return new RedirectView("/Project");
     }
 
+
     /**
-     * Removes current user from selected project
-     * @param id id of project
-     * @return redirect to projectoverview
+     * Deletes a list in the database
+     * @param newTaskListAttribute new Tasklist Object from View
+     * @return reirekt to Projekt
      */
-    @GetMapping("deleteList{listId}")
-    public View deleteList(@RequestParam("listId") Integer id){
-
+    @RequestMapping(value = "/deleteList", method = RequestMethod.POST)
+    public View deleteList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute) {
+        int id = newTaskListAttribute.getListId();
         tasklistService.deleteTasklistById(id);
-
         return new RedirectView("/Project");
     }
 

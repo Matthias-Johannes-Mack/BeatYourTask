@@ -25,7 +25,7 @@ public class Project {
     @ManyToMany(mappedBy = "projects")
     private List<User> users = new ArrayList<>();
 
-    @OneToMany(mappedBy = "projects")
+    @ManyToMany(mappedBy = "projects")
     private List<Tasklist> lists = new ArrayList<>();
 
     @ElementCollection

@@ -21,10 +21,10 @@ public class Tasklist {
     /** color of a list given in htm color names*/
     private String color;
 
-    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
-    @JoinTable(name = "list_project",
-            joinColumns = { @JoinColumn(name = "fk_user") },
-            inverseJoinColumns = { @JoinColumn(name = "fk_list") })
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinTable(name = "tasklist_project",
+            joinColumns = { @JoinColumn(name = "fk_project") },
+            inverseJoinColumns = { @JoinColumn(name = "fk_tasklist") })
     private List<Project> projects = new ArrayList<>();
 
     /**
@@ -39,7 +39,7 @@ public class Tasklist {
      * @param color of the list
      */
     public void setColor(String color) {
-        this.color = "background-color:"+color+";";
+        this.color = "background-color:"+color;
     }
 
     /**returns the color of this list */
