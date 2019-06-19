@@ -5,6 +5,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Class that represents projects with corresponding data
@@ -25,8 +26,10 @@ public class Project {
     @ManyToMany(mappedBy = "projects")
     private List<User> users = new ArrayList<>();
 
-    @ManyToMany(mappedBy = "projects")
-    private List<Tasklist> lists = new ArrayList<>();
+
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Tasklist> tasklists;
+
 
     @ElementCollection
     private List<Integer> orders = new ArrayList<>();
@@ -37,15 +40,17 @@ public class Project {
     }
 
     public List<Tasklist> getLists() {
-        return lists;
+        return this.tasklists;
     }
 
     public void addTasklist(Tasklist tasklist) {
-        this.lists.add(tasklist);
+        Tasklist tasklistVar = tasklist;
+        tasklistVar.setProject(this);
+        tasklists.add(tasklistVar);
     }
 
     public void removeTasklist(Tasklist tasklist) {
-        this.lists.remove(tasklist);
+        this.tasklists.remove(tasklist);
     }
 
     /**

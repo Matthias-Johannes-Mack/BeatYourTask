@@ -41,21 +41,6 @@ public class ProjectviewController {
     }
 
 
-    /**
-     * Loads the Projectview with all tasklists in the database
-     * @param model model containing all the tasklist in the database
-     * @return projectview with all tasklist in database
-    @GetMapping("/Project")
-    public ModelAndView loadLists(Model model) {
-        model.addAttribute("tasklists", tasklistService.getAllTaskLists());
-
-        System.out.println("in /Project");
-
-
-        String view = "Projectview";
-        return new ModelAndView(view, "command", model);
-    }
-*/
 
     /**
      * Loads the Projectview with the responding tasklists in the database

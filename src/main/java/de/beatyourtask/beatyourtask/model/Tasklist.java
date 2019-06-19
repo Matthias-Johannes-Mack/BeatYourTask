@@ -21,11 +21,10 @@ public class Tasklist {
     /** color of a list given in htm color names*/
     private String color;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
-    @JoinTable(name = "tasklist_project",
-            joinColumns = { @JoinColumn(name = "fk_project") },
-            inverseJoinColumns = { @JoinColumn(name = "fk_tasklist") })
-    private List<Project> projects = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn
+    private Project project;
+
 
     /**
      * constructor Tasklist
@@ -78,4 +77,6 @@ public class Tasklist {
     public void setListName(String listName) {
         this.listName = listName;
     }
+
+    public void setProject(Project project) {this.project = project;}
 }
