@@ -25,12 +25,27 @@ public class Project {
     @ManyToMany(mappedBy = "projects")
     private List<User> users = new ArrayList<>();
 
+    @OneToMany(mappedBy = "projects")
+    private List<Tasklist> lists = new ArrayList<>();
+
     @ElementCollection
     private List<Integer> orders = new ArrayList<>();
 
     // no-argument constructor for hibernate
     public Project() {
 
+    }
+
+    public List<Tasklist> getLists() {
+        return lists;
+    }
+
+    public void addTasklist(Tasklist tasklist) {
+        this.lists.add(tasklist);
+    }
+
+    public void removeTasklist(Tasklist tasklist) {
+        this.lists.remove(tasklist);
     }
 
     /**

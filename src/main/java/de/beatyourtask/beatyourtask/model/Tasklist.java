@@ -1,8 +1,8 @@
 package de.beatyourtask.beatyourtask.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Tasklist that contains tasks
@@ -20,6 +20,12 @@ public class Tasklist {
 
     /** color of a list given in htm color names*/
     private String color;
+
+    @OneToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
+    @JoinTable(name = "list_project",
+            joinColumns = { @JoinColumn(name = "fk_user") },
+            inverseJoinColumns = { @JoinColumn(name = "fk_list") })
+    private List<Project> projects = new ArrayList<>();
 
     /**
      * constructor Tasklist

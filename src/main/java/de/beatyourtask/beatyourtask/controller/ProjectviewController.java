@@ -5,6 +5,7 @@ import de.beatyourtask.beatyourtask.services.TasklistService;
 import de.beatyourtask.beatyourtask.model.Tasklist;
 import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
+
+import javax.validation.Valid;
 
 /**
  * Controller for the ProjectView
@@ -64,6 +67,51 @@ public class ProjectviewController {
         return new RedirectView("/Project");
     }
 
+    @GetMapping("editList{listId}")
+    public String displayEditForm(@RequestParam("listId") Integer id, Model model){
+
+        model.addAttribute("title", "Edit List");
+        model.addAttribute("list", tasklistService.loadTasklistById(id));
+
+        return "/editList";
+    }
+
+    /**
+     * Processes form for editing an existing project
+     * @param list tasklist with changed values
+     * @param result contains (if present) errors of project validation
+     * @param model contains the edited project
+     * @return redirect to projectoverview
+     */
+    @PostMapping("editList")
+    public View processDisplayEditForm(@Valid @ModelAttribute Tasklist list, BindingResult result, Model model){
+
+        /**
+         if(result.hasErrors()){
+         model.addAttribute("list",list);
+         model.addAttribute("title", "Edit List");
+         return "/editList";
+         }
+         */
+
+        // saving edited project
+        tasklistService.saveList(list);
+
+        return new RedirectView("/Project");
+    }
+
+    /**
+     * Removes current user from selected project
+     * @param id id of project
+     * @return redirect to projectoverview
+     */
+    @GetMapping("deleteList{listId}")
+    public View deleteList(@RequestParam("listId") Integer id){
+
+        tasklistService.deleteTasklistById(id);
+
+        return new RedirectView("/Project");
+    }
 
 
 
