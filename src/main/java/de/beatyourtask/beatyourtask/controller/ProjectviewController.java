@@ -81,8 +81,6 @@ public class ProjectviewController {
             System.out.println("In try");
             Integer projectIdInt = Integer.parseInt(projectId);
 
-
-
             projectService.findById(projectIdInt).addTasklist(tasklistService.loadTasklistById(newTaskListAttribute.getListId()));
 
             projectService.save(projectService.findById(projectIdInt));
@@ -91,10 +89,6 @@ public class ProjectviewController {
             e.printStackTrace();
         }
 
-
-
-
-       // return new RedirectView("/Project");
         return "redirect:/Project?ProjectId="+projectId;
 
     }
@@ -105,7 +99,10 @@ public class ProjectviewController {
      * @return reirekt to Projekt
      */
     @RequestMapping(value = "/editList", method = RequestMethod.POST)
-    public View editList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute) {
+    public String editList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute, @RequestHeader(value = "referer", required = false) final String referer) {
+        String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
+        System.out.println("ProjectId: "+projectId);
+
         int id = newTaskListAttribute.getListId();
         System.out.println(id);
         System.out.println("in Edit");
@@ -117,9 +114,7 @@ public class ProjectviewController {
         list.setListName(newTaskListAttribute.getListName());
         tasklistService.saveList(list);
 
-
-
-        return new RedirectView("/Project");
+        return "redirect:/Project?ProjectId="+projectId;
     }
 
 
@@ -129,10 +124,14 @@ public class ProjectviewController {
      * @return reirekt to Projekt
      */
     @RequestMapping(value = "/deleteList", method = RequestMethod.POST)
-    public View deleteList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute) {
+    public String deleteList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute, @RequestHeader(value = "referer", required = false) final String referer) {
+        String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
+        System.out.println("ProjectId: "+projectId);
+
         int id = newTaskListAttribute.getListId();
         tasklistService.deleteTasklistById(id);
-        return new RedirectView("/Project");
+
+        return "redirect:/Project?ProjectId="+projectId;
     }
 
 
