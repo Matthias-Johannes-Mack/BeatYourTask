@@ -43,4 +43,7 @@ public class TasklistService {
     public void  deleteTasklistById(int id) {
         tasklistRepository.deleteById(id);
     }
+
+    public Tasklist loadTasklistById(int id) { return tasklistRepository.getOne(id); }
+
 }

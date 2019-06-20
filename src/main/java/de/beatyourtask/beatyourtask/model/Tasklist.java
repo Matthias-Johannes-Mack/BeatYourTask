@@ -1,8 +1,8 @@
 package de.beatyourtask.beatyourtask.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Tasklist that contains tasks
@@ -21,6 +21,11 @@ public class Tasklist {
     /** color of a list given in htm color names*/
     private String color;
 
+    @ManyToOne
+    @JoinColumn
+    private Project project;
+
+
     /**
      * constructor Tasklist
      */
@@ -33,7 +38,7 @@ public class Tasklist {
      * @param color of the list
      */
     public void setColor(String color) {
-        this.color = "background-color:"+color+";";
+        this.color = "background-color:"+color;
     }
 
     /**returns the color of this list */
@@ -72,4 +77,6 @@ public class Tasklist {
     public void setListName(String listName) {
         this.listName = listName;
     }
+
+    public void setProject(Project project) {this.project = project;}
 }
