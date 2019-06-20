@@ -152,6 +152,7 @@
                 //TODO
             });
 
+            //sets the id of the list in the edit list modal
             $( ".listbutton").click(function() {
                 console.log("button clicked");
                 var parentID = $(this).closest('li').attr('id');
@@ -163,6 +164,7 @@
                 $("#editListModal #listID").val(idInt);
             });
 
+            //sets the id of the list in the delete list modal
             $( ".listbuttondelete").click(function() {
                 console.log("button clicked");
                 var parentID = $(this).closest('li').attr('id');
