@@ -15,11 +15,11 @@
          <div class="spaltenkopf">
                 <!--uses contextvariable tasklists from TasklistView when called in TasklistView-->
              <!--/*@thymesVar id="Titel" type="java.lang.String"*/-->
-              <p class="Spaltentitel" th:text="${Titel}" style="color: white;"></p>
-             <button type="button" class="btn btn primary listbutton"
-                     data-target ="#editListModal" data-toggle="modal">Edit</button>
-             <button type="button" class="btn btn primary listbuttondelete"
-                     data-target ="#deleteListModal" data-toggle="modal">Delete</button>
+              <div class="Spaltentitel" th:text="${Titel}" style="color: white;"></div>
+             <button type="button" class="listbutton, badge mr-3 badge-outline-light"
+                     data-target ="#editListModal" data-toggle="modal"><i class="fa fa-edit"></i></button>
+             <button type="button" class="istbuttondelete, badge mr-3 badge-outline-light"
+                     data-target ="#deleteListModal" data-toggle="modal"><i class="fa fa-trash"></i></button>
          </div>
         <!--container der Tasks -->
         <ul class="taskContainer">
