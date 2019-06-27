@@ -26,8 +26,9 @@
           <!--/*@thymesVar id="tasks" type="de.beatyourtask.beatyourtask.model.Task"*/-->
             <!--suppress ThymeleafVariablesResolveInspection -->
              <li
-                     th:each="task: ${tasks}" th:include="/fragments/TaskFragment :: taskFragment"
-                     th:with="Titel=${task.taskName},  Id=idtask_+${task.taskId}"
+                     th:each="task : ${taskForList}"
+                     th:include="/fragments/TaskFragment :: taskFragment"
+                     th:with="Titel=${task.taskName},  Id=idtask_+${task.taskId}, validationId=${taskStat.count}"
                      th:remove="tag"
              />
         </ul>
