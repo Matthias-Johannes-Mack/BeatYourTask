@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 /**
  * Tasklist that contains tasks
  */
@@ -24,6 +25,13 @@ public class Tasklist {
     @ManyToOne
     @JoinColumn
     private Project project;
+
+    @OneToMany(mappedBy = "tasklist", cascade = CascadeType.ALL)
+    private List<Task> tasks = new ArrayList<Task>();
+
+    /** order of the taskLists in the project*/
+    @ElementCollection
+    private List<Integer> orders = new ArrayList<>();
 
 
     /**
@@ -79,4 +87,14 @@ public class Tasklist {
     }
 
     public void setProject(Project project) {this.project = project;}
+
+    public List<Task> getLists() {
+        return this.tasks;
+    }
+
+    public void addTasks(Task task) {
+        Task taskVar = task;
+        taskVar.setTaskList(this);
+        tasks.add(taskVar);
+    }
 }

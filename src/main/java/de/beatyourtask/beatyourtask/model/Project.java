@@ -28,7 +28,7 @@ public class Project {
 
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<Tasklist> tasklists;
+    private List<Tasklist> tasklists = new ArrayList<Tasklist>();
 
 
     @ElementCollection

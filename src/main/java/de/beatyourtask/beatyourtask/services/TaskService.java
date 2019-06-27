@@ -23,4 +23,7 @@ public class TaskService {
     public List<Task> getAllTasks() {
         return taskRepository.findAll();
     }
+
+    @Transactional
+    public Task getTaskById(int id) { return taskRepository.getOne(id); }
 }

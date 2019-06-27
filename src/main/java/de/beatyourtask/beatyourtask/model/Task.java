@@ -1,14 +1,17 @@
 package de.beatyourtask.beatyourtask.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 
 @Entity
 public class Task {
     @Id
     @GeneratedValue
     private Integer taskId;
+
+    @ManyToOne
+    @JoinColumn
+    private Tasklist tasklist;
 
     /** name of ... */
     private String taskName;
@@ -25,4 +28,6 @@ public class Task {
     public String getTaskName() {
         return taskName;
     }
+
+    public void setTaskList(Tasklist tasklist) {this.tasklist = tasklist;}
 }
