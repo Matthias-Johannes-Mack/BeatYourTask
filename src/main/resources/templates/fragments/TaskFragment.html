@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <th:block th:include="/fragments/TaskFragment"></th:block>
+</head>
+<body>
+<span th:fragment="taskFragment">
+<!--/*@thymesVar id="Id" type="java.lang.String"*/-->
+<li class="task" th:id="${Id}">
+
+        <!--uses contextvariable tasklists from TasklistView when called in TasklistView-->
+         <!--suppress ThymeleafVariablesResolveInspection -->
+        <div class="Titel" th:text="${Titel}" style="color: black;"></div>
+
+</li>
+</span>
+</body>
+</html>

@@ -3,9 +3,9 @@ package de.beatyourtask.beatyourtask.controller;
 import de.beatyourtask.beatyourtask.model.Project;
 import de.beatyourtask.beatyourtask.model.User;
 import de.beatyourtask.beatyourtask.services.ProjectService;
+import de.beatyourtask.beatyourtask.services.TaskService;
 import de.beatyourtask.beatyourtask.services.TasklistService;
 import de.beatyourtask.beatyourtask.model.Tasklist;
-import org.springframework.scheduling.config.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
+import de.beatyourtask.beatyourtask.model.Task;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -33,6 +34,9 @@ public class ProjectviewController {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private TaskService taskService;
 
 
     @ModelAttribute(value = "newTaskListAttribute")
@@ -82,6 +86,12 @@ public class ProjectviewController {
         model.addAttribute("tasklists", sortedTasklists);
         System.out.println(id);
         System.out.println("in /ProjectID");
+
+        List<Task> tasks = taskService.getAllTasks();
+        model.addAttribute("tasks", tasks);
+        for(Task task : tasks) {
+            System.out.println(task.getTaskName());
+        }
 
         String view = "Projectview";
         return new ModelAndView(view, "command", model);

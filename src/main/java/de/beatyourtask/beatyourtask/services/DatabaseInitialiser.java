@@ -1,10 +1,7 @@
 package de.beatyourtask.beatyourtask.services;
 
 
-import de.beatyourtask.beatyourtask.model.Project;
-import de.beatyourtask.beatyourtask.model.Role;
-import de.beatyourtask.beatyourtask.model.Tasklist;
-import de.beatyourtask.beatyourtask.model.User;
+import de.beatyourtask.beatyourtask.model.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +32,9 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
 
   @Autowired
   private TasklistService tasklistService;
+
+  @Autowired
+  private TaskService taskService;
 
   @Override
   public void onApplicationEvent(ContextRefreshedEvent event) {
@@ -96,5 +96,9 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     user3.setRoles(userRoles);
 
     userService.saveUser(user3);
+
+    Task task1 = new Task();
+    task1.setTaskName("TestTask");
+    taskService.saveTask(task1);
   }
 }
