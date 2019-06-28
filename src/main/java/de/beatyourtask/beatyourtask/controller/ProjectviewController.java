@@ -93,7 +93,6 @@ public class ProjectviewController {
         for(Tasklist list : sortedTasklists){
             int listID = list.getListId();
             tasks.add(tasklistService.loadTasklistById(listID).getTasks());
-            System.out.println(tasklistService.loadTasklistById(listID).getTasks().get(0).getTaskName());
         }
         model.addAttribute("allTasks", tasks);
 
