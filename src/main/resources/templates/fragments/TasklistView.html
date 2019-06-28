@@ -185,12 +185,13 @@
 <ul id="sortableListContainer" class="sortableListContainer">
 
     <!-- Loads Lists from database: uses contextvariable tasklists from Projectview when called in Projectview -->
+    <!-- gives listFragment a list with all the tasks in it: taskForList -->
 
     <!--/*@thymesVar id="tasklists" type="de.beatyourtask.beatyourtask.model.Tasklist"*/-->
     <!--suppress ThymeleafVariablesResolveInspection -->
     <li
             th:each="list: ${tasklists}" th:include="/fragments/listFragments :: listFragment"
-            th:with="Titel=${list.listName}, Color=${list.color}, Id=idspalte_+${list.listId}"
+            th:with="Titel=${list.listName}, Color=${list.color}, Id=idspalte_+${list.listId}, iteration=${listStat.index}, taskForList=${allTasks[iteration]}"
             th:remove="tag"
     />
 

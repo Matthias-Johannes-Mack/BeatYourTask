@@ -87,11 +87,15 @@ public class ProjectviewController {
         System.out.println(id);
         System.out.println("in /ProjectID");
 
-        List<Task> tasks = taskService.getAllTasks();
-        model.addAttribute("tasks", tasks);
-        for(Task task : tasks) {
-            System.out.println(task.getTaskName());
+
+        // a list containing the tasks for each tasklist, index in the list is the same as in sortedList
+        List<List<Task>> tasks = new ArrayList<List<Task>>();
+        for(Tasklist list : sortedTasklists){
+            int listID = list.getListId();
+            tasks.add(tasklistService.loadTasklistById(listID).getTasks());
+            System.out.println(tasklistService.loadTasklistById(listID).getTasks().get(0).getTaskName());
         }
+        model.addAttribute("allTasks", tasks);
 
         String view = "Projectview";
         return new ModelAndView(view, "command", model);

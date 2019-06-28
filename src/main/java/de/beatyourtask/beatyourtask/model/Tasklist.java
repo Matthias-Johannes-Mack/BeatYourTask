@@ -88,7 +88,7 @@ public class Tasklist {
 
     public void setProject(Project project) {this.project = project;}
 
-    public List<Task> getLists() {
+    public List<Task> getTasks() {
         return this.tasks;
     }
 

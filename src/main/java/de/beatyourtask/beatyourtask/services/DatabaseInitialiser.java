@@ -2,11 +2,13 @@ package de.beatyourtask.beatyourtask.services;
 
 
 import de.beatyourtask.beatyourtask.model.*;
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.orm.hibernate5.HibernateTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
@@ -97,8 +99,49 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
 
     userService.saveUser(user3);
 
+// ----------- Data for Testing loading tasks ------------------------ //
+
+    Project testPrj = new Project();
+    testPrj.setProjectName("testPrj ");
+    testPrj.setProjectDescription("test for testPrj");
+
+
+    User userTest = new User();
+    userTest.setPassword(passwordEncoder.encode("password"));
+    userTest.setEmail("jan@test");
+    userTest.setSurname("Max");
+    userTest.setLastname("Mustermann");
+    userTest.setRoles(userRoles);
+    userTest.addProject(testPrj);
+    userService.saveUser(userTest);
+
+
     Task task1 = new Task();
-    task1.setTaskName("TestTask");
+    task1.setTaskName("TestTask1");
     taskService.saveTask(task1);
+
+    Task task2 = new Task();
+    task2.setTaskName("TestTask2");
+    taskService.saveTask(task2);
+
+    Tasklist tasklist1 = new Tasklist();
+    tasklist1.setListName("tasklist1");
+    tasklistService.saveList(tasklist1);
+
+    tasklist1.addTasks(task1);
+    tasklistService.saveList(tasklist1);
+
+    Tasklist tasklist2 = new Tasklist();
+    tasklist2.setListName("tasklist2");
+    tasklistService.saveList(tasklist2);
+
+    tasklist2.addTasks(task2);
+    tasklistService.saveList(tasklist2);
+
+    projectService.save(testPrj);
+
+    testPrj.addTasklist(tasklist1);
+    testPrj.addTasklist(tasklist2);
+    projectService.save(testPrj);
   }
 }
