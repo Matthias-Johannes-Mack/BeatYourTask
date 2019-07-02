@@ -19,13 +19,13 @@
             <div class="Titel" th:text="${Titel}" style="color: black;"></div>
                 </div>
                 <div class="col-4">
-                    <div cla    ss="dropdown">
+                    <div class="dropdown">
                         <i class="fas fa-ellipsis-v" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Edit</a>
+                            <a class="dropdown-item" th:href="@{/taskComments(taskId=${task.taskId})}">Edit</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#">Comments</a>
-                            <a class="dropdown-item" href="#">Assignees</a>
+                            <a class="dropdown-item" th:href="@{/taskComments(taskId=${task.taskId})}">Comments</a>
+                            <a class="dropdown-item" th:href="@{/taskAssignees(taskId=${task.taskId})}">Assignees</a>
                         </div>
                     </div>
                 </div>
