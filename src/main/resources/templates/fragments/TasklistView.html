@@ -18,6 +18,7 @@
     <th:block th:include="/fragments/AddNewListModal"></th:block>
     <th:block th:include="/fragments/editListModal"></th:block>
     <th:block th:include="/fragments/deleteListModal"></th:block>
+    <th:block th:include="/fragments/AddNewTaskModal"></th:block>
 
 
     <!-- Style for this fragment -->
@@ -29,10 +30,12 @@
             float: left;
             margin-right: -999em;
         }
+
         /* horizontale ausrichtung des ListenContainers*/
         #sortableListContainer > li {
             float: left;
         }
+
         /*Task */
         .task {
             background: #fff;
@@ -47,6 +50,7 @@
             box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
             border-radius: 5px;
         }
+
         /* Spalte in der TaskContainer drinnen*/
         .spalte {
             padding-top: 0%;
@@ -55,6 +59,7 @@
             width: 270px;
             vertical-align: top;
         }
+
         /* Vorschau beim bewegen von Tasks */
         .highlightTask {
             opacity: 0.5;
@@ -68,6 +73,7 @@
             min-height: 75px;
             border-radius: 5px;
         }
+
         /* Vorschau beim bewegen von Spalten */
         .highlightSpalte {
             opacity: 0.5;
@@ -76,6 +82,7 @@
             height: 550px;
             width: 270px;
         }
+
         /*container für Tasks */
         .taskContainer {
             list-style-type: none;
@@ -84,27 +91,30 @@
             width: 100%;
             min-height: 500px;
             min-width: 150px;
+
+            text-align: center;
         }
+
         .spaltenkopf {
             background: rgba(25, 25, 25, .1);
         }
-    </style>
 
+    </style>
 
 
     <!-- jquerry functions for this fragment -->
     <script>
         /*making sortable(drag and drop) work */
-        $(document).ready(function() {
+        $(document).ready(function () {
             /* Connect all lists */
             $("#sortableListContainer").sortable({
                 placeholder: "highlightSpalte",
                 //saves the new position when a list is moved
                 update: function sendAjaxWhenListMoved(event, ui) {
                     var listOrder = $(this).sortable('serialize');
-                    var jsonfile={json:JSON.stringify(listOrder)};
+                    var jsonfile = {json: JSON.stringify(listOrder)};
                     console.log("Liste bewegt!");
-                    console.log("Data: "+listOrder);
+                    console.log("Data: " + listOrder);
                     // Post
                     $.ajax({
                         type: 'POST',
@@ -118,9 +128,9 @@
             // send intial order of lists when page is loaded(when list is added/deleted)
             $(function sendInitalListPosition() {
                 var listOrder = $("#sortableListContainer").sortable('serialize');
-                var jsonfile={json:JSON.stringify(listOrder)};
+                var jsonfile = {json: JSON.stringify(listOrder)};
                 console.log("Initale Listen Position!");
-                console.log("Data: "+listOrder);
+                console.log("Data: " + listOrder);
                 // Post ajax
                 $.ajax({
                     type: 'POST',
@@ -152,11 +162,11 @@
             });
 
             //sets the id of the list in the edit list modal
-            $( ".listbutton").click(function() {
+            $(".listbutton").click(function () {
                 console.log("button clicked");
                 var parentID = $(this).closest('li').attr('id');
                 console.log(parentID);
-                var idString = parentID.replace("idspalte_","");
+                var idString = parentID.replace("idspalte_", "");
                 console.log(idString);
                 var idInt = parseInt(idString);
 
@@ -164,15 +174,28 @@
             });
 
             //sets the id of the list in the delete list modal
-            $( ".listbuttondelete").click(function() {
+            $(".listbuttondelete").click(function () {
                 console.log("button clicked");
                 var parentID = $(this).closest('li').attr('id');
                 console.log(parentID);
-                var idString = parentID.replace("idspalte_","");
+                var idString = parentID.replace("idspalte_", "");
                 console.log(idString);
                 var idInt = parseInt(idString);
 
                 $("#deleteListModal #listID").val(idInt);
+            });
+
+            //sets the id of the list in which task shall be created in the new task modal
+            $(".addTaskButton").click(function () {
+                console.log("button clicked");
+                var parentID = $(this).closest('li').attr('id');
+                console.log("parentID: " + parentID);
+                var idString = parentID.replace("idspalte_", "");
+                console.log("parentID String: " + idString);
+                var idInt = parseInt(idString);
+
+                $("#AddNewTaskModal #listID").val(idInt);
+
             });
         });
     </script>
@@ -227,7 +250,8 @@
     Ende Mock Listen -->
 
     <!-- button zum öffnen des Modals zum hinzufügen einer neuen Liste -->
-    <input type="button" class="btn btn-secondary btn-pill btn-sm" id="addNewListButton" value="+" name="addList" data-toggle="modal"
+    <input type="button" class="btn btn-secondary btn-pill btn-sm" id="addNewListButton" value="+" name="addList"
+           data-toggle="modal"
            data-target="#newListModal"/>
 
 

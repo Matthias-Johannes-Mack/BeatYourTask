@@ -13,9 +13,8 @@ public class Task {
     @JoinColumn
     private Tasklist tasklist;
 
-    /** name of ... */
+    /** name of Task */
     private String taskName;
-
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
@@ -30,4 +29,5 @@ public class Task {
     }
 
     public void setTaskList(Tasklist tasklist) {this.tasklist = tasklist;}
+
 }

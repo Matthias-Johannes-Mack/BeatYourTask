@@ -38,32 +38,35 @@ public class ProjectviewController {
     @Autowired
     private TaskService taskService;
 
-
     @ModelAttribute(value = "newTaskListAttribute")
-    public Tasklist newTasklist()
-    {
+    public Tasklist newTasklist() {
         return new Tasklist();
     }
 
+    @ModelAttribute(value = "newTaskAttribute")
+    public Task newTAsk() {
+        return new Task();
+    }
 
 
     /**
      * Loads the Projectview with the responding tasklists in the database
+     *
      * @param model model containing all the tasklist in the database
      * @return projectview with all tasklist in database
-     * */
+     */
     @GetMapping("/Project{ProjectId}")
     public ModelAndView loadListsID(Model model, @RequestParam("ProjectId") Integer id) {
         //for loading the lists in the rigth order
         Project currentProject = projectService.findById(id);
-        List<Tasklist> unSortedTasklists =currentProject.getLists();
+        List<Tasklist> unSortedTasklists = currentProject.getLists();
         List<Integer> order = currentProject.getOrders();
         List<Tasklist> sortedTasklists = new ArrayList<Tasklist>();
         List<Tasklist> listsToRemoveFromUnsorted = new ArrayList<Tasklist>();
 
         for (Integer currentId : order) {
-            for (Tasklist currenTasklist: unSortedTasklists) {
-                if(currenTasklist.getListId() == currentId) {
+            for (Tasklist currenTasklist : unSortedTasklists) {
+                if (currenTasklist.getListId() == currentId) {
                     sortedTasklists.add(currenTasklist);
                     listsToRemoveFromUnsorted.add(currenTasklist);
                     break;
@@ -72,15 +75,15 @@ public class ProjectviewController {
         }
         unSortedTasklists.removeAll(listsToRemoveFromUnsorted);
 
-        System.out.println("unsorted Tasklist"+unSortedTasklists);
-        System.out.println("Sorted Tsklist: "+sortedTasklists);
+        System.out.println("unsorted Tasklist" + unSortedTasklists);
+        System.out.println("Sorted Tsklist: " + sortedTasklists);
 
         //if some of list ids were not allready saved in the order these tasklist will be loaded at the end
         //e.g. when a list is added
-        for (Tasklist currenTasklist: unSortedTasklists) {
-                sortedTasklists.add(currenTasklist);
+        for (Tasklist currenTasklist : unSortedTasklists) {
+            sortedTasklists.add(currenTasklist);
         }
-        System.out.println("Sorted Tsklist: "+sortedTasklists);
+        System.out.println("Sorted Tsklist: " + sortedTasklists);
 
 
         model.addAttribute("tasklists", sortedTasklists);
@@ -90,7 +93,7 @@ public class ProjectviewController {
 
         // a list containing the tasks for each tasklist, index in the list is the same as in sortedList
         List<List<Task>> tasks = new ArrayList<List<Task>>();
-        for(Tasklist list : sortedTasklists){
+        for (Tasklist list : sortedTasklists) {
             int listID = list.getListId();
             tasks.add(tasklistService.loadTasklistById(listID).getTasks());
         }
@@ -103,6 +106,7 @@ public class ProjectviewController {
 
     /**
      * Saves a new list in the database
+     *
      * @param newTaskListAttribute new Tasklist Object from View
      * @return reirekt to Projekt
      */
@@ -111,11 +115,10 @@ public class ProjectviewController {
 
         System.out.println("in add List");
         String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
-        System.out.println("ProjectId: "+projectId);
+        System.out.println("ProjectId: " + projectId);
         tasklistService.saveList(newTaskListAttribute);
         System.out.println("saved tasklist");
-        System.out.println("saved tasklist with id: "+newTaskListAttribute.getListId());
-
+        System.out.println("saved tasklist with id: " + newTaskListAttribute.getListId());
 
 
         try {
@@ -126,52 +129,84 @@ public class ProjectviewController {
 
             projectService.save(projectService.findById(projectIdInt));
 
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
 
-        return "redirect:/Project?ProjectId="+projectId;
+        return "redirect:/Project?ProjectId=" + projectId;
 
     }
 
     /**
      * Edit a list in the database
+     *
      * @param newTaskListAttribute new Tasklist Object from View
      * @return reirekt to Projekt
      */
     @RequestMapping(value = "/editList", method = RequestMethod.POST)
     public String editList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute, @RequestHeader(value = "referer", required = false) final String referer) {
         String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
-        System.out.println("ProjectId: "+projectId);
+        System.out.println("ProjectId: " + projectId);
 
         int id = newTaskListAttribute.getListId();
         System.out.println(id);
         System.out.println("in Edit");
         System.out.println(newTaskListAttribute.getColor());
         Tasklist list = tasklistService.loadTasklistById(id);
-        String color=newTaskListAttribute.getColor().replaceFirst("background-color:","");
+        String color = newTaskListAttribute.getColor().replaceFirst("background-color:", "");
         System.out.println(color);
         list.setColor(color);
         list.setListName(newTaskListAttribute.getListName());
         tasklistService.saveList(list);
 
-        return "redirect:/Project?ProjectId="+projectId;
+        return "redirect:/Project?ProjectId=" + projectId;
     }
 
     /**
      * Deletes a list in the database
+     *
      * @param newTaskListAttribute new Tasklist Object from View
      * @return reirekt to Projekt
      */
     @RequestMapping(value = "/deleteList", method = RequestMethod.POST)
     public String deleteList(@ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute, @RequestHeader(value = "referer", required = false) final String referer) {
         String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
-        System.out.println("ProjectId: "+projectId);
+        System.out.println("ProjectId: " + projectId);
 
         int id = newTaskListAttribute.getListId();
         tasklistService.deleteTasklistById(id);
 
-        return "redirect:/Project?ProjectId="+projectId;
+        return "redirect:/Project?ProjectId=" + projectId;
     }
 
+
+    /**
+     * Saves a new task in the database
+     *
+     * @param newTaskAttribute new task Object from View
+     * @return redirekt to Projekt
+     */
+    @RequestMapping(value = "/addTask", method = RequestMethod.POST)
+    public String addTask(@ModelAttribute("newTaskAttribute") Task newTaskAttribute, @ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute, @RequestHeader(value = "referer", required = false) final String referer) {
+        String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
+        int listID = newTaskListAttribute.getListId();
+
+        System.out.println("in add Task");
+        System.out.println("ProjectId: " + projectId);
+        System.out.println("Task created in ListID: " + listID);
+        System.out.println("Taskname: " + newTaskAttribute.getTaskName());
+
+        taskService.saveTask(newTaskAttribute);
+
+        try {
+
+            tasklistService.loadTasklistById(listID).addTasks(taskService.getTaskById(newTaskAttribute.getTaskId()));
+            tasklistService.saveList(tasklistService.loadTasklistById(listID));
+
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/Project?ProjectId=" + projectId;
+    }
 }
