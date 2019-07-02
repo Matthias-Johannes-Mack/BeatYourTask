@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
+    <!-- Dependency for datepicker-->
+    <script src="js/shards.min.js"></script>
+
     <!-- Script for Bootstrap Form validation -->
     <script>
         (function () {
@@ -60,6 +63,10 @@
                     <div th:object="${newTaskListAttribute}">
                         <input type="hidden" class="form-control" id="listID" th:field="*{listId}">
                     </div>
+
+
+                    <label for="datepicker-task">Due date</label>
+                    <input type="text" class="form-control" id="datepicker-task" placeholder="Due date">
 
                     <br>
 

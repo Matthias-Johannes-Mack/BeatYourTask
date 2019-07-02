@@ -197,6 +197,18 @@
                 $("#AddNewTaskModal #listID").val(idInt);
 
             });
+
+
+            var startDate = new Date();
+            startDate.setDate(startDate.getDate());
+
+            $('#datepicker-task').datepicker({
+                startDate: startDate,
+                calendarWeeks: true,
+                autoclose: true,
+                todayHighlight: true
+            });
+
         });
     </script>
 
