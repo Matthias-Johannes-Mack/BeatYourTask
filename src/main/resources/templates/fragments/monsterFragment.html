@@ -1,0 +1,21 @@
+<html lang="en" xmlns:th="http://thymeleaf.org/">
+
+<div class="container bg-light ml-auto rounded w-25 h-100 ml-auto" xmlns:padding-left="http://www.w3.org/1999/xhtml"
+     xmlns:th="http://www.w3.org/1999/xhtml"/>
+
+<div class="row w-50">
+    <div class=" ">
+        <img th:src="${MonsterPic}" class="w-100 ml-1 avatar" alt="Monster">
+    </div>
+</div>
+
+<div class="progress w-75 border border-dark h-auto ">
+    <div class="progress-bar bg-warning" role="progressbar" th:style="'width:' + ${currentHp / maxHp * 100} + '%;'"
+         th:aria-valuenow="${currentHp}"
+         aria-valuemin="0"
+         th:aria-valuemax="${maxHp}" th:text="${currentHp} + ' ' + Hp.">
+    </div>
+
+</div>
+</div>
+</html>

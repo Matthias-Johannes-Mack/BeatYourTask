@@ -2,15 +2,16 @@ package de.beatyourtask.beatyourtask.controller;
 
 import de.beatyourtask.beatyourtask.model.Project;
 import de.beatyourtask.beatyourtask.model.User;
+import de.beatyourtask.beatyourtask.services.MonsterService;
 import de.beatyourtask.beatyourtask.services.ProjectService;
 import de.beatyourtask.beatyourtask.services.UserService;
 import de.beatyourtask.beatyourtask.validators.AddUserDTO;
 import de.beatyourtask.beatyourtask.validators.ProjectAddUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Controller;
 
 import javax.validation.Valid;
 
@@ -29,6 +30,9 @@ public class ProjectoverviewController {
     UserService userService;
 
     @Autowired
+    MonsterService monsterService;
+
+    @Autowired
     ProjectAddUserValidator projectAddUserValidator;
 
     /**
@@ -39,11 +43,23 @@ public class ProjectoverviewController {
      */
     @GetMapping("")
     public String displayProjects(Model model) {
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+
         model.addAttribute("title", "Projectoverview");
         model.addAttribute("projects", userService.getCurrentUser().getProjects());
+
+        // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
-        model.addAttribute("Monsterpic", userService.getCurrentUser().getActiveMonsterPath());
+        model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+        model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+        model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+        model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        //-------------------------------------------------------------------------------------------------
+
+
+
         return "projectoverview/projects";
     }
 

@@ -35,7 +35,7 @@ public class User {
 
     private int damage;
 
-    private String activeMonsterPath;
+    private int activeMonsterId;
 
     /**-------------------------------------------**/
 
@@ -164,11 +164,11 @@ public class User {
         this.damage = damage;
     }
 
-    public String getActiveMonsterPath() {
-        return activeMonsterPath;
+    public int getActiveMonsterId() {
+        return activeMonsterId;
     }
 
-    public void setActiveMonsterPath(String activeMonsterPath) {
-        this.activeMonsterPath = activeMonsterPath;
+    public void setActiveMonsterId(int activeMonsterId) {
+        this.activeMonsterId = activeMonsterId;
     }
 }
