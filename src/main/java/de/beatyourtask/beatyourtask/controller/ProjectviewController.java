@@ -195,6 +195,13 @@ public class ProjectviewController {
         System.out.println("ProjectId: " + projectId);
         System.out.println("Task created in ListID: " + listID);
         System.out.println("Taskname: " + newTaskAttribute.getTaskName());
+        System.out.println("duedate: " + newTaskAttribute.getDate());
+
+        // damit dateelemnt nur angezeiigt wird wenn datum ausgewählt
+        String dateValue = newTaskAttribute.getDate();
+        if (dateValue == "") {
+            newTaskAttribute.setDate(null);
+        }
 
         taskService.saveTask(newTaskAttribute);
 

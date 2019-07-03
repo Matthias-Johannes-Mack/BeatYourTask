@@ -14,7 +14,16 @@
 
             <!--uses contextvariable tasklists from TasklistView when called in TasklistView-->
             <!--suppress ThymeleafVariablesResolveInspection -->
-         <div class="Titel" th:text="${Titel}" style="color: black;"></div>
+            <div class="Titel" th:text="${Titel}" style="color: black;"></div>
+
+
+            <!-- date Elemente werden nur angezeigt wenn date != null-->
+            <!--suppress ThymeleafVariablesResolveInspection -->
+            <div th:if="${dueDate} != null" class="dateWrapper">
+             <i class="fa fa-calendar dateElement"></i>
+                <!--suppress ThymeleafVariablesResolveInspection -->
+             <div class="date dateElement" th:text="${dueDate}" style="color: lightslategrey;"></div>
+            </div>
 
         </li>
 </span>

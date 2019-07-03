@@ -57,20 +57,21 @@
                                name="tiel" th:field="*{taskName}" type="text" required>
                         <div class="invalid-feedback"> Please choose a title!</div>
                         <div class="valid-feedback"> Good title!</div>
+
+
+                        <label for="datepicker-task">Due date</label>
+                        <input type="text" class="form-control datepicker" th:field="*{date}" id="datepicker-task" placeholder="Due date">
                     </div>
+
 
                     <!--/*@thymesVar id="newTaskListAttribute" type="de.beatyourtask.beatyourtask.model.Tasklist"*/-->
                     <div th:object="${newTaskListAttribute}">
                         <input type="hidden" class="form-control" id="listID" th:field="*{listId}">
                     </div>
 
-
-                    <label for="datepicker-task">Due date</label>
-                    <input type="text" class="form-control" id="datepicker-task" placeholder="Due date">
-
                     <br>
 
-                    <input type="submit" value="Submit" class="btn btn-danger"/>
+                    <input type="submit" value="Submit" class="btn btn-danger "/>
 
                 </div>
             </form>

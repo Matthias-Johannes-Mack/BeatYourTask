@@ -16,6 +16,8 @@ public class Task {
     /** name of Task */
     private String taskName;
 
+    private String date;
+
     public void setTaskName(String taskName) {
         this.taskName = taskName;
     }
@@ -30,4 +32,11 @@ public class Task {
 
     public void setTaskList(Tasklist tasklist) {this.tasklist = tasklist;}
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 }
