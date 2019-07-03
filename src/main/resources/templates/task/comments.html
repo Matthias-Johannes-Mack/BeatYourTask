@@ -33,6 +33,7 @@
                 <table class="table">
                     <tr th:each="comment : ${comments}">
                         <td>
+                            <p class="comment-date" th:text="${#dates.format(comment.createDate, 'dd-MM-yyyy ''at'' HH:mm')}"></p>
                             <p class="comment-title" th:text="${comment.author.surname} + ' ' + ${comment.author.Lastname} + ' wrote:'"></p>
                             <p class="comment-text" th:utext="${comment.message}"></p>
                         </td>

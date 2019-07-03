@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Entity
 public class Comment {
@@ -13,8 +15,9 @@ public class Comment {
     @GeneratedValue
     private Integer id;
 
+    @Size(min=5,max=250, message="The comment should be between 5 and 250 characters long.")
     private String message;
-    private String createDate;
+    private Date createDate;
 
     @OneToOne
     private User author;
@@ -56,11 +59,11 @@ public class Comment {
         this.author = author;
     }
 
-    public String getCreateDate() {
+    public Date getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(String createDate) {
+    public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 

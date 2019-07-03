@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 
 @Controller
@@ -104,11 +105,23 @@ public class TaskController {
 
 
     @PostMapping("comments{taskId}")
-    public String processDisplayUsersForm(@RequestParam("taskId") Integer taskId, @ModelAttribute Comment comment, Model model){
+    public String processDisplayUsersForm(@RequestParam("taskId") Integer taskId, @ModelAttribute @Valid Comment comment, BindingResult result, Model model){
+
+        Task task = taskService.getTaskById(taskId);
+        Integer projectId = task.getTasklist().getProject().getProjectId();
+
+        if(result.hasErrors()){
+            model.addAttribute("title", "Comments");
+            model.addAttribute("comments", commentService.findAllByTask(task));
+            model.addAttribute("taskId", taskId);
+            model.addAttribute("projectId", projectId);
+            return "task/comments";
+        }
 
         comment.setAuthor(userService.getCurrentUser());
         comment.setOwnerTask(taskService.getTaskById(taskId));
         comment.setMessage(comment.getMessage().replace("\n","<br />"));
+        comment.setCreateDate(new Date());
 
         // saving changes to database
         commentService.save(comment);
