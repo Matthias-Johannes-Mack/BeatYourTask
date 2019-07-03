@@ -28,9 +28,12 @@ public class Task {
     }
 
     public void addUser(User user){
-        assignees.add(user);
+        this.assignees.add(user);
     }
 
+    public void removeUser(User user){
+        this.assignees.remove(user);
+    }
     // Getters and Setters
     public void setTaskName(String taskName) {
         this.taskName = taskName;

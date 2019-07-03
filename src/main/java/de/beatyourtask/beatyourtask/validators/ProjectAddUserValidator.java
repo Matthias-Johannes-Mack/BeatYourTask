@@ -43,7 +43,7 @@ public class ProjectAddUserValidator implements Validator {
             // checks if user is already part of the project
             boolean flag = false;
             for (Project prj: user.getProjects()) {
-                if(prj.getProjectId() == addUserDTO.getProjectId()){
+                if(prj.getProjectId() == addUserDTO.getId()){
                     flag = true;
                 }
             }

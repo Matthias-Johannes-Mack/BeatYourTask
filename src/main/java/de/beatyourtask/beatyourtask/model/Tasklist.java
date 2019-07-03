@@ -92,6 +92,10 @@ public class Tasklist {
         return this.tasks;
     }
 
+    public Project getProject() {
+        return project;
+    }
+
     public void addTasks(Task task) {
         Task taskVar = task;
         taskVar.setTaskList(this);
