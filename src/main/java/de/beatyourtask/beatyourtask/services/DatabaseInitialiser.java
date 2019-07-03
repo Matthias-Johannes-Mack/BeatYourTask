@@ -49,8 +49,13 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     User user1 = new User();
     user1.setPassword(passwordEncoder.encode("password"));
     user1.setEmail("user@test.de");
+    user1.setSurname("Max");
+    user1.setLastname("Mustermann");
     user1.setRoles(userRoles);
+    user1.setExp(700);
+    user1.setLvl(1);
     userService.saveUser(user1);
+
 
     Project sopra = new Project();
     sopra.setProjectName("Testproject 1");
