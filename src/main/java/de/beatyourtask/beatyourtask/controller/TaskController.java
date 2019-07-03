@@ -1,7 +1,9 @@
 package de.beatyourtask.beatyourtask.controller;
 
+import de.beatyourtask.beatyourtask.model.Comment;
 import de.beatyourtask.beatyourtask.model.Task;
 import de.beatyourtask.beatyourtask.model.User;
+import de.beatyourtask.beatyourtask.services.CommentService;
 import de.beatyourtask.beatyourtask.services.TaskService;
 import de.beatyourtask.beatyourtask.services.UserService;
 import de.beatyourtask.beatyourtask.validators.AddUserDTO;
@@ -28,8 +30,12 @@ public class TaskController {
     @Autowired
     TaskAddAssigneeValidator taskAddAssigneeValidator;
 
+    @Autowired
+    CommentService commentService;
+
+
     @GetMapping("assignees{taskId}")
-    public String displayAssigneesForm(@RequestParam("taskId") Integer taskId, Model model, @RequestHeader(value = "referer", required = false) final String referer) {
+    public String displayAssigneesForm(@RequestParam("taskId") Integer taskId, Model model) {
 
         Task task = taskService.getTaskById(taskId);
         Integer projectId = task.getTasklist().getProject().getProjectId();
@@ -78,5 +84,35 @@ public class TaskController {
         taskService.saveTask(taskService.getTaskById(taskId));
 
         return "redirect:/task/assignees?taskId=" + taskId;
+    }
+
+    @GetMapping("comments{taskId}")
+    public String displayComments(@RequestParam("taskId") Integer taskId, Model model, @RequestHeader(value = "referer", required = false) final String referer) {
+
+        Task task = taskService.getTaskById(taskId);
+        Integer projectId = task.getTasklist().getProject().getProjectId();
+
+
+        model.addAttribute("title", "Comments");
+        model.addAttribute("comment", new Comment());
+        model.addAttribute("comments", commentService.findAllByTask(task));
+        model.addAttribute("taskId", taskId);
+        model.addAttribute("projectId", projectId);
+
+        return "task/comments";
+    }
+
+
+    @PostMapping("comments{taskId}")
+    public String processDisplayUsersForm(@RequestParam("taskId") Integer taskId, @ModelAttribute Comment comment, Model model){
+
+        comment.setAuthor(userService.getCurrentUser());
+        comment.setOwnerTask(taskService.getTaskById(taskId));
+        comment.setMessage(comment.getMessage().replace("\n","<br />"));
+
+        // saving changes to database
+        commentService.save(comment);
+
+        return "redirect:/task/comments?taskId=" + taskId;
     }
 }
