@@ -1,21 +1,17 @@
 <html lang="en" xmlns:th="http://thymeleaf.org/">
 
-<div class="container bg-light ml-auto rounded w-25 h-100 ml-auto" xmlns:padding-left="http://www.w3.org/1999/xhtml"
-     xmlns:th="http://www.w3.org/1999/xhtml"/>
-
-<div class="row w-50">
-    <div class=" ">
-        <img th:src="${MonsterPic}" class="w-100 ml-1 avatar" alt="Monster">
+<div class="d-flex flex-row with-shadows container bg-light rounded mb-0 w-25 h-100 with-shadows border border-dark">
+    <div class="bg-dark rounded"><img th:src="${MonsterPic}" class="with-shadows avatar img-thumbnail bg-light p-0 rounded border-dark border" width="190px" alt="Monster"></div>
+    <div class="w-100 p-3 text-center">
+        <div class="progress border border-dark h-auto with-shadows">
+            <div class="progress-bar bg-danger" role="progressbar"
+                 th:style="'width:' + ${currentHp / maxHp * 100} + '%;'"
+                 th:aria-valuenow="${currentHp}"
+                 aria-valuemin="0"
+                 th:aria-valuemax="${maxHp}" th:text="${currentHp} + ' ' + Hp.">
+            </div>
+        </div>
+        <input type="button" class="btn btn-danger p-2 mt-2" value="Kick me" />
     </div>
-</div>
-
-<div class="progress w-75 border border-dark h-auto ">
-    <div class="progress-bar bg-warning" role="progressbar" th:style="'width:' + ${currentHp / maxHp * 100} + '%;'"
-         th:aria-valuenow="${currentHp}"
-         aria-valuemin="0"
-         th:aria-valuemax="${maxHp}" th:text="${currentHp} + ' ' + Hp.">
-    </div>
-
-</div>
 </div>
 </html>

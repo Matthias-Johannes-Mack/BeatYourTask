@@ -1,22 +1,23 @@
 <html lang="en" xmlns:th="http://thymeleaf.org/">
-<div class="container bg-light ml-2  rounded w-25 h-auto mb-auto" xmlns:padding-left="http://www.w3.org/1999/xhtml"
+<div class="card" xmlns:padding-left="http://www.w3.org/1999/xhtml"
      xmlns:th="http://www.w3.org/1999/xhtml"/>
 
-<div class="row">
+<div class="card text-center with-shadows">
 
-    <div class="ml-3" th:text="${Surname} + ' ' + ${Lastname}"/>
-
-    <div class="progress w-75 border border-dark ml-2">
+    <div class="card-img-top p-3 bg-light" th:text="${Surname} + ' ' + ${Lastname}"/>
+<div class="p-1">
+    <div class="progress w-100 border border-dark with-shadows">
         <div class="progress-bar bg-danger h-auto" role="progressbar" th:style="'width:' + ${Exp / 10} + '%;'" th:aria-valuenow="${Exp}"
              aria-valuemin="0"
              aria-valuemax="1000" th:text="${Exp} + ' ' + Exp.">
         </div>
-
     </div>
 
-    <div class="text-body pl-2" th:text="Lvl. + ' ' + ${Lvl}"/>
+    <div class=" text-center" th:text="Lvl. + ' ' + ${Lvl}"/>
 
 </div>
-
 </div>
+</div>
+
+
 </html>

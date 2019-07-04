@@ -111,21 +111,21 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
         monster1.setMonsterId(1);
         monster1.setLifepoints(500);
         monster1.setCurrentLifePoints(500);
-        monster1.setMonsterPic("images/Monster/Ogre/0_Ogre_Dying_000.png");
+        monster1.setMonsterPic("images/Monster/Goblin/0_Goblin_Dying_000.png");
         monsterService.saveMonster(monster1);
 
         Monster monster2 = new Monster();
         monster2.setMonsterId(2);
         monster2.setLifepoints(1000);
         monster2.setCurrentLifePoints(1000);
-        monster2.setMonsterPic("images/Monster/Goblin/0_Goblin_Dying_000.png");
+        monster2.setMonsterPic("images/Monster/Orc/0_Orc_Dying_000.png");
         monsterService.saveMonster(monster2);
 
         Monster monster3 = new Monster();
         monster3.setMonsterId(3);
         monster3.setLifepoints(1500);
         monster3.setCurrentLifePoints(1500);
-        monster3.setMonsterPic("images/Monster/Orc/0_Orc_Dying_000.png");
+        monster3.setMonsterPic("images/Monster/Ogre/0_Ogre_Dying_000.png");
         monsterService.saveMonster(monster3);
 
     }
