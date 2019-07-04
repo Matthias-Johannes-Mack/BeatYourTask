@@ -4,10 +4,10 @@ import de.beatyourtask.beatyourtask.model.Project;
 import de.beatyourtask.beatyourtask.services.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
+
+
 
 /**
  * Controller for handeling Ajax request when an sortable item was moved
@@ -52,9 +52,61 @@ public class AjaxController {
 
         }
 
+        return "Home";
+    }
 
+
+    @PostMapping("/ajaxMovedTask")
+    public  String  changeOrderOfTask(@RequestParam("json") String jsonOrder) {
+        System.out.println("in ajaxMovedTask");
+        System.out.println(jsonOrder);
+
+        String listID = jsonOrder.substring(10, jsonOrder.indexOf("&"));
+        System.out.println("listID: "+listID);
+
+        getTaskOrderFromJsonString(jsonOrder);
 
         return "Home";
+    }
+
+
+    /**
+     * Makes an Arraylist containing the ordered taskIDs from the JsonString of the Ajax Post from the moved tasks
+     * @param jsonOrder JsonString of the Ajax Post
+     * @return Arraylist containing the ordered tasksIDs from a List
+     */
+    private ArrayList<Integer> getTaskOrderFromJsonString(String jsonOrder) {
+        ArrayList<Integer> order = new ArrayList<>();
+
+        jsonOrder = jsonOrder.substring(jsonOrder.indexOf("&")+1, jsonOrder.length());
+        jsonOrder = jsonOrder.replaceAll("\"", "");
+        System.out.println("Removed "+ jsonOrder);
+
+        while(jsonOrder.indexOf("=") >= 0) {
+            int taskIDInt;
+            String taskIDString;
+
+            jsonOrder = jsonOrder.substring(jsonOrder.indexOf("=") + 1, jsonOrder.length());
+
+            if(jsonOrder.indexOf("&") >= 0){
+                taskIDString =  jsonOrder.substring(0, jsonOrder.indexOf("&"));
+            } else {
+                taskIDString = jsonOrder;
+            }
+            System.out.println("taskID: "+taskIDString);
+
+            try {
+                taskIDInt = Integer.parseInt(taskIDString);
+                order.add(taskIDInt);
+            }
+            catch (NumberFormatException e) {
+                System.out.println(e);
+                //TODO Fehlerbehandlung: dann die alte Reihenfolge beibeghalten?!
+            }
+        }
+
+        System.out.println("Complete Array: "+order);
+        return order;
     }
 
     /**
@@ -66,6 +118,7 @@ public class AjaxController {
         ArrayList<Integer> order = new ArrayList<>();
 
         jsonOrder = jsonOrder.replaceAll("\"", "");
+
         System.out.println("Remove \": "+jsonOrder);
 
         while(jsonOrder.indexOf("=") >= 0) {

@@ -191,41 +191,48 @@
                     var idNewList = newList.attr('id');
                     var idTask =  item.attr('id');
                     var taskOrderOldList = $(this).sortable('serialize');
+                    // taskOrderNewList is a global variable (look above)
 
 
                     console.log("Moved " + idTask + " from " + idOldList + " to " + idNewList);
 
-                   if(ui.sender) console.log("sender in stop");
 
+                   // task moved in same list
                    if(oldList == newList) {
                        console.log("task in gleicher Liste bewegt");
-                       console.log(taskOrderOldList);
+                       console.log("taskorer: id: "+idOldList+" Order "+taskOrderOldList);
 
+                       sendAjaxTasks(idOldList, taskOrderOldList);
 
-                       /* Post
-                       $.ajax({
-                           data: data,
-                           type: 'POST',
-                           url: '/TODO'
-                       });
-                       */
-
+                       // task moved in other list
                    } else {
                        console.log("task in andere Liste bewegt");
                        console.log("taskorer Old: id: "+idOldList+" Order "+taskOrderOldList);
                        console.log("taskorer New: id: "+idNewList+" Order "+taskOrderNewList);
 
+                        // Code for old tasklist
+                       sendAjaxTasks(idOldList, taskOrderOldList);
 
+                       // Code for new Tasklist
+                       sendAjaxTasks(idNewList, taskOrderNewList);
 
-                       /* Post
-                       $.ajax({
-                           data: data,
-                           type: 'POST',
-                           url: '/TODO'
-                       });
-                       */
                    }
 
+                    // sends the actual ajax request when a task is moved
+                    function sendAjaxTasks(idList, taskOrder) {
+                        var postData = idList+"&"+taskOrder;
+                        var jsonfile = {json: JSON.stringify(postData)};
+
+                        // Post
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ajaxMovedTask',
+                            data: jsonfile,
+                            dataType: "json"
+                        });
+
+                        console.log("ajax task send: "+ postData)
+                    }
                 },
 
                 change: function changeOnTaskMove(event, ui) {
@@ -235,7 +242,11 @@
 
                 }
 
+
+
             }).disableSelection();
+
+
 
             $(function sendInitalTaskPosition() {
                 //TODO
