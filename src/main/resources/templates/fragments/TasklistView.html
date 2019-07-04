@@ -137,6 +137,11 @@
                     console.log("ajax send!");
                 }
             });
+
+
+
+
+
             // send intial order of lists when page is loaded(when list is added/deleted)
             $(function sendInitalListPosition() {
                 var listOrder = $("#sortableListContainer").sortable('serialize');
@@ -152,23 +157,86 @@
                 });
                 console.log("ajax send!");
             });
+
+            // saves task order of the list that task was moved in
+            var taskOrderNewList;
+
             /* Connect all taskconatainer */
             $(".taskContainer").sortable({
                 connectWith: ".taskContainer",
                 placeholder: "highlightTask",
-                //saves the new position when a task is moved
-                update: function sendAjaxWhenTaskMoved(event, ui) {
-                    var data = $(this).sortable('serialize');
+
+                //functions for handeling when task is moved
+                update: function updateOnTaskMove(event, ui) {
+
                     console.log("Task bewegt!");
-                    /* Post
-                    $.ajax({
-                        data: data,
-                        type: 'POST',
-                        url: '/TODO'
-                    });
-                    */
+
+                    function getTaskOrderNewList(sortableList,ui){
+
+                        taskOrderNewList = sortableList.sortable('serialize');
+
+                    }
+                    getTaskOrderNewList($(this),ui);
+
+                },
+
+                start: function startTaskMove(event, ui) {
+                    item = ui.item;
+                    newList = oldList = ui.item.parent().parent();
+                },
+
+                stop: function stopTaskMove(event, ui) {
+
+                    var idOldList = oldList.attr('id');
+                    var idNewList = newList.attr('id');
+                    var idTask =  item.attr('id');
+                    var taskOrderOldList = $(this).sortable('serialize');
+
+
+                    console.log("Moved " + idTask + " from " + idOldList + " to " + idNewList);
+
+                   if(ui.sender) console.log("sender in stop");
+
+                   if(oldList == newList) {
+                       console.log("task in gleicher Liste bewegt");
+                       console.log(taskOrderOldList);
+
+
+                       /* Post
+                       $.ajax({
+                           data: data,
+                           type: 'POST',
+                           url: '/TODO'
+                       });
+                       */
+
+                   } else {
+                       console.log("task in andere Liste bewegt");
+                       console.log("taskorer Old: id: "+idOldList+" Order "+taskOrderOldList);
+                       console.log("taskorer New: id: "+idNewList+" Order "+taskOrderNewList);
+
+
+
+                       /* Post
+                       $.ajax({
+                           data: data,
+                           type: 'POST',
+                           url: '/TODO'
+                       });
+                       */
+                   }
+
+                },
+
+                change: function changeOnTaskMove(event, ui) {
+                    if(ui.sender) {
+                        newList = ui.placeholder.parent().parent();
+                    }
+
                 }
+
             }).disableSelection();
+
             $(function sendInitalTaskPosition() {
                 //TODO
             });
