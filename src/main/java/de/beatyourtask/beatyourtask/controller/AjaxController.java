@@ -1,7 +1,9 @@
 package de.beatyourtask.beatyourtask.controller;
 
 import de.beatyourtask.beatyourtask.model.Project;
+import de.beatyourtask.beatyourtask.model.Tasklist;
 import de.beatyourtask.beatyourtask.services.ProjectService;
+import de.beatyourtask.beatyourtask.services.TasklistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,10 @@ public class AjaxController {
 
     @Autowired
     private ProjectService projectService;
+
+    @Autowired
+    private TasklistService tasklistService;
+
     /**
      *Class for updating the order of lists in a project when a list was moved
      * @param jsonOrder JsonString of the Ajax Post with the order of the listsids(jquerry ui sortable serialize)
@@ -64,7 +70,17 @@ public class AjaxController {
         String listID = jsonOrder.substring(10, jsonOrder.indexOf("&"));
         System.out.println("listID: "+listID);
 
-        getTaskOrderFromJsonString(jsonOrder);
+        try {
+            int listIDInt = Integer.parseInt(listID);
+            Tasklist list = tasklistService.loadTasklistById(listIDInt);
+            list.setOrderTasks(getTaskOrderFromJsonString(jsonOrder));
+            tasklistService.saveList(list);
+            System.out.println("________" + tasklistService.loadTasklistById(listIDInt).getOrderTasks());
+
+        } catch(NumberFormatException e) {
+            e.printStackTrace();
+        }
+
 
         return "Home";
     }
