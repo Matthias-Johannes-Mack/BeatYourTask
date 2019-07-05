@@ -44,7 +44,7 @@
                             <div class="btn-group" role="group" aria-label="Basic example">
                             <a class="btn btn-danger" th:href=@{/task/removecomment(taskId=${taskId},commentId=${comment.id})} th:if="${comment.author.id == currentUser.id}"><i class="fa fa-minus-circle"></i></a>
                             <!--Button for EditModal-->
-                            <a class="btn btn-primary eBtn" th:href="@{findOne/(commentId=${comment.id})}"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-primary eBtn" th:href="@{findOne/(commentId=${comment.id})}" th:if="${comment.author.id == currentUser.id}"><i class="fa fa-edit"></i></a>
                             <!--/Button for EditModal-->
                             </div>
                         </td>
