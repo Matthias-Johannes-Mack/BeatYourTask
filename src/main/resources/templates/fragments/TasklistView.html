@@ -138,10 +138,6 @@
                 }
             });
 
-
-
-
-
             // send intial order of lists when page is loaded(when list is added/deleted)
             $(function sendInitalListPosition() {
                 var listOrder = $("#sortableListContainer").sortable('serialize');
@@ -202,7 +198,8 @@
                        console.log("task in gleicher Liste bewegt");
                        console.log("taskorer: id: "+idOldList+" Order "+taskOrderOldList);
 
-                       sendAjaxTasks(idOldList, taskOrderOldList);
+                       // only needs to save the new order
+                       sendAjaxTaskOrder(idOldList, taskOrderOldList);
 
                        // task moved in other list
                    } else {
@@ -211,27 +208,61 @@
                        console.log("taskorer New: id: "+idNewList+" Order "+taskOrderNewList);
 
                         // Code for old tasklist
-                       sendAjaxTasks(idOldList, taskOrderOldList);
+                       sendAjaxTaskOrder(idOldList, taskOrderOldList);
+                       sendAjaxRemoveTaskFromList(idOldList, idTask)
 
                        // Code for new Tasklist
-                       sendAjaxTasks(idNewList, taskOrderNewList);
+                       sendAjaxTaskOrder(idNewList, taskOrderNewList);
+                       sendAjaxMoveTaskToList(idNewList, idTask)
 
                    }
 
-                    // sends the actual ajax request when a task is moved
-                    function sendAjaxTasks(idList, taskOrder) {
+                    // sends the actual ajax request to save the new order
+                    function sendAjaxTaskOrder(idList, taskOrder) {
                         var postData = idList+"&"+taskOrder;
                         var jsonfile = {json: JSON.stringify(postData)};
 
                         // Post
                         $.ajax({
                             type: 'POST',
-                            url: '/ajaxMovedTask',
+                            url: '/ajaxSaveTaskOrder',
                             data: jsonfile,
                             dataType: "json"
                         });
 
-                        console.log("ajax task send: "+ postData)
+                        console.log("ajax task send (New order): "+ postData)
+                    }
+
+                    // sends the actual ajax request when task is moved away from list
+                    function sendAjaxRemoveTaskFromList(idList, idTask) {
+                        var postData = idList+"&"+idTask;
+                        var jsonfile = {json: JSON.stringify(postData)};
+
+                        // Post
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ajaxRemovedTaskFromList',
+                            data: jsonfile,
+                            dataType: "json"
+                        });
+
+                        console.log("ajax task send (Moved Away): "+ postData)
+                    }
+
+                    // sends the actual ajax request when task is moved to new list
+                    function sendAjaxMoveTaskToList(idList, idTask) {
+                        var postData = idList+"&"+idTask;
+                        var jsonfile = {json: JSON.stringify(postData)};
+
+                        // Post
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ajaxMovedTaskToNewList',
+                            data: jsonfile,
+                            dataType: "json"
+                        });
+
+                        console.log("ajax task send (Move to): "+ postData)
                     }
                 },
 
@@ -242,15 +273,8 @@
 
                 }
 
-
-
             }).disableSelection();
 
-
-
-            $(function sendInitalTaskPosition() {
-                //TODO
-            });
 
             //sets the id of the list in the edit list modal
             $(".listbutton").click(function () {

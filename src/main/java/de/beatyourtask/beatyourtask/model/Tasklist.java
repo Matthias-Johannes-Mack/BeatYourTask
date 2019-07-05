@@ -98,6 +98,11 @@ public class Tasklist {
         tasks.add(taskVar);
     }
 
+    public void removeTasks(Task task) {
+        Task taskVar = task;
+        tasks.remove(taskVar);
+    }
+
     public void setOrderTasks(List<Integer> orderTasks) {
         this.orderTasks = orderTasks;
     }
