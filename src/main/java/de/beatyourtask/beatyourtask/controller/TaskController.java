@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.Date;
 
-
+/**
+ * Controller handlling all requests for /task
+ */
 @Controller
 @RequestMapping(value ="task")
 public class TaskController {
@@ -35,13 +37,19 @@ public class TaskController {
     @Autowired
     CommentService commentService;
 
-
+    /**
+     * Shows all Assignees that are assigned to the task
+     * @param taskId the task id
+     * @param model contains data needed to view all assignees
+     * @return assignees.html
+     */
     @GetMapping("assignees{taskId}")
     public String displayAssigneesForm(@RequestParam("taskId") Integer taskId, Model model) {
 
         Task task = taskService.getTaskById(taskId);
         Integer projectId = task.getTasklist().getProject().getProjectId();
 
+        // filling the model
         model.addAttribute("title", "Assignees");
         model.addAttribute("users", task.getAssignees());
         model.addAttribute("user", new User());
@@ -51,6 +59,14 @@ public class TaskController {
         return "task/assignees";
     }
 
+    /**
+     * Processes request for adding a assignee to the task
+     * @param taskId task id of current task
+     * @param user the user to be added as assignee
+     * @param result contains (if present) errors of user validation
+     * @param model contains data for the view
+     * @return redirect to assignees
+     */
     @PostMapping("assignees{taskId}")
     public String processDisplayUsersForm(@RequestParam("taskId") Integer taskId, @ModelAttribute @Valid User user,
                                           BindingResult result, Model model){
@@ -77,6 +93,12 @@ public class TaskController {
         return "redirect:/task/assignees?taskId=" + taskId;
     }
 
+    /**
+     * Removes specific user from current task as assignee
+     * @param taskId id of current task
+     * @param userId user that needs to be removed
+     * @return redirect to assignees
+     */
     @GetMapping("removeassignee{taskId, userId}")
     public String processRemoveAssignee(@RequestParam("taskId") Integer taskId, @RequestParam("userId") Integer userId){
 
@@ -88,8 +110,15 @@ public class TaskController {
         return "redirect:/task/assignees?taskId=" + taskId;
     }
 
+
+    /**
+     * Shows all comments for the task
+     * @param taskId the id of the current task
+     * @param model hold data needed to display the view
+     * @return comments.html
+     */
     @GetMapping("comments{taskId}")
-    public String displayComments(@RequestParam("taskId") Integer taskId, Model model, @RequestHeader(value = "referer", required = false) final String referer) {
+    public String displayComments(@RequestParam("taskId") Integer taskId, Model model) {
 
         Task task = taskService.getTaskById(taskId);
         Integer projectId = task.getTasklist().getProject().getProjectId();
@@ -105,9 +134,14 @@ public class TaskController {
         return "task/comments";
     }
 
-
+    /**
+     * Creates a new comment
+     * @param taskId id of current task
+     * @param comment comment object from the form
+     * @return redirect to comments
+     */
     @PostMapping("comments{taskId}")
-    public String processDisplayUsersForm(@RequestParam("taskId") Integer taskId, @ModelAttribute Comment comment, Model model){
+    public String processCommentForm(@RequestParam("taskId") Integer taskId, @ModelAttribute Comment comment){
 
         Task task = taskService.getTaskById(taskId);
         Integer projectId = task.getTasklist().getProject().getProjectId();
@@ -124,6 +158,12 @@ public class TaskController {
     }
 
 
+    /**
+     * Removes Comment from current task
+     * @param taskId id of current task
+     * @param commentId id of comment to be removed
+     * @return redirect to comments
+     */
     @GetMapping("removecomment{taskId, commentId}")
     public String processRemoveComment(@RequestParam Integer taskId, @RequestParam Integer commentId){
 
@@ -132,6 +172,11 @@ public class TaskController {
         return "redirect:/task/comments?taskId=" + taskId;
     }
 
+    /**
+     * Processes editing the comment via the modal
+     * @param commentDTO Data Transfer Object that holds information about the comment, task and message
+     * @return redirect to comments
+     */
     @PostMapping("editComment")
     public String editComment(CommentDTO commentDTO){
 
@@ -143,6 +188,11 @@ public class TaskController {
         return "redirect:/task/comments?taskId=" + commentDTO.getTaskId();
     }
 
+    /**
+     * Returns a JSON representation of an commentDTO object
+     * @param commentId id of needed comment
+     * @return commentDTO containing information about comment, task and message
+     */
     @GetMapping("/findOne")
     @ResponseBody
     public CommentDTO findOne(Integer commentId){

@@ -13,6 +13,9 @@ import org.springframework.validation.Validator;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Class for Validation of the addAssignee form
+ */
 @Component
 public class TaskAddAssigneeValidator implements Validator {
 
@@ -27,6 +30,11 @@ public class TaskAddAssigneeValidator implements Validator {
         return AddUserDTO.class.isAssignableFrom(clazz);
     }
 
+    /**
+     * Validation fo the input data from the addAssignee form
+     * @param target addUserDTO object that contains email and taskId
+     * @param errors contains errors of validation
+     */
     @Override
     public void validate(Object target, Errors errors) {
         AddUserDTO addUserDTO = (AddUserDTO) target;

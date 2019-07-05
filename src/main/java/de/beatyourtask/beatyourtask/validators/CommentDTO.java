@@ -2,6 +2,9 @@ package de.beatyourtask.beatyourtask.validators;
 
 import de.beatyourtask.beatyourtask.model.Comment;
 
+/**
+ * Class that represents objects that carry data for editing a comment
+ */
 public class CommentDTO {
 
     private Integer commentId;
@@ -12,7 +15,11 @@ public class CommentDTO {
 
     }
 
-
+    /**
+     * Converts a comment into a commentDTO object by converting id, taskId and message
+     * @param comment the comment that needes to be converted
+     * @return commentDTO object containing converted data
+     */
     public CommentDTO convert(Comment comment){
         this.commentId = comment.getId();
         this.message = comment.getMessage().replace("<br />","\n");
