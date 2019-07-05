@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://thymeleaf.org/">
-<head th:replace="projectoverview/dependencies::head"></head>
+<head th:replace="task/headComments::commentHead"></head>
 <body class="shards-app-promo-page--1">
 <!--Background-->
 <div class="welcome d-flex justify-content-center flex-column">
@@ -15,13 +15,14 @@
 
                 <!--Form for adding a comment-->
                 <div style="margin-bottom: 1rem;">
-                    <form method="post" th:object="${comment}">
+                    <form method="post" th:object="${comment}" class="needs-validation" novalidate>
 
                         <!-- Email -->
                         <div class="form-group">
                             <label th:for="commentTextarea">Message</label>
-                            <textarea th:errorclass="is-invalid" th:field="*{message}" class="form-control" id="commentTextarea" rows="2"></textarea>
-                            <p th:if="${#fields.hasErrors('message')}" th:errors="*{message}" class="text-danger"></p>
+                            <textarea th:errorclass="is-invalid" th:field="*{message}" class="form-control" id="commentTextarea" rows="2" required></textarea>
+                            <div class="invalid-feedback"> Please type a comment!</div>
+                            <div class="valid-feedback"> Good comment! </div>
                         </div>
 
                         <!-- Submit Button-->
@@ -33,9 +34,19 @@
                 <table class="table">
                     <tr th:each="comment : ${comments}">
                         <td>
+
                             <p class="comment-date" th:text="${#dates.format(comment.createDate, 'dd-MM-yyyy ''at'' HH:mm')}"></p>
-                            <p class="comment-title" th:text="${comment.author.surname} + ' ' + ${comment.author.Lastname} + ' wrote:'"></p>
+                            <p class="comment-title" th:if="${comment.author.id == currentUser.id}" th:text="'You wrote:'"></p>
+                            <p class="comment-title" th:unless="${comment.author.id == currentUser.id}" th:text="${comment.author.surname} + ' ' + ${comment.author.lastname} + ' wrote:'"></p>
                             <p class="comment-text" th:utext="${comment.message}"></p>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                            <a class="btn btn-danger" th:href=@{/task/removecomment(taskId=${taskId},commentId=${comment.id})} th:if="${comment.author.id == currentUser.id}"><i class="fa fa-minus-circle"></i></a>
+                            <!--Button for EditModal-->
+                            <a class="btn btn-primary eBtn" th:href="@{findOne/(commentId=${comment.id})}"><i class="fa fa-edit"></i></a>
+                            <!--/Button for EditModal-->
+                            </div>
                         </td>
                     </tr>
                 </table>

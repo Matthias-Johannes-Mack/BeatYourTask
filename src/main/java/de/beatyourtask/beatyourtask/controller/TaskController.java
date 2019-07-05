@@ -7,6 +7,7 @@ import de.beatyourtask.beatyourtask.services.CommentService;
 import de.beatyourtask.beatyourtask.services.TaskService;
 import de.beatyourtask.beatyourtask.services.UserService;
 import de.beatyourtask.beatyourtask.validators.AddUserDTO;
+import de.beatyourtask.beatyourtask.validators.CommentDTO;
 import de.beatyourtask.beatyourtask.validators.TaskAddAssigneeValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -98,6 +99,7 @@ public class TaskController {
         model.addAttribute("comment", new Comment());
         model.addAttribute("comments", commentService.findAllByTask(task));
         model.addAttribute("taskId", taskId);
+        model.addAttribute("currentUser", userService.getCurrentUser());
         model.addAttribute("projectId", projectId);
 
         return "task/comments";
@@ -105,18 +107,10 @@ public class TaskController {
 
 
     @PostMapping("comments{taskId}")
-    public String processDisplayUsersForm(@RequestParam("taskId") Integer taskId, @ModelAttribute @Valid Comment comment, BindingResult result, Model model){
+    public String processDisplayUsersForm(@RequestParam("taskId") Integer taskId, @ModelAttribute Comment comment, Model model){
 
         Task task = taskService.getTaskById(taskId);
         Integer projectId = task.getTasklist().getProject().getProjectId();
-
-        if(result.hasErrors()){
-            model.addAttribute("title", "Comments");
-            model.addAttribute("comments", commentService.findAllByTask(task));
-            model.addAttribute("taskId", taskId);
-            model.addAttribute("projectId", projectId);
-            return "task/comments";
-        }
 
         comment.setAuthor(userService.getCurrentUser());
         comment.setOwnerTask(taskService.getTaskById(taskId));
@@ -127,5 +121,34 @@ public class TaskController {
         commentService.save(comment);
 
         return "redirect:/task/comments?taskId=" + taskId;
+    }
+
+
+    @GetMapping("removecomment{taskId, commentId}")
+    public String processRemoveComment(@RequestParam Integer taskId, @RequestParam Integer commentId){
+
+        commentService.delete(commentService.findById(commentId));
+
+        return "redirect:/task/comments?taskId=" + taskId;
+    }
+
+    @PostMapping("editComment")
+    public String editComment(CommentDTO commentDTO){
+
+        Comment editComment = commentService.findById(commentDTO.getCommentId());
+        editComment.setMessage(commentDTO.getMessage().replace("\n","<br />"));
+
+        commentService.save(editComment);
+
+        return "redirect:/task/comments?taskId=" + commentDTO.getTaskId();
+    }
+
+    @GetMapping("/findOne")
+    @ResponseBody
+    public CommentDTO findOne(Integer commentId){
+
+        CommentDTO conComment = new CommentDTO().convert(commentService.findById(commentId));
+
+        return conComment;
     }
 }

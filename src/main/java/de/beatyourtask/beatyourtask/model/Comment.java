@@ -1,11 +1,12 @@
 package de.beatyourtask.beatyourtask.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
-import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Entity
@@ -15,9 +16,9 @@ public class Comment {
     @GeneratedValue
     private Integer id;
 
-    @Size(min=5,max=250, message="The comment should be between 5 and 250 characters long.")
     private String message;
     private Date createDate;
+
 
     @OneToOne
     private User author;

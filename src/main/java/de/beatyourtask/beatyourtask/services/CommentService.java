@@ -28,4 +28,10 @@ public class CommentService {
         return commentRepository.findByOwnerTask(task);
     }
 
+    public void delete(Comment comment){
+        commentRepository.delete(comment);
+    }
+
+
+
 }

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/">
+<head th:fragment="commentHead">
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">Default Title</title>
+
+    <!-- Dependencys -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.3/js/bootstrapValidator.min.js"></script>
+
+    <link
+            rel="stylesheet"
+            type="text/css"
+            th:href="@{/css/custom.css}"/>
+
+    <th:block th:include="/task/editCommentModal"></th:block>
+    <script>
+
+        /*making editing a comment work */
+        $(document).ready(function () {
+
+
+            $('.eBtn').on('click', function(event){
+                event.preventDefault();
+                var href = $(this).attr('href');
+                console.log("ijee" + href);
+
+                $.get(href, function (commentDTO, status) {
+                    $('#message').val(commentDTO.message);
+                    $('#commentId').val(commentDTO.commentId);
+                    $('#taskId').val(commentDTO.taskId);
+                });
+
+                $('#editCommentModal').modal();
+            });
+
+        });
+    </script>
+
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // select all forms for Bootstrap validation
+                var forms = document.getElementsByClassName('needs-validation');
+                // iterate over and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+
+
+    <!-- header -->
+    <th:block th:include="/fragments/header_singed_in"></th:block>
+</head>
+<body>
+
+</body>
+</html>
