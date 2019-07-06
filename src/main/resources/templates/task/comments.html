@@ -20,7 +20,7 @@
                         <!-- Email -->
                         <div class="form-group">
                             <label th:for="commentTextarea">Message</label>
-                            <textarea th:errorclass="is-invalid" th:field="*{message}" class="form-control" id="commentTextarea" rows="2" required></textarea>
+                            <textarea th:errorclass="is-invalid" th:field="*{message}" class="form-control" id="commentTextarea" rows="2" maxlength="250" required></textarea>
                             <div class="invalid-feedback"> Please type a comment!</div>
                             <div class="valid-feedback"> Good comment! </div>
                         </div>
@@ -38,7 +38,7 @@
                             <p class="comment-date" th:text="${#dates.format(comment.createDate, 'dd-MM-yyyy ''at'' HH:mm')}"></p>
                             <p class="comment-title" th:if="${comment.author.id == currentUser.id}" th:text="'You wrote:'"></p>
                             <p class="comment-title" th:unless="${comment.author.id == currentUser.id}" th:text="${comment.author.surname} + ' ' + ${comment.author.lastname} + ' wrote:'"></p>
-                            <p class="comment-text" th:utext="${comment.message}"></p>
+                            <p style="word-break: break-all;" class="comment-text" th:utext="${comment.message}"></p>
                         </td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Basic example">
