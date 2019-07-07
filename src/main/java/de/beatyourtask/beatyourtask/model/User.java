@@ -29,13 +29,13 @@ public class User {
 
     /** stuff for the gamification **/
 
-    private int lvl;
+    private int lvl = 1;
 
-    private int exp;
+    private int exp = 0;
 
     private int damage;
 
-    private int activeMonsterId;
+    private int activeMonsterId =1;
 
     /**-------------------------------------------**/
 

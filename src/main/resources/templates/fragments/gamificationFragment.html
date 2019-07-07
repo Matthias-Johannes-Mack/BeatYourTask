@@ -30,7 +30,7 @@
                  th:aria-valuemax="${maxHp}" th:text="${currentHp} + ' ' + Hp.">
             </div>
         </div>
-        <a class="btn btn-danger p-2 mt-2" th:href="@{decreseHp(MonsterId=${MonsterId})}">Kick me</a>
+        <a class="btn btn-danger p-2 mt-2" th:href="@{/projectoverview/decreaseHp(MonsterId=${MonsterId})}">Kick me</a>
     </div>
 </div>
 

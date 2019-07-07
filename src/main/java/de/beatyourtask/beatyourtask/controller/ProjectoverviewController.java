@@ -290,9 +290,9 @@ public class ProjectoverviewController {
      *
      * @return redirect to users.html
      */
-    @GetMapping("/decreseHp{MonsterId}")
+    @GetMapping("decreaseHp{MonsterId}")
     public String updateHp(@RequestParam("MonsterId") Integer monsterId) {
-
+        System.out.println("decreseIt");
         monsterService.findMonsterById(monsterId).setCurrentLifePoints(450);
 
         // saving changes to database
@@ -300,5 +300,4 @@ public class ProjectoverviewController {
 
         return "redirect:";
     }
-
 }
