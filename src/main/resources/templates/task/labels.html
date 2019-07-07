@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/">
+<head th:replace="/projectoverview/dependencies::head">
+    <th:block th:include="/fragments/AddLabelModal"></th:block>
+
+    <
+
+</head>
+<body class="shards-app-promo-page--1">
+<!--Background-->
+<div class="welcome d-flex justify-content-center flex-column">
+
+
+    <!-- Panel for showing the users-->
+    <div class="col-md-6">
+        <a class="btn btn-primary mb-4" th:href=@{/Project(ProjectId=${projectId})}><i class="fas fa-angle-left"></i> Back to Project</a>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" th:text="${title}">Default Title</h4>
+                <!--table that displays all labels of the task-->
+                <table class="table" title="Labels of the Task">
+                    <h6>Labels of the Task</h6>
+                    <tr>
+                        <th>Label</th>
+                        <th>Color</th>
+                    </tr>
+                    <tr th:each="tasklabel : ${tasklabels}">
+                        <td th:text="${tasklabel.labelName}"></td>
+                        <td th:text="${tasklabel.labelColor}"></td>
+                        <td><a class="btn btn-danger" th:href=@{/task/removelabel(taskId=${taskId},labelId=${tasklabel.labelId})}><i class="fa fa-minus-circle"></i></a></td>
+                    </tr>
+                </table>
+                <table class = "table">
+                    <h6>Labels of the Project</h6>
+                    <tr>
+                        <th>Label</th>
+                        <th>Color</th>
+                    </tr>
+
+                    <tr th:each="projectlabel : ${projectlabels}">
+                        <td th:text="${projectlabel.labelName}"></td>
+                        <td th:text="${projectlabel.labelColor}"></td>
+                        <td><a class="btn btn-primary" th:href=@{/task/addlabel(taskId=${taskId},labelId=${projectlabel.labelId})}><i class="fa fa-plus-circle"></i></a></td>
+                    </tr>
+                </table>
+                <!-- button zum öffnen des Modals zum hinzufügen eines neuen Labels -->
+                <a class="listbutton badge mr-3 badge-outline-light" th:href=@{/task/addLabel(taskId=${taskId})}>Add Label</a>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- include the Footer -->
+<th:block th:include="/fragments/footer"></th:block>
+</html>

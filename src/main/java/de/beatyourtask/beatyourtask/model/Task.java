@@ -18,6 +18,9 @@ public class Task {
     @OneToMany(cascade = CascadeType.ALL)
     private List<User> assignees = new ArrayList<User>();
 
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Label> labels = new ArrayList<Label>();
+
     /** name of Task */
     private String taskName;
 
@@ -34,6 +37,15 @@ public class Task {
     public void removeUser(User user){
         this.assignees.remove(user);
     }
+
+    public void addLabel(Label label){
+        this.labels.add(label);
+    }
+
+    public void removeLabel(Label label){
+        this.labels.remove(label);
+    }
+
     // Getters and Setters
     public void setTaskName(String taskName) {
         this.taskName = taskName;
@@ -58,6 +70,10 @@ public class Task {
     public void setAssignees(List<User> assignees) {
         this.assignees = assignees;
     }
+
+    public List<Label> getLabels() { return labels; }
+
+    public void setLabels(Label label) { this.labels.add(label); }
 
     public Integer getTaskId() {
         return taskId;

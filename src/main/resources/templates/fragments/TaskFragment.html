@@ -6,6 +6,8 @@
     <title>Title</title>
 
     <th:block th:include="/fragments/TaskFragment"></th:block>
+    <th:block th:include="/task/AddLabelModal"></th:block>
+
 </head>
 <body>
 <span th:fragment="taskFragment">
@@ -26,11 +28,11 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" th:href="@{task/comments(taskId=${task.taskId})}">Comments</a>
                             <a class="dropdown-item" th:href="@{task/assignees(taskId=${task.taskId})}">Assignees</a>
+                            <a class="dropdown-item" th:href="@{task/labels(taskId=${task.taskId})}">Labels</a>
                         </div>
                     </div>
                 </div>
-            </div>
-
+         </div>
         </li>
 </span>
 </body>

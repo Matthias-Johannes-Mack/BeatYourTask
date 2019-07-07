@@ -30,6 +30,9 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
     private List<Tasklist> tasklists = new ArrayList<Tasklist>();
 
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Label> labels = new ArrayList<Label>();
+
 
     @ElementCollection
     private List<Integer> orders = new ArrayList<>();
@@ -70,6 +73,10 @@ public class Project {
         this.users.remove(user);
         user.getProjects().remove(this);
     }
+
+    public void setLabel(Label label) { this.labels.add(label); }
+
+    public List<Label> getLabel() { return this.labels; }
 
 
     // getters and setters
