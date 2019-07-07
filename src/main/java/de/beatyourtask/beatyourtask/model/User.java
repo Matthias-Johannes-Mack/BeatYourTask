@@ -37,6 +37,10 @@ public class User {
 
     private int activeMonsterId =1;
 
+    private int maxExp = 500;
+
+    private int lvlPercentage = 0;
+
     /**-------------------------------------------**/
 
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
@@ -170,5 +174,21 @@ public class User {
 
     public void setActiveMonsterId(int activeMonsterId) {
         this.activeMonsterId = activeMonsterId;
+    }
+
+    public int getMaxExp() {
+        return maxExp;
+    }
+
+    public void setMaxExp(int maxExp) {
+        this.maxExp = maxExp;
+    }
+
+    public int getLvlPercentage() {
+        return lvlPercentage;
+    }
+
+    public void setLvlPercentage(int lvlPercentage) {
+        this.lvlPercentage = lvlPercentage;
     }
 }

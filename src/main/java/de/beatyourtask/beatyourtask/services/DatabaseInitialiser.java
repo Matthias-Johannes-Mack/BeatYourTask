@@ -39,6 +39,9 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
     @Autowired
     private MonsterService monsterService;
 
+    @Autowired
+    private LevelService levelService;
+
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
         logger.info("Initialisiere Datenbank mit Testdaten...");
@@ -130,5 +133,38 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
         monster3.setMonsterPic("/images/Monster/Ogre/0_Ogre_Dying_000.png");
         monster3.setMonsterName("Ogre");
         monsterService.saveMonster(monster3);
+
+        // initialize the Level
+
+        Level lvl1 = new Level();
+        lvl1.setLevel(1);
+        lvl1.setDamage(50);
+        lvl1.setMaxExpLvl(500);
+        levelService.saveLevel(lvl1);
+
+        Level lvl2 = new Level();
+        lvl2.setLevel(2);
+        lvl2.setDamage(100);
+        lvl2.setMaxExpLvl(1000);
+        levelService.saveLevel(lvl2);
+
+        Level lvl3 = new Level();
+        lvl3.setLevel(3);
+        lvl3.setDamage(200);
+        lvl3.setMaxExpLvl(1500);
+        levelService.saveLevel(lvl3);
+
+        Level lvl4 = new Level();
+        lvl4.setLevel(4);
+        lvl4.setDamage(300);
+        lvl4.setMaxExpLvl(2000);
+        levelService.saveLevel(lvl4);
+
+        Level lvl5 = new Level();
+        lvl5.setLevel(5);
+        lvl5.setDamage(400);
+        lvl5.setMaxExpLvl(5000);
+        levelService.saveLevel(lvl5);
+
     }
 }

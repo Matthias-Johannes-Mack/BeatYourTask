@@ -7,9 +7,9 @@
 <div class="p-1">
     <div class="progress w-100 border border-dark with-shadows">
         <div th:if = "${Exp != null}"
-                class="progress-bar bg-danger h-auto" role="progressbar" th:style="'width:' + ${Exp / 10} + '%;'" th:aria-valuenow="${Exp}"
+                class="progress-bar bg-danger h-auto" role="progressbar" th:style="'width:' + ${lvlPercent} + '%; height:45px;'" th:aria-valuenow="${Exp}"
              aria-valuemin="0"
-             aria-valuemax="1000" th:text="${Exp} + ' ' + Exp.">
+             th:aria-valuemax="${maxExp}" th:text="${Exp} + ' ' + Exp.">
         </div>
     </div>
 

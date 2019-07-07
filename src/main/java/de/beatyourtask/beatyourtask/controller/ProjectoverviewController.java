@@ -2,6 +2,7 @@ package de.beatyourtask.beatyourtask.controller;
 
 import de.beatyourtask.beatyourtask.model.Project;
 import de.beatyourtask.beatyourtask.model.User;
+import de.beatyourtask.beatyourtask.services.LevelService;
 import de.beatyourtask.beatyourtask.services.MonsterService;
 import de.beatyourtask.beatyourtask.services.ProjectService;
 import de.beatyourtask.beatyourtask.services.UserService;
@@ -33,6 +34,9 @@ public class ProjectoverviewController {
     MonsterService monsterService;
 
     @Autowired
+    LevelService levelService;
+
+    @Autowired
     ProjectAddUserValidator projectAddUserValidator;
 
     /**
@@ -51,6 +55,8 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
+        model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
         model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
@@ -78,6 +84,8 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
+        model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
         model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
@@ -108,6 +116,8 @@ public class ProjectoverviewController {
             // Stuff for the gamification like level, exp and the monster information
             model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
             model.addAttribute("Exp", userService.getCurrentUser().getExp());
+            model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
+            model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
             model.addAttribute("Damage", userService.getCurrentUser().getDamage());
             model.addAttribute("Surname", userService.getCurrentUser().getSurname());
             model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
@@ -142,7 +152,9 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
         model.addAttribute("Damage", userService.getCurrentUser().getDamage());
+        model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
         model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
@@ -189,6 +201,8 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
+        model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
         model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
@@ -224,7 +238,9 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
         model.addAttribute("Damage", userService.getCurrentUser().getDamage());
+        model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
         model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
@@ -260,7 +276,9 @@ public class ProjectoverviewController {
             // Stuff for the gamification like level, exp and the monster information
             model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
             model.addAttribute("Exp", userService.getCurrentUser().getExp());
+            model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
             model.addAttribute("Damage", userService.getCurrentUser().getDamage());
+            model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
             model.addAttribute("Surname", userService.getCurrentUser().getSurname());
             model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
             model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
@@ -324,13 +342,16 @@ public class ProjectoverviewController {
             // puts monster to the next lvl if its level is under 3
             if (userService.getCurrentUser().getActiveMonsterId() <= 2) {
                 //set the new monster and save it
-                userService.getAllUsers().forEach((u)->userService.getUserById(u.getId()).setActiveMonsterId(userService.getCurrentUser().getActiveMonsterId() + 1));
+                userService.getAllUsers().forEach((u) -> userService.getUserById(u.getId()).setActiveMonsterId(userService.getCurrentUser().getActiveMonsterId() + 1));
                 userService.saveUser(userService.findByEmail(userService.getCurrentUser().getEmail()));
                 //puts the damage  to the old monster and the remaining damage to the new one
                 int restDamage = (cPoints - damage) * (-1);
 
                 monsterService.findMonsterById(monsterId).setCurrentLifePoints(monsterService.findMonsterById(monsterId).getCurrentLifePoints() - (damage - restDamage));
                 monsterService.findMonsterById(monsterId + 1).setCurrentLifePoints(monsterService.findMonsterById(monsterId + 1).getCurrentLifePoints() - restDamage);
+                // resets the new monster picture
+                String currentMonsterName = monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId() + 1).getMonsterName();
+                monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_000.png");
                 // calculates the value for the percentage
                 int currentP = monsterService.findMonsterById(monsterId + 1).getCurrentLifePoints() - restDamage;
                 int maxP = monsterService.findMonsterById(monsterId + 1).getLifepoints();
@@ -342,7 +363,7 @@ public class ProjectoverviewController {
 
             } else {
                 // set all user the monster to 1
-                userService.getAllUsers().forEach((u)->userService.getUserById(u.getId()).setActiveMonsterId(1));
+                userService.getAllUsers().forEach((u) -> userService.getUserById(u.getId()).setActiveMonsterId(1));
 
 
                 // resets all monster with higher values
@@ -363,30 +384,67 @@ public class ProjectoverviewController {
         // set the monsterpic
         double percentage = monsterService.findMonsterById(monsterId).getPercentageLeft();
         String currentMonsterName = monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterName();
-        if (percentage < 90) {
-            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_003.png");
 
-        } else if (percentage < 80) {
+
+        if (percentage <= 90) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_003.png");
-        } else if (percentage < 70) {
+        }
+
+        if (percentage <= 80) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_003.png");
+        }
+        if (percentage <= 70) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_004.png");
-        } else if (percentage < 60) {
+        }
+        if (percentage <= 60) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_005.png");
-        } else if (percentage < 50) {
+        }
+        if (percentage <= 50) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_006.png");
-        } else if (percentage < 40) {
+        }
+        if (percentage <= 40) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_007.png");
-        } else if (percentage < 30) {
+        }
+        if (percentage <= 30) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_009.png");
-        } else if (percentage < 20) {
+        }
+        if (percentage <= 20) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_010.png");
-        } else if (percentage < 10) {
-            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_013.png");
-        } else if (percentage == 0) {
+        }
+        if (percentage <= 10 && percentage > 0) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_014.png");
         }
+
         // save the whole thing
         monsterService.saveMonster(monsterService.findMonsterById(monsterId));
+
+        // section for the level work
+        int userExp = userService.getCurrentUser().getExp();
+        int currentUserLvl = userService.getCurrentUser().getLvl();
+        int maxLvlExp = levelService.findLevelById(currentUserLvl).getMaxExpLvl();
+        // if the user Exp is to high, change the level
+        if ((userExp + 100) > maxLvlExp) {
+            if (currentUserLvl <= 5) {
+
+                // calculate the percentage for the Progressbar
+                int calc = ((100 * userExp) / maxLvlExp);
+                userService.getCurrentUser().setLvlPercentage(calc);
+
+                // increase the lvl
+                userService.getCurrentUser().setLvl(currentUserLvl + 1);
+                userService.getCurrentUser().setExp(0);
+                userService.getCurrentUser().setMaxExp(levelService.findLevelById(currentUserLvl + 1).getMaxExpLvl());
+                userService.getCurrentUser().setDamage(levelService.findLevelById(currentUserLvl + 1).getDamage());
+            }
+        } else {
+            // increse the exp
+            userService.getCurrentUser().setExp(userExp + 100);
+            // calculate the percentage for the Progressbar
+            int calc = ((100 * userExp) / maxLvlExp);
+            userService.getCurrentUser().setLvlPercentage(calc);
+        }
+        // save the user
+        userService.saveUser(userService.getCurrentUser());
         return "redirect:/projectoverview";
     }
 }
