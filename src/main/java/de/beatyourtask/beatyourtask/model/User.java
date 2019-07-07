@@ -33,7 +33,7 @@ public class User {
 
     private int exp = 0;
 
-    private int damage;
+    private int damage = 50;
 
     private int activeMonsterId =1;
 

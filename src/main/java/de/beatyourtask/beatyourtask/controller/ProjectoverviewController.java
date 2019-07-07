@@ -51,12 +51,14 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
         model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
         model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
         model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
         model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
         //-------------------------------------------------------------------------------------------------
 
 
@@ -76,12 +78,14 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
         model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
         model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
         model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
         model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
         //-------------------------------------------------------------------------------------------------
 
         return "projectoverview/addProject";
@@ -104,12 +108,14 @@ public class ProjectoverviewController {
             // Stuff for the gamification like level, exp and the monster information
             model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
             model.addAttribute("Exp", userService.getCurrentUser().getExp());
+            model.addAttribute("Damage", userService.getCurrentUser().getDamage());
             model.addAttribute("Surname", userService.getCurrentUser().getSurname());
             model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
             model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
             model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
             model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
             model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+            model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
             //-------------------------------------------------------------------------------------------------
             return "projectoverview/addProject";
         }
@@ -136,12 +142,14 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
         model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
         model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
         model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
         model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
         //-------------------------------------------------------------------------------------------------
 
         return "projectoverview/editProject";
@@ -181,12 +189,14 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
         model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
         model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
         model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
         model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
         //-------------------------------------------------------------------------------------------------
 
         userService.getCurrentUser().removeProject(projectService.findById(id));
@@ -214,13 +224,15 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
         model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
         model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
         model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
         model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
-        //-------------------------------------------------------------------------------------------------
+        model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
+//-------------------------------------------------------------------------------------------------
 
         return "projectoverview/users";
     }
@@ -248,12 +260,14 @@ public class ProjectoverviewController {
             // Stuff for the gamification like level, exp and the monster information
             model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
             model.addAttribute("Exp", userService.getCurrentUser().getExp());
+            model.addAttribute("Damage", userService.getCurrentUser().getDamage());
             model.addAttribute("Surname", userService.getCurrentUser().getSurname());
             model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
             model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
             model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
             model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
             model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+            model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
             //-------------------------------------------------------------------------------------------------
 
             return "projectoverview/users";
@@ -290,14 +304,89 @@ public class ProjectoverviewController {
      *
      * @return redirect to users.html
      */
-    @GetMapping("decreaseHp{MonsterId}")
-    public String updateHp(@RequestParam("MonsterId") Integer monsterId) {
-        System.out.println("decreseIt");
-        monsterService.findMonsterById(monsterId).setCurrentLifePoints(450);
+    @RequestMapping("decreaseHp{MonsterId, Damage}")
+    public String updateHp(@RequestParam("MonsterId") Integer monsterId, @RequestParam("Damage") Integer damage) {
+        int cPoints = monsterService.findMonsterById(monsterId).getCurrentLifePoints();
 
+        // if there are enough damage points
+        if ((cPoints - damage) >= 0) {
+            // put damage to the monster
+            monsterService.findMonsterById(monsterId).setCurrentLifePoints(monsterService.findMonsterById(monsterId).getCurrentLifePoints() - damage);
+            // calculates the value for the percentage
+            int currentP = monsterService.findMonsterById(monsterId).getCurrentLifePoints() - damage;
+            int maxP = monsterService.findMonsterById(monsterId).getLifepoints();
+            int calculation = (100 * currentP) / maxP;
+            if (calculation < 0) {
+                calculation = 0;
+            }
+            monsterService.findMonsterById(monsterId).setPercentageLeft(calculation);
+        } else {
+            // puts monster to the next lvl if its level is under 3
+            if (userService.getCurrentUser().getActiveMonsterId() <= 2) {
+                //set the new monster and save it
+                userService.getAllUsers().forEach((u)->userService.getUserById(u.getId()).setActiveMonsterId(userService.getCurrentUser().getActiveMonsterId() + 1));
+                userService.saveUser(userService.findByEmail(userService.getCurrentUser().getEmail()));
+                //puts the damage  to the old monster and the remaining damage to the new one
+                int restDamage = (cPoints - damage) * (-1);
+
+                monsterService.findMonsterById(monsterId).setCurrentLifePoints(monsterService.findMonsterById(monsterId).getCurrentLifePoints() - (damage - restDamage));
+                monsterService.findMonsterById(monsterId + 1).setCurrentLifePoints(monsterService.findMonsterById(monsterId + 1).getCurrentLifePoints() - restDamage);
+                // calculates the value for the percentage
+                int currentP = monsterService.findMonsterById(monsterId + 1).getCurrentLifePoints() - restDamage;
+                int maxP = monsterService.findMonsterById(monsterId + 1).getLifepoints();
+                int calculation = (100 * currentP) / maxP;
+                if (calculation < 0) {
+                    calculation = 0;
+                }
+                monsterService.findMonsterById(monsterId + 1).setPercentageLeft(calculation);
+
+            } else {
+                // set all user the monster to 1
+                userService.getAllUsers().forEach((u)->userService.getUserById(u.getId()).setActiveMonsterId(1));
+
+
+                // resets all monster with higher values
+                monsterService.findMonsterById(1).setCurrentLifePoints(2500);
+                monsterService.findMonsterById(1).setLifepoints(2500);
+
+                monsterService.findMonsterById(2).setCurrentLifePoints(3000);
+                monsterService.findMonsterById(2).setLifepoints(3000);
+
+                monsterService.findMonsterById(3).setCurrentLifePoints(3500);
+                monsterService.findMonsterById(3).setLifepoints(3500);
+                // save the whole thing
+                userService.saveUser(userService.findByEmail(userService.getCurrentUser().getEmail()));
+            }
+        }
         // saving changes to database
         monsterService.saveMonster(monsterService.findMonsterById(monsterId));
+        // set the monsterpic
+        double percentage = monsterService.findMonsterById(monsterId).getPercentageLeft();
+        String currentMonsterName = monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterName();
+        if (percentage < 90) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_003.png");
 
-        return "redirect:";
+        } else if (percentage < 80) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_003.png");
+        } else if (percentage < 70) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_004.png");
+        } else if (percentage < 60) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_005.png");
+        } else if (percentage < 50) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_006.png");
+        } else if (percentage < 40) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_007.png");
+        } else if (percentage < 30) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_009.png");
+        } else if (percentage < 20) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_010.png");
+        } else if (percentage < 10) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_013.png");
+        } else if (percentage == 0) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_014.png");
+        }
+        // save the whole thing
+        monsterService.saveMonster(monsterService.findMonsterById(monsterId));
+        return "redirect:/projectoverview";
     }
 }

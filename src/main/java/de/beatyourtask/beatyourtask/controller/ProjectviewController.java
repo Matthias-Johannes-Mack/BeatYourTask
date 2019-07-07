@@ -82,13 +82,15 @@ public class ProjectviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
         model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
         model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
         model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
         model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
-        //-------------------------------------------------------------------------------------------------
+        model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
+//-------------------------------------------------------------------------------------------------
         System.out.println(id);
         System.out.println("in /ProjectID");
 

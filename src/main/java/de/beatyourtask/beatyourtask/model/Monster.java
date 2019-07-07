@@ -13,7 +13,8 @@ public class Monster {
     private int lifepoints;
     private int currentLifePoints;
     private String monsterPic;
-
+    private double percentageLeft = 100.0;
+    private String monsterName;
 
     /**
      * Empty Costructor
@@ -53,4 +54,19 @@ public class Monster {
         this.monsterPic = monsterPic;
     }
 
+    public double getPercentageLeft() {
+        return percentageLeft;
+    }
+
+    public void setPercentageLeft(double percentageLeft) {
+        this.percentageLeft = percentageLeft;
+    }
+
+    public String getMonsterName() {
+        return monsterName;
+    }
+
+    public void setMonsterName(String monsterName) {
+        this.monsterName = monsterName;
+    }
 }
