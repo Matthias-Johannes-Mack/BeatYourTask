@@ -43,8 +43,7 @@ public class ProjectoverviewController {
      */
     @GetMapping("")
     public String displayProjects(Model model) {
-        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
-        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+
 
         model.addAttribute("title", "Projectoverview");
         model.addAttribute("projects", userService.getCurrentUser().getProjects());
@@ -52,12 +51,13 @@ public class ProjectoverviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
         model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
         model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
         model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
         model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
         //-------------------------------------------------------------------------------------------------
-
 
 
         return "projectoverview/projects";
@@ -73,6 +73,16 @@ public class ProjectoverviewController {
     public String displayAddForm(Model model) {
         model.addAttribute("title", "Add Project");
         model.addAttribute("project", new Project());
+        // Stuff for the gamification like level, exp and the monster information
+        model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+        model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+        model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+        model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+        model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+        model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        //-------------------------------------------------------------------------------------------------
 
         return "projectoverview/addProject";
     }
@@ -91,6 +101,16 @@ public class ProjectoverviewController {
         if (result.hasErrors()) {
             model.addAttribute("project", project);
             model.addAttribute("title", "Add Project");
+            // Stuff for the gamification like level, exp and the monster information
+            model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+            model.addAttribute("Exp", userService.getCurrentUser().getExp());
+            model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+            model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+            model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+            model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+            model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+            model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+            //-------------------------------------------------------------------------------------------------
             return "projectoverview/addProject";
         }
 
@@ -98,7 +118,7 @@ public class ProjectoverviewController {
         project.addUser(userService.getCurrentUser());
         projectService.save(project);
 
-        return "redirect:";
+        return "redirect:/projectoverview";
     }
 
     /**
@@ -113,6 +133,16 @@ public class ProjectoverviewController {
 
         model.addAttribute("title", "Edit Project");
         model.addAttribute("project", projectService.findById(id));
+        // Stuff for the gamification like level, exp and the monster information
+        model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+        model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+        model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+        model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+        model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+        model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        //-------------------------------------------------------------------------------------------------
 
         return "projectoverview/editProject";
     }
@@ -137,7 +167,7 @@ public class ProjectoverviewController {
         // saving edited project
         projectService.save(project);
 
-        return "redirect:";
+        return "redirect:/projectoverview";
     }
 
     /**
@@ -147,14 +177,24 @@ public class ProjectoverviewController {
      * @return redirect to projectoverview
      */
     @GetMapping("leaveProject{projectId}")
-    public String leaveProject(@RequestParam("projectId") Integer id) {
+    public String leaveProject(@RequestParam("projectId") Integer id, Model model) {
+        // Stuff for the gamification like level, exp and the monster information
+        model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+        model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+        model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+        model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+        model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+        model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        //-------------------------------------------------------------------------------------------------
 
         userService.getCurrentUser().removeProject(projectService.findById(id));
 
         // saving changes to database
         userService.saveUser(userService.getCurrentUser());
 
-        return "redirect:";
+        return "redirect:/projectoverview";
     }
 
     /**
@@ -171,6 +211,16 @@ public class ProjectoverviewController {
         model.addAttribute("users", projectService.findById(id).getUsers());
         model.addAttribute("user", new User());
         model.addAttribute("project", id);
+        // Stuff for the gamification like level, exp and the monster information
+        model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+        model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+        model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+        model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+        model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+        model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        //-------------------------------------------------------------------------------------------------
 
         return "projectoverview/users";
     }
@@ -195,6 +245,17 @@ public class ProjectoverviewController {
             model.addAttribute("title", "Users");
             model.addAttribute("users", projectService.findById(id).getUsers());
             model.addAttribute("project", id);
+            // Stuff for the gamification like level, exp and the monster information
+            model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+            model.addAttribute("Exp", userService.getCurrentUser().getExp());
+            model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+            model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+            model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+            model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+            model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+            model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+            //-------------------------------------------------------------------------------------------------
+
             return "projectoverview/users";
         }
 
@@ -224,6 +285,20 @@ public class ProjectoverviewController {
         return "redirect:/projectoverview/users?projectId=" + projectId;
     }
 
+    /**
+     * sets the hp for the monster
+     *
+     * @return redirect to users.html
+     */
+    @GetMapping("/decreseHp{MonsterId}")
+    public String updateHp(@RequestParam("MonsterId") Integer monsterId) {
 
+        monsterService.findMonsterById(monsterId).setCurrentLifePoints(450);
+
+        // saving changes to database
+        monsterService.saveMonster(monsterService.findMonsterById(monsterId));
+
+        return "redirect:";
+    }
 
 }

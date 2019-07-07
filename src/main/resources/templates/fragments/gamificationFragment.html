@@ -1,13 +1,13 @@
 <html lang="en" xmlns:th="http://thymeleaf.org/">
-<div class="card" xmlns:padding-left="http://www.w3.org/1999/xhtml"
-     xmlns:th="http://www.w3.org/1999/xhtml"/>
+<div class="card"/>
 
 <div class="card text-center with-shadows">
 
     <div class="card-img-top p-3 bg-light" th:text="${Surname} + ' ' + ${Lastname}"/>
 <div class="p-1">
     <div class="progress w-100 border border-dark with-shadows">
-        <div class="progress-bar bg-danger h-auto" role="progressbar" th:style="'width:' + ${Exp / 10} + '%;'" th:aria-valuenow="${Exp}"
+        <div th:if = "${Exp != null}"
+                class="progress-bar bg-danger h-auto" role="progressbar" th:style="'width:' + ${Exp / 10} + '%;'" th:aria-valuenow="${Exp}"
              aria-valuemin="0"
              aria-valuemax="1000" th:text="${Exp} + ' ' + Exp.">
         </div>
@@ -18,6 +18,20 @@
 </div>
 </div>
 </div>
-
+<div class="d-flex flex-row with-shadows container bg-light rounded mb-0 w-25 h-100 with-shadows border border-dark">
+    <div class="bg-dark rounded"><img th:src="${MonsterPic}" class="with-shadows avatar img-thumbnail bg-light p-0 rounded border-dark border" width="190px" alt="Monster"></div>
+    <div class="w-100 p-3 text-center">
+        <div class="progress border border-dark h-auto with-shadows">
+            <div th:if="${currentHp != null && maxHp != null}"
+                    class="progress-bar bg-danger" role="progressbar"
+                 th:style="'width:' + ${currentHp / maxHp * 100} + '%;'"
+                 th:aria-valuenow="${currentHp}"
+                 aria-valuemin="0"
+                 th:aria-valuemax="${maxHp}" th:text="${currentHp} + ' ' + Hp.">
+            </div>
+        </div>
+        <a class="btn btn-danger p-2 mt-2" th:href="@{decreseHp(MonsterId=${MonsterId})}">Kick me</a>
+    </div>
+</div>
 
 </html>

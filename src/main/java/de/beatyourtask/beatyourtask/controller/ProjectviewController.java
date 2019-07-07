@@ -1,22 +1,17 @@
 package de.beatyourtask.beatyourtask.controller;
 
 import de.beatyourtask.beatyourtask.model.Project;
-import de.beatyourtask.beatyourtask.model.User;
+import de.beatyourtask.beatyourtask.model.Tasklist;
+import de.beatyourtask.beatyourtask.services.MonsterService;
 import de.beatyourtask.beatyourtask.services.ProjectService;
 import de.beatyourtask.beatyourtask.services.TasklistService;
-import de.beatyourtask.beatyourtask.model.Tasklist;
-import org.springframework.scheduling.config.Task;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.ui.Model;
+import de.beatyourtask.beatyourtask.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
 
-import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +29,11 @@ public class ProjectviewController {
     @Autowired
     private ProjectService projectService;
 
+    @Autowired
+    UserService userService;
 
+    @Autowired
+    MonsterService monsterService;
     @ModelAttribute(value = "newTaskListAttribute")
     public Tasklist newTasklist()
     {
@@ -80,6 +79,16 @@ public class ProjectviewController {
 
 
         model.addAttribute("tasklists", sortedTasklists);
+        // Stuff for the gamification like level, exp and the monster information
+        model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+        model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+        model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+        model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+        model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+        model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        //-------------------------------------------------------------------------------------------------
         System.out.println(id);
         System.out.println("in /ProjectID");
 
@@ -116,7 +125,6 @@ public class ProjectviewController {
         } catch (NumberFormatException e){
             e.printStackTrace();
         }
-
         return "redirect:/Project?ProjectId="+projectId;
 
     }
