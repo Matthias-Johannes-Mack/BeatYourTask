@@ -346,21 +346,22 @@ public class ProjectoverviewController {
                 userService.saveUser(userService.findByEmail(userService.getCurrentUser().getEmail()));
                 //puts the damage  to the old monster and the remaining damage to the new one
                 int restDamage = (cPoints - damage) * (-1);
-
+                System.out.println(restDamage);
                 monsterService.findMonsterById(monsterId).setCurrentLifePoints(monsterService.findMonsterById(monsterId).getCurrentLifePoints() - (damage - restDamage));
                 monsterService.findMonsterById(monsterId + 1).setCurrentLifePoints(monsterService.findMonsterById(monsterId + 1).getCurrentLifePoints() - restDamage);
-                // resets the new monster picture
-                String currentMonsterName = monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId() + 1).getMonsterName();
-                monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_000.png");
+
                 // calculates the value for the percentage
                 int currentP = monsterService.findMonsterById(monsterId + 1).getCurrentLifePoints() - restDamage;
                 int maxP = monsterService.findMonsterById(monsterId + 1).getLifepoints();
-                int calculation = (100 * currentP) / maxP;
-                if (calculation < 0) {
-                    calculation = 0;
-                }
-                monsterService.findMonsterById(monsterId + 1).setPercentageLeft(calculation);
+                // int calculation = (100 * currentP) / maxP;
 
+
+                monsterService.findMonsterById(monsterId + 1).setPercentageLeft(100);
+                // resets the new monster picture
+                if ((userService.getCurrentUser().getActiveMonsterId() + 1) < 4) {
+                    String currentMonsterName = monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId() + 1).getMonsterName();
+                    monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId() + 1).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_000.png");
+                }
             } else {
                 // set all user the monster to 1
                 userService.getAllUsers().forEach((u) -> userService.getUserById(u.getId()).setActiveMonsterId(1));
@@ -369,12 +370,16 @@ public class ProjectoverviewController {
                 // resets all monster with higher values
                 monsterService.findMonsterById(1).setCurrentLifePoints(2500);
                 monsterService.findMonsterById(1).setLifepoints(2500);
+                monsterService.findMonsterById(1).setPercentageLeft(100);
 
                 monsterService.findMonsterById(2).setCurrentLifePoints(3000);
                 monsterService.findMonsterById(2).setLifepoints(3000);
+                monsterService.findMonsterById(2).setPercentageLeft(100);
 
                 monsterService.findMonsterById(3).setCurrentLifePoints(3500);
                 monsterService.findMonsterById(3).setLifepoints(3500);
+                monsterService.findMonsterById(3).setPercentageLeft(100);
+
                 // save the whole thing
                 userService.saveUser(userService.findByEmail(userService.getCurrentUser().getEmail()));
             }
@@ -384,31 +389,33 @@ public class ProjectoverviewController {
         // set the monsterpic
         double percentage = monsterService.findMonsterById(monsterId).getPercentageLeft();
         String currentMonsterName = monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterName();
+        if (percentage <= 100 && percentage > 90) {
+            monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_000.png");
+        }
 
-
-        if (percentage <= 90) {
+        if (percentage <= 90 && percentage > 80) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_003.png");
         }
 
-        if (percentage <= 80) {
+        if (percentage <= 80 && percentage > 70) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_003.png");
         }
-        if (percentage <= 70) {
+        if (percentage <= 70 && percentage > 60) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_004.png");
         }
-        if (percentage <= 60) {
+        if (percentage <= 60 && percentage > 50) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_005.png");
         }
-        if (percentage <= 50) {
+        if (percentage <= 50 && percentage > 40) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_006.png");
         }
-        if (percentage <= 40) {
+        if (percentage <= 40 && percentage > 30) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_007.png");
         }
-        if (percentage <= 30) {
+        if (percentage <= 30 && percentage > 20) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_009.png");
         }
-        if (percentage <= 20) {
+        if (percentage <= 20 && percentage > 10) {
             monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).setMonsterPic("/images/Monster/" + currentMonsterName + "/0_" + currentMonsterName + "_Dying_010.png");
         }
         if (percentage <= 10 && percentage > 0) {
@@ -424,15 +431,12 @@ public class ProjectoverviewController {
         int maxLvlExp = levelService.findLevelById(currentUserLvl).getMaxExpLvl();
         // if the user Exp is to high, change the level
         if ((userExp + 100) > maxLvlExp) {
-            if (currentUserLvl <= 5) {
-
-                // calculate the percentage for the Progressbar
-                int calc = ((100 * userExp) / maxLvlExp);
-                userService.getCurrentUser().setLvlPercentage(calc);
+            if (currentUserLvl <= 10) {
 
                 // increase the lvl
                 userService.getCurrentUser().setLvl(currentUserLvl + 1);
                 userService.getCurrentUser().setExp(0);
+                userService.getCurrentUser().setLvlPercentage(0);
                 userService.getCurrentUser().setMaxExp(levelService.findLevelById(currentUserLvl + 1).getMaxExpLvl());
                 userService.getCurrentUser().setDamage(levelService.findLevelById(currentUserLvl + 1).getDamage());
             }

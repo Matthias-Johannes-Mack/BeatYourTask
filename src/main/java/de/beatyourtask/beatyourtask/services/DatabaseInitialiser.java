@@ -166,5 +166,35 @@ public class DatabaseInitialiser implements ApplicationListener<ContextRefreshed
         lvl5.setMaxExpLvl(5000);
         levelService.saveLevel(lvl5);
 
+        Level lvl6 = new Level();
+        lvl6.setLevel(6);
+        lvl6.setDamage(500);
+        lvl6.setMaxExpLvl(10000);
+        levelService.saveLevel(lvl6);
+
+        Level lvl7 = new Level();
+        lvl7.setLevel(7);
+        lvl7.setDamage(600);
+        lvl7.setMaxExpLvl(20000);
+        levelService.saveLevel(lvl7);
+
+        Level lvl8 = new Level();
+        lvl8.setLevel(8);
+        lvl8.setDamage(600);
+        lvl8.setMaxExpLvl(20000);
+        levelService.saveLevel(lvl8);
+
+        Level lvl9 = new Level();
+        lvl9.setLevel(9);
+        lvl9.setDamage(700);
+        lvl9.setMaxExpLvl(50000);
+        levelService.saveLevel(lvl9);
+
+        Level lvl10 = new Level();
+        lvl10.setLevel(10);
+        lvl10.setDamage(1000);
+        lvl10.setMaxExpLvl(100000);
+        levelService.saveLevel(lvl10);
+
     }
 }
