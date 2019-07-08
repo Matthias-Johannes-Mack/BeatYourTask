@@ -1,21 +1,14 @@
 package de.beatyourtask.beatyourtask.controller;
 
 import de.beatyourtask.beatyourtask.model.Project;
+import de.beatyourtask.beatyourtask.model.Task;
 import de.beatyourtask.beatyourtask.model.Tasklist;
-import de.beatyourtask.beatyourtask.services.MonsterService;
-import de.beatyourtask.beatyourtask.services.ProjectService;
-import de.beatyourtask.beatyourtask.services.TaskService;
-import de.beatyourtask.beatyourtask.services.TasklistService;
-import de.beatyourtask.beatyourtask.services.UserService;
+import de.beatyourtask.beatyourtask.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import de.beatyourtask.beatyourtask.model.Tasklist;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.view.RedirectView;
-import de.beatyourtask.beatyourtask.model.Task;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -93,6 +86,8 @@ public class ProjectviewController {
         // Stuff for the gamification like level, exp and the monster information
         model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
         model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
+        model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
         model.addAttribute("Damage", userService.getCurrentUser().getDamage());
         model.addAttribute("Surname", userService.getCurrentUser().getSurname());
         model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
@@ -101,7 +96,7 @@ public class ProjectviewController {
         model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
         model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
         model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
-//-------------------------------------------------------------------------------------------------
+        //-------------------------------------------------------------------------------------------------
         System.out.println(id);
         System.out.println("in /ProjectID");
 
