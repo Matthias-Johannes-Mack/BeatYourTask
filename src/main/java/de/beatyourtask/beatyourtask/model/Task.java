@@ -22,7 +22,7 @@ public class Task {
     private String taskName;
 
     private String date;
-    private boolean done;
+    private boolean done = false;
 
 
 

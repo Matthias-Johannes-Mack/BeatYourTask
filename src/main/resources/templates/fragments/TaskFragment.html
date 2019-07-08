@@ -10,7 +10,7 @@
 <body>
 <span th:fragment="taskFragment">
         <!--/*@thymesVar id="Id" type="java.lang.String"*/-->
-        <li class="task" th:id="${Id}">
+        <li th:style="${task.done?'background-color: #17C670; border-color: #17C670 ':''}" class="task" th:id="${Id}">
 
             <!--uses contextvariable tasklists from TasklistView when called in TasklistView-->
             <!--suppress ThymeleafVariablesResolveInspection -->
@@ -22,11 +22,12 @@
                     <div class="dropdown">
                         <i class="fas fa-ellipsis-v" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item editTaskButton">edit</a>
+                            <a class="dropdown-item editTaskButton">Edit</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" th:href="@{task/comments(taskId=${task.taskId})}">Comments</a>
                             <a class="dropdown-item" th:href="@{task/assignees(taskId=${task.taskId})}">Assignees</a>
-                            <a class="dropdown-item" th:href="@{/projectoverview/decreaseHp(MonsterId=${MonsterId},taskId=${task.taskId})}"> Done? <input th:checked="${task.done}" type="checkbox" id="customToggle2" name="customToggle2" disabled /></a>
+                            <a th:if="${!task.done}" class="dropdown-item" th:href="@{/projectoverview/decreaseHp(MonsterId=${MonsterId},taskId=${task.taskId})}"> Done?</a>
+                            <span th:if="${task.done}" class="dropdown-item"> Done? <input th:checked="${task.done}" type="checkbox" id="customToggle2" name="customToggle2" disabled /></span>
                         </div>
                     </div>
                 </div>
