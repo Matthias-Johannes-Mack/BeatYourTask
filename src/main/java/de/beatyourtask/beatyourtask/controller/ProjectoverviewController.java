@@ -322,9 +322,10 @@ public class ProjectoverviewController {
      *
      * @return redirect to users.html
      */
-    @RequestMapping("decreaseHp{MonsterId, Damage}")
-    public String updateHp(@RequestParam("MonsterId") Integer monsterId, @RequestParam("Damage") Integer damage) {
+    @RequestMapping("decreaseHp{MonsterId}")
+    public String updateHp(@RequestParam("MonsterId") Integer monsterId) {
         int cPoints = monsterService.findMonsterById(monsterId).getCurrentLifePoints();
+        int damage = userService.getCurrentUser().getDamage();
 
         // if there are enough damage points
         if ((cPoints - damage) >= 0) {
