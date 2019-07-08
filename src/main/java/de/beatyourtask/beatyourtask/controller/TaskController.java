@@ -230,4 +230,73 @@ public class TaskController {
 
         return "redirect:/task/labels?taskId=" + taskId;
     }
+
+    @GetMapping("editLabel{taskId, labelId}")
+    public String displayEditLabelForm(@RequestParam("taskId") Integer taskId,@RequestParam("labelId") Integer labelId, Model model) {
+
+        Task task = taskService.getTaskById(taskId);
+        Integer projectId = task.getTasklist().getProject().getProjectId();
+
+        model.addAttribute("title", "Labels");
+        model.addAttribute("labels", task.getLabels());
+        model.addAttribute("label", new Label());
+        model.addAttribute("taskId", taskId);
+        model.addAttribute("projectId", projectId);
+
+        return "task/addLabel";
+    }
+
+    @PostMapping("editLabel{taskId, labelId}")
+    public String processEditLabelForm(@RequestParam("taskId") Integer taskId,@RequestParam("labelId") Integer labelId, @ModelAttribute @Valid Label label,
+                                      BindingResult result, Model model) {
+
+        Task task = taskService.getTaskById(taskId);
+        Integer projectId = task.getTasklist().getProject().getProjectId();
+
+
+        if (result.hasErrors()) {
+            model.addAttribute("title", "Labels");
+            model.addAttribute("users", task.getLabels());
+            model.addAttribute("taskId", taskId);
+            model.addAttribute("projectId", projectId);
+            return "task/addLabel";
+        }
+
+        labelService.getLabelById(labelId).setLabelName(label.getLabelName());
+        labelService.getLabelById(labelId).setLabelColor(label.getLabelColor());
+
+
+        System.out.println("Task-Labels: " + taskService.getTaskById(taskId).getLabels());
+        System.out.println("Project-Labels: " + projectService.findById(projectId).getLabel());
+
+        // saving changes to database
+        taskService.saveTask(taskService.getTaskById(taskId));
+        projectService.save(projectService.findById(projectId));
+
+        return "redirect:/task/labels?taskId=" + taskId;
+    }
+
+    @GetMapping("removeLabelPerm{taskId, labelId}")
+    public String processRemoveLabelPerm(@RequestParam("taskId") Integer taskId, @RequestParam("labelId") Integer labelId) {
+        Integer projectId =  taskService.getTaskById(taskId).getTasklist().getProject().getProjectId();
+
+        System.out.println("TaskId: " + taskId);
+        System.out.println("LabelId: " + labelId);
+
+
+        for (Tasklist tasklists : projectService.findById(projectId).getLists()) {
+            for (Task tasks : tasklists.getTasks()) {
+                tasks.removeLabel(labelService.getLabelById(labelId));
+                taskService.saveTask(tasks);
+            }
+        }
+        taskService.getTaskById(taskId).getTasklist().getProject().removeLabel(labelService.getLabelById(labelId));
+
+        // saving changes to database
+        taskService.saveTask(taskService.getTaskById(taskId));
+        projectService.save(projectService.findById(projectId));
+
+
+        return "redirect:/task/labels?taskId=" + taskId;
+    }
 }

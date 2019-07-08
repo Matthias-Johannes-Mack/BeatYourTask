@@ -6,7 +6,6 @@
     <title>Title</title>
 
     <th:block th:include="/fragments/TaskFragment"></th:block>
-    <th:block th:include="/task/AddLabelModal"></th:block>
 
 </head>
 <body>
@@ -33,6 +32,9 @@
                     </div>
                 </div>
          </div>
+            <tr th:each="label : ${task.labels}">
+                <th th:bgcolor="${label.labelColor}"><i class="far fa-circle"></i></th>
+            </tr>
         </li>
 </span>
 </body>

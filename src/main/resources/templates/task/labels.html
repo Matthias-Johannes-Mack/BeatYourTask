@@ -23,11 +23,15 @@
                     <tr>
                         <th>Label</th>
                         <th>Color</th>
+                        <th></th>
                     </tr>
                     <tr th:each="tasklabel : ${tasklabels}">
-                        <td th:text="${tasklabel.labelName}"></td>
-                        <td th:text="${tasklabel.labelColor}"></td>
-                        <td><a class="btn btn-danger" th:href=@{/task/removelabel(taskId=${taskId},labelId=${tasklabel.labelId})}><i class="fa fa-minus-circle"></i></a></td>
+                        <td th:text="${tasklabel.labelName}" th:bgcolor="${tasklabel.labelColor}"></td>
+                        <td th:text="${tasklabel.labelColor}" th:bgcolor="${tasklabel.labelColor}"></td>
+                        <td th:bgcolor="${tasklabel.labelColor}">
+                            <a class="btn btn-danger" th:href=@{/task/removelabel(taskId=${taskId},labelId=${tasklabel.labelId})}><i class="fa fa-minus-circle"></i></a>
+                            <a class="btn btn-primary" th:href=@{/task/editLabel(taskId=${taskId},labelId=${tasklabel.labelId})}><i class="fa fa-edit"></i></a>
+                        </td>
                     </tr>
                 </table>
                 <table class = "table">
@@ -35,12 +39,16 @@
                     <tr>
                         <th>Label</th>
                         <th>Color</th>
+                        <th></th>
                     </tr>
 
                     <tr th:each="projectlabel : ${projectlabels}">
-                        <td th:text="${projectlabel.labelName}"></td>
-                        <td th:text="${projectlabel.labelColor}"></td>
-                        <td><a class="btn btn-primary" th:href=@{/task/addlabel(taskId=${taskId},labelId=${projectlabel.labelId})}><i class="fa fa-plus-circle"></i></a></td>
+                        <td th:text="${projectlabel.labelName}" th:bgcolor="${projectlabel.labelColor}"></td>
+                        <td th:text="${projectlabel.labelColor}" th:bgcolor="${projectlabel.labelColor}"></td>
+                        <td th:bgcolor="${projectlabel.labelColor}"><a class="btn btn-primary" th:href=@{/task/addlabel(taskId=${taskId},labelId=${projectlabel.labelId})}><i class="fa fa-plus-circle"></i></a>
+                            <a class="btn btn-primary" th:href=@{/task/editLabel(taskId=${taskId},labelId=${projectlabel.labelId})}><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-danger" th:href=@{/task/removeLabelPerm(taskId=${taskId},labelId=${projectlabel.labelId})}><i class="fa fa-trash"></i></a>
+                        </td>
                     </tr>
                 </table>
                 <!-- button zum öffnen des Modals zum hinzufügen eines neuen Labels -->

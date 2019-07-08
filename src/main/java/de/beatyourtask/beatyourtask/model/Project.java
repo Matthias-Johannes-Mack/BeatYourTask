@@ -74,6 +74,10 @@ public class Project {
         user.getProjects().remove(this);
     }
 
+    public void removeLabel(Label label) {
+        this.labels.remove(label);
+    }
+
     public void setLabel(Label label) { this.labels.add(label); }
 
     public List<Label> getLabel() { return this.labels; }
