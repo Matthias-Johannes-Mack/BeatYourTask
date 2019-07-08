@@ -99,6 +99,18 @@
             background: rgba(25, 25, 25, .1);
         }
 
+        /* für die tasks dateinhalte */
+        .dateElement {
+            float: left;
+            margin-right: 5px;
+            font-size: 11pt;
+        }
+
+        .dateWrapper {
+            display: flex;
+            align-items: center;
+        }
+
     </style>
 
 
@@ -125,6 +137,7 @@
                     console.log("ajax send!");
                 }
             });
+
             // send intial order of lists when page is loaded(when list is added/deleted)
             $(function sendInitalListPosition() {
                 var listOrder = $("#sortableListContainer").sortable('serialize');
@@ -140,26 +153,128 @@
                 });
                 console.log("ajax send!");
             });
+
+            // saves task order of the list that task was moved in
+            var taskOrderNewList;
+
             /* Connect all taskconatainer */
             $(".taskContainer").sortable({
                 connectWith: ".taskContainer",
                 placeholder: "highlightTask",
-                //saves the new position when a task is moved
-                update: function sendAjaxWhenTaskMoved(event, ui) {
-                    var data = $(this).sortable('serialize');
+
+                //functions for handeling when task is moved
+                update: function updateOnTaskMove(event, ui) {
+
                     console.log("Task bewegt!");
-                    /* Post
-                    $.ajax({
-                        data: data,
-                        type: 'POST',
-                        url: '/TODO'
-                    });
-                    */
+
+                    function getTaskOrderNewList(sortableList,ui){
+
+                        taskOrderNewList = sortableList.sortable('serialize');
+
+                    }
+                    getTaskOrderNewList($(this),ui);
+
+                },
+
+                start: function startTaskMove(event, ui) {
+                    item = ui.item;
+                    newList = oldList = ui.item.parent().parent();
+                },
+
+                stop: function stopTaskMove(event, ui) {
+
+                    var idOldList = oldList.attr('id');
+                    var idNewList = newList.attr('id');
+                    var idTask =  item.attr('id');
+                    var taskOrderOldList = $(this).sortable('serialize');
+                    // taskOrderNewList is a global variable (look above)
+
+
+                    console.log("Moved " + idTask + " from " + idOldList + " to " + idNewList);
+
+
+                   // task moved in same list
+                   if(oldList == newList) {
+                       console.log("task in gleicher Liste bewegt");
+                       console.log("taskorer: id: "+idOldList+" Order "+taskOrderOldList);
+
+                       // only needs to save the new order
+                       sendAjaxTaskOrder(idOldList, taskOrderOldList);
+
+                       // task moved in other list
+                   } else {
+                       console.log("task in andere Liste bewegt");
+                       console.log("taskorer Old: id: "+idOldList+" Order "+taskOrderOldList);
+                       console.log("taskorer New: id: "+idNewList+" Order "+taskOrderNewList);
+
+                        // Code for old tasklist
+                       sendAjaxTaskOrder(idOldList, taskOrderOldList);
+                       sendAjaxRemoveTaskFromList(idOldList, idTask)
+
+                       // Code for new Tasklist
+                       sendAjaxTaskOrder(idNewList, taskOrderNewList);
+                       sendAjaxMoveTaskToList(idNewList, idTask)
+
+                   }
+
+                    // sends the actual ajax request to save the new order
+                    function sendAjaxTaskOrder(idList, taskOrder) {
+                        var postData = idList+"&"+taskOrder;
+                        var jsonfile = {json: JSON.stringify(postData)};
+
+                        // Post
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ajaxSaveTaskOrder',
+                            data: jsonfile,
+                            dataType: "json"
+                        });
+
+                        console.log("ajax task send (New order): "+ postData)
+                    }
+
+                    // sends the actual ajax request when task is moved away from list
+                    function sendAjaxRemoveTaskFromList(idList, idTask) {
+                        var postData = idList+"&"+idTask;
+                        var jsonfile = {json: JSON.stringify(postData)};
+
+                        // Post
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ajaxRemovedTaskFromList',
+                            data: jsonfile,
+                            dataType: "json"
+                        });
+
+                        console.log("ajax task send (Moved Away): "+ postData)
+                    }
+
+                    // sends the actual ajax request when task is moved to new list
+                    function sendAjaxMoveTaskToList(idList, idTask) {
+                        var postData = idList+"&"+idTask;
+                        var jsonfile = {json: JSON.stringify(postData)};
+
+                        // Post
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ajaxMovedTaskToNewList',
+                            data: jsonfile,
+                            dataType: "json"
+                        });
+
+                        console.log("ajax task send (Move to): "+ postData)
+                    }
+                },
+
+                change: function changeOnTaskMove(event, ui) {
+                    if(ui.sender) {
+                        newList = ui.placeholder.parent().parent();
+                    }
+
                 }
+
             }).disableSelection();
-            $(function sendInitalTaskPosition() {
-                //TODO
-            });
+
 
             //sets the id of the list in the edit list modal
             $(".listbutton").click(function () {
@@ -197,6 +312,18 @@
                 $("#AddNewTaskModal #listID").val(idInt);
 
             });
+
+
+            var startDate = new Date();
+            startDate.setDate(startDate.getDate());
+
+            $('#datepicker-task').datepicker({
+                startDate: startDate,
+                calendarWeeks: true,
+                autoclose: true,
+                todayHighlight: true
+            });
+
         });
     </script>
 

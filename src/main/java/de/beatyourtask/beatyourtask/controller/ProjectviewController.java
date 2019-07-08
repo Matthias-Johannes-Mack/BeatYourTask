@@ -91,11 +91,42 @@ public class ProjectviewController {
         System.out.println("in /ProjectID");
 
 
-        // a list containing the tasks for each tasklist, index in the list is the same as in sortedList
+
+        // a list containing the tasks for each tasklist, index in the list is the same as in sortedTaskList
         List<List<Task>> tasks = new ArrayList<List<Task>>();
+
         for (Tasklist list : sortedTasklists) {
             int listID = list.getListId();
-            tasks.add(tasklistService.loadTasklistById(listID).getTasks());
+
+            // Tasklist containing the sorted tasks for a list
+            List<Task> sortedTasksForList = new ArrayList<>();
+            List<Task> unsortedTasksForList = tasklistService.loadTasklistById(listID).getTasks();
+            List<Integer> orderTasks = list.getOrderTasks();
+            List<Task> listRemoveFromUnsortedTask = new ArrayList<Task>();
+
+            for(Integer currentTaskID : orderTasks) {
+                for (Task currentTask : unsortedTasksForList) {
+                    System.out.println("Curren task id: "+currentTaskID);
+                    System.out.println("Curren task id 2: "+currentTask.getTaskId());
+
+                    if(currentTask.getTaskId() == currentTaskID) {
+                        sortedTasksForList.add(currentTask);
+                        listRemoveFromUnsortedTask.add(currentTask);
+                    }
+                }
+            }
+
+
+            //if some of list ids were not allready saved in the order these tasklist will be loaded at the end
+            //e.g. when a list is added
+            unsortedTasksForList.removeAll(listRemoveFromUnsortedTask);
+            for (Task currentTask : unsortedTasksForList) {
+                sortedTasksForList.add(currentTask);
+            }
+
+            tasks.add(sortedTasksForList);
+
+            //tasks.add(tasklistService.loadTasklistById(listID).getTasks());
         }
         model.addAttribute("allTasks", tasks);
 
@@ -195,6 +226,13 @@ public class ProjectviewController {
         System.out.println("ProjectId: " + projectId);
         System.out.println("Task created in ListID: " + listID);
         System.out.println("Taskname: " + newTaskAttribute.getTaskName());
+        System.out.println("duedate: " + newTaskAttribute.getDate());
+
+        // damit dateelemnt nur angezeiigt wird wenn datum ausgewählt
+        String dateValue = newTaskAttribute.getDate();
+        if (dateValue == "") {
+            newTaskAttribute.setDate(null);
+        }
 
         taskService.saveTask(newTaskAttribute);
 

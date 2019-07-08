@@ -28,7 +28,7 @@
              <li
                      th:each="task : ${taskForList}"
                      th:include="/fragments/TaskFragment :: taskFragment"
-                     th:with="Titel=${task.taskName},  Id=idtask_+${task.taskId}, validationId=${taskStat.count}"
+                     th:with="Titel=${task.taskName},  Id=idtask_+${task.taskId}, validationId=${taskStat.count}, dueDate=${task.date}"
                      th:remove="tag"
              />
 

@@ -29,9 +29,9 @@ public class Tasklist {
     @OneToMany(mappedBy = "tasklist", cascade = CascadeType.ALL)
     private List<Task> tasks = new ArrayList<Task>();
 
-    /** order of the taskLists in the project*/
+    /** order of the tasks in the list*/
     @ElementCollection
-    private List<Integer> orders = new ArrayList<>();
+    private List<Integer> orderTasks = new ArrayList<>();
 
 
     /**
@@ -101,4 +101,18 @@ public class Tasklist {
         taskVar.setTaskList(this);
         tasks.add(taskVar);
     }
+
+    public void removeTasks(Task task) {
+        Task taskVar = task;
+        tasks.remove(taskVar);
+    }
+
+    public void setOrderTasks(List<Integer> orderTasks) {
+        this.orderTasks = orderTasks;
+    }
+
+    public List<Integer> getOrderTasks() {
+        return orderTasks;
+    }
+
 }
