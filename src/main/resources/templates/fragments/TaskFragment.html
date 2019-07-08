@@ -27,7 +27,7 @@
                             <a class="dropdown-item" th:href="@{task/comments(taskId=${task.taskId})}">Comments</a>
                             <a class="dropdown-item" th:href="@{task/assignees(taskId=${task.taskId})}">Assignees</a>
                             <a th:if="${!task.done}" class="dropdown-item" th:href="@{/projectoverview/decreaseHp(MonsterId=${MonsterId},taskId=${task.taskId})}"> Done?</a>
-                            <span th:if="${task.done}" class="dropdown-item"> Done? <input th:checked="${task.done}" type="checkbox" id="customToggle2" name="customToggle2" disabled /></span>
+                            <span th:if="${task.done}" class="dropdown-item"> Done? <i style="color: #17C670;"class="fas fa-check"></i></span>
                         </div>
                     </div>
                 </div>
