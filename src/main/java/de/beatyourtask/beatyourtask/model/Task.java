@@ -22,11 +22,21 @@ public class Task {
     private String taskName;
 
     private String date;
+    private boolean done;
+
 
 
     // Constructor
     public Task(){
 
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
     }
 
     public void addUser(User user){

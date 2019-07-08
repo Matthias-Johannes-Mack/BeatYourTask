@@ -1,11 +1,9 @@
 package de.beatyourtask.beatyourtask.controller;
 
 import de.beatyourtask.beatyourtask.model.Project;
+import de.beatyourtask.beatyourtask.model.Task;
 import de.beatyourtask.beatyourtask.model.User;
-import de.beatyourtask.beatyourtask.services.LevelService;
-import de.beatyourtask.beatyourtask.services.MonsterService;
-import de.beatyourtask.beatyourtask.services.ProjectService;
-import de.beatyourtask.beatyourtask.services.UserService;
+import de.beatyourtask.beatyourtask.services.*;
 import de.beatyourtask.beatyourtask.validators.AddUserDTO;
 import de.beatyourtask.beatyourtask.validators.ProjectAddUserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +36,9 @@ public class ProjectoverviewController {
 
     @Autowired
     ProjectAddUserValidator projectAddUserValidator;
+
+    @Autowired
+    TaskService taskService;
 
     /**
      * Loads the Projectoverview with all projects in the database
@@ -328,6 +329,14 @@ public class ProjectoverviewController {
         int damage = userService.getCurrentUser().getDamage();
         String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
         int projectID = Integer.parseInt(projectId);
+
+        Task task = taskService.getTaskById(taskId);
+        task.setDone(true);
+        taskService.saveTask(task);
+
+
+
+
 
         // if there are enough damage points
         if ((cPoints - damage) >= 0) {
