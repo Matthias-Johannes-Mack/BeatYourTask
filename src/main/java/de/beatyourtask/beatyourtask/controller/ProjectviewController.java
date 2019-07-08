@@ -247,4 +247,26 @@ public class ProjectviewController {
 
         return "redirect:/Project?ProjectId=" + projectId;
     }
+
+    @RequestMapping(value = "/editTask", method = RequestMethod.POST)
+    public String editTask(@ModelAttribute("newTaskAttribute") Task newTaskAttribute, @ModelAttribute("newTaskListAttribute") Tasklist newTaskListAttribute, @RequestHeader(value = "referer", required = false) final String referer) {
+        String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
+
+        int taskID = newTaskListAttribute.getListId();
+
+        Task task = taskService.getTaskById(taskID);
+        task.setTaskName(newTaskAttribute.getTaskName());
+        task.setDate(newTaskAttribute.getDate());
+        System.out.println("getDate: "+newTaskAttribute.getDate());
+
+        // damit dateelemnt nur angezeiigt wird wenn datum ausgewählt
+        String dateValue = newTaskAttribute.getDate();
+        if (dateValue == "") {
+            task.setDate(null);
+        }
+
+        taskService.saveTask(task);
+
+        return "redirect:/Project?ProjectId=" + projectId;
+    }
 }

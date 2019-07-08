@@ -11,14 +11,16 @@
     <title>Tasklistview with jQuery UI Sortable</title>
 
     <!-- Dependencys -->
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- Dependencys -->
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
 
     <th:block th:include="/fragments/AddNewListModal"></th:block>
+    <th:block th:include="/fragments/AddNewTaskModal"></th:block>
     <th:block th:include="/fragments/editListModal"></th:block>
     <th:block th:include="/fragments/deleteListModal"></th:block>
     <th:block th:include="/fragments/AddNewTaskModal"></th:block>
+    <th:block th:include="/fragments/editTaskModal"></th:block>
 
 
     <!-- Style for this fragment -->
@@ -112,6 +114,7 @@
         }
 
     </style>
+
 
 
     <!-- jquerry functions for this fragment -->
@@ -313,12 +316,35 @@
 
             });
 
+            $('.editTaskButton').on('click', function(event){
+                $('#editTaskModal').modal();
+
+                console.log("button clicked");
+                var parentID = $(this).closest('li').attr('id');
+                console.log("parentID: " + parentID);
+                var idString = parentID.replace("idtask_", "");
+                console.log("parentID String TASK: " + idString);
+                var idInt = parseInt(idString);
+
+                $("#editTaskModal #listID").val(idInt);
+            });
+
 
             var startDate = new Date();
             startDate.setDate(startDate.getDate());
 
             $('#datepicker-task').datepicker({
                 startDate: startDate,
+                calendarWeeks: true,
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            var startEditDate = new Date();
+            startEditDate.setDate(startEditDate.getDate());
+
+            $('#datepicker-editTask').datepicker({
+                startDate: startEditDate,
                 calendarWeeks: true,
                 autoclose: true,
                 todayHighlight: true

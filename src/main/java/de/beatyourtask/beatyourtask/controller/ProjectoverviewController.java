@@ -77,6 +77,7 @@ public class ProjectoverviewController {
         project.addUser(userService.getCurrentUser());
         projectService.save(project);
 
+
         return "redirect:";
     }
 
