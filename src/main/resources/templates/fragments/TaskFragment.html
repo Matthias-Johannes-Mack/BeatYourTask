@@ -26,7 +26,7 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" th:href="@{task/comments(taskId=${task.taskId})}">Comments</a>
                             <a class="dropdown-item" th:href="@{task/assignees(taskId=${task.taskId})}">Assignees</a>
-                            <a class="dropdown-item"> Done? <input type="checkbox" id="customToggle2" name="customToggle2" required /></a>
+                            <a class="dropdown-item" th:href="@{/projectoverview/decreaseHp(MonsterId=${MonsterId},taskId=${task.taskId})}"> Done? <input type="checkbox" id="customToggle2" name="customToggle2" disabled /></a>
                         </div>
                     </div>
                 </div>

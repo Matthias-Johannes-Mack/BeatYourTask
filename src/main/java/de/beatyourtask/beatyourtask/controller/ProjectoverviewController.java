@@ -322,10 +322,12 @@ public class ProjectoverviewController {
      *
      * @return redirect to users.html
      */
-    @RequestMapping("decreaseHp{MonsterId}")
-    public String updateHp(@RequestParam("MonsterId") Integer monsterId) {
+    @RequestMapping("decreaseHp{MonsterId, taskId}")
+    public String updateHp(@RequestParam("MonsterId") Integer monsterId, @RequestParam("taskId") Integer taskId, @RequestHeader(value = "referer", required = false) final String referer) {
         int cPoints = monsterService.findMonsterById(monsterId).getCurrentLifePoints();
         int damage = userService.getCurrentUser().getDamage();
+        String projectId = referer.substring(referer.indexOf("=") + 1, referer.length());
+        int projectID = Integer.parseInt(projectId);
 
         // if there are enough damage points
         if ((cPoints - damage) >= 0) {
@@ -450,6 +452,6 @@ public class ProjectoverviewController {
         }
         // save the user
         userService.saveUser(userService.getCurrentUser());
-        return "redirect:/projectoverview";
+        return "redirect:/Project?ProjectId=" + projectId;
     }
 }
