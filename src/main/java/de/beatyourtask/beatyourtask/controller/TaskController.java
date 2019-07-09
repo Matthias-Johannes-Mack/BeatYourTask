@@ -1,12 +1,7 @@
 package de.beatyourtask.beatyourtask.controller;
 
-import de.beatyourtask.beatyourtask.model.Comment;
-import de.beatyourtask.beatyourtask.model.Task;
-import de.beatyourtask.beatyourtask.model.User;
-import de.beatyourtask.beatyourtask.services.CommentService;
-import de.beatyourtask.beatyourtask.services.MonsterService;
-import de.beatyourtask.beatyourtask.services.TaskService;
-import de.beatyourtask.beatyourtask.services.UserService;
+import de.beatyourtask.beatyourtask.model.*;
+import de.beatyourtask.beatyourtask.services.*;
 import de.beatyourtask.beatyourtask.validators.AddUserDTO;
 import de.beatyourtask.beatyourtask.validators.CommentDTO;
 import de.beatyourtask.beatyourtask.validators.TaskAddAssigneeValidator;
@@ -202,14 +197,6 @@ public class TaskController {
 
         Task task = taskService.getTaskById(taskId);
         Integer projectId = task.getTasklist().getProject().getProjectId();
-
-        if(result.hasErrors()){
-            model.addAttribute("title", "Comments");
-            model.addAttribute("comments", commentService.findAllByTask(task));
-            model.addAttribute("taskId", taskId);
-            model.addAttribute("projectId", projectId);
-            return "task/comments";
-        }
 
         comment.setAuthor(userService.getCurrentUser());
         comment.setOwnerTask(taskService.getTaskById(taskId));
