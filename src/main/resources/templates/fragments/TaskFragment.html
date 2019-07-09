@@ -37,11 +37,6 @@
                     </div>
                 </div>
          </div>
-            <tr th:each="label : ${task.labels}">
-                <th th:bgcolor="${label.labelColor}"><i class="far fa-circle"></i></th>
-            </tr>
-
-
 
             <!-- date Elemente werden nur angezeigt wenn date != null-->
             <!--suppress ThymeleafVariablesResolveInspection -->
@@ -50,6 +45,11 @@
                 <!--suppress ThymeleafVariablesResolveInspection -->
              <div class="date dateElement" th:text="${dueDate}" style="color: lightslategrey;"></div>
             </div>
+
+            <div class="labelWrapper">
+                <i th:each="label : ${task.labels}" th:style="'color:' + ${label.labelColor}" class="fas fa-tag"></i>
+            </div>
+
 
 
         </li>
