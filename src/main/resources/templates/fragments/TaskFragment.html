@@ -28,11 +28,11 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" th:href="@{task/comments(taskId=${task.taskId})}">Comments</a>
                             <a class="dropdown-item" th:href="@{task/assignees(taskId=${task.taskId})}">Assignees</a>
+                            <a class="dropdown-item" th:href="@{task/labels(taskId=${task.taskId})}">Labels</a>
                             <a th:if="${!task.done}" class="dropdown-item"
                                th:href="@{/projectoverview/decreaseHp(MonsterId=${MonsterId},taskId=${task.taskId})}"> Done?</a>
                             <span th:if="${task.done}" class="dropdown-item"> Done? <i style="color: #17C670;"
                                                                                        class="fas fa-check"></i></span>
-                            <a class="dropdown-item" th:href="@{task/labels(taskId=${task.taskId})}">Labels</a>
                         </div>
                     </div>
                 </div>
