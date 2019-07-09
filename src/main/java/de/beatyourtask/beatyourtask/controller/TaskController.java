@@ -195,6 +195,12 @@ public class TaskController {
         return "task/labels";
     }
 
+    /**
+     * removes a label form the respective task
+     * @param taskId id of the task
+     * @param labelId id of the label
+     * @return
+     */
     @GetMapping("removelabel{taskId, labelId}")
     public String processRemoveLabel(@RequestParam("taskId") Integer taskId, @RequestParam("labelId") Integer labelId) {
 
@@ -210,6 +216,12 @@ public class TaskController {
         return "redirect:/task/labels?taskId=" + taskId;
     }
 
+    /**
+     * adds a label to a task
+     * @param taskId id of the task
+     * @param labelId id of the label
+     * @return
+     */
     @GetMapping("addlabel{taskId, labelId}")
     public String processAddLabel(@RequestParam("taskId") Integer taskId, @RequestParam("labelId") Integer labelId) {
 
@@ -221,6 +233,12 @@ public class TaskController {
         return "redirect:/task/labels?taskId=" + taskId;
     }
 
+    /**
+     * displays a form for adding a label to the project
+     * @param taskId id of the task
+     * @param model
+     * @return
+     */
     @GetMapping("addLabel{taskId}")
     public String displayAddLabelForm(@RequestParam("taskId") Integer taskId, Model model) {
 
@@ -237,6 +255,14 @@ public class TaskController {
         return "task/addLabel";
     }
 
+    /**
+     * adds the created label to the project and the task
+     * @param taskId id of the task
+     * @param label new created label
+     * @param result
+     * @param model
+     * @return
+     */
     @PostMapping("addLabel{taskId}")
     public String processAddLabelForm(@RequestParam("taskId") Integer taskId, @ModelAttribute @Valid Label label,
                                           BindingResult result, Model model) {
@@ -269,6 +295,13 @@ public class TaskController {
         return "redirect:/task/labels?taskId=" + taskId;
     }
 
+    /**
+     * changes the color and the name of a label
+     * @param taskId id of the task
+     * @param labelId id of the label
+     * @param model
+     * @return
+     */
     @GetMapping("editLabel{taskId, labelId}")
     public String displayEditLabelForm(@RequestParam("taskId") Integer taskId,@RequestParam("labelId") Integer labelId, Model model) {
 
@@ -285,6 +318,13 @@ public class TaskController {
         return "task/addLabel";
     }
 
+    /**
+     * changes the color and the name of a label
+     * @param taskId id of the task
+     * @param labelId id of the label
+     * @param model
+     * @return
+     */
     @PostMapping("editLabel{taskId, labelId}")
     public String processEditLabelForm(@RequestParam("taskId") Integer taskId,@RequestParam("labelId") Integer labelId, @ModelAttribute @Valid Label label,
                                       BindingResult result, Model model) {
@@ -315,6 +355,12 @@ public class TaskController {
         return "redirect:/task/labels?taskId=" + taskId;
     }
 
+    /**
+     * removes a label from the project and from all tasks
+     * @param taskId id of the task
+     * @param labelId id of the label
+     * @return
+     */
     @GetMapping("removeLabelPerm{taskId, labelId}")
     public String processRemoveLabelPerm(@RequestParam("taskId") Integer taskId, @RequestParam("labelId") Integer labelId) {
         Integer projectId =  taskService.getTaskById(taskId).getTasklist().getProject().getProjectId();
