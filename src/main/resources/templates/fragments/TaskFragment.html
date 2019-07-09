@@ -21,14 +21,17 @@
                 </div>
                 <div class="col-4">
                     <div class="dropdown">
-                        <i class="fas fa-ellipsis-v" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+                        <i class="fas fa-ellipsis-v" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"></i>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                             <a class="dropdown-item editTaskButton">Edit</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" th:href="@{task/comments(taskId=${task.taskId})}">Comments</a>
                             <a class="dropdown-item" th:href="@{task/assignees(taskId=${task.taskId})}">Assignees</a>
-                            <a th:if="${!task.done}" class="dropdown-item" th:href="@{/projectoverview/decreaseHp(MonsterId=${MonsterId},taskId=${task.taskId})}"> Done?</a>
-                            <span th:if="${task.done}" class="dropdown-item"> Done? <i style="color: #17C670;"class="fas fa-check"></i></span>
+                            <a th:if="${!task.done}" class="dropdown-item"
+                               th:href="@{/projectoverview/decreaseHp(MonsterId=${MonsterId},taskId=${task.taskId})}"> Done?</a>
+                            <span th:if="${task.done}" class="dropdown-item"> Done? <i style="color: #17C670;"
+                                                                                       class="fas fa-check"></i></span>
                             <a class="dropdown-item" th:href="@{task/labels(taskId=${task.taskId})}">Labels</a>
                         </div>
                     </div>
@@ -37,7 +40,7 @@
             <tr th:each="label : ${task.labels}">
                 <th th:bgcolor="${label.labelColor}"><i class="far fa-circle"></i></th>
             </tr>
-            </div>
+
 
 
             <!-- date Elemente werden nur angezeigt wenn date != null-->
@@ -47,6 +50,7 @@
                 <!--suppress ThymeleafVariablesResolveInspection -->
              <div class="date dateElement" th:text="${dueDate}" style="color: lightslategrey;"></div>
             </div>
+
 
         </li>
 </span>
