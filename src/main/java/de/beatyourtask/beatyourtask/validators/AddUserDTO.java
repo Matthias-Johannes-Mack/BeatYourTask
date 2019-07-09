@@ -8,12 +8,12 @@ import de.beatyourtask.beatyourtask.model.User;
 public class AddUserDTO {
 
     private User user;
-    private int projectId;
+    private int id;
 
 
     public AddUserDTO(User user, int projectId) {
         setUser(user);
-        setProjectId(projectId);
+        setId(projectId);
     }
 
     // getters and setters
@@ -25,11 +25,11 @@ public class AddUserDTO {
         this.user = user;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public int getId() {
+        return id;
     }
 
-    private void setProjectId(int projectId) {
-        this.projectId = projectId;
+    private void setId(int id) {
+        this.id = id;
     }
 }

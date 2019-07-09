@@ -27,6 +27,22 @@ public class User {
 
     private boolean enabled = true;
 
+    /** stuff for the gamification **/
+
+    private int lvl = 1;
+
+    private int exp = 0;
+
+    private int damage = 50;
+
+    private int activeMonsterId =1;
+
+    private int maxExp = 500;
+
+    private int lvlPercentage = 0;
+
+    /**-------------------------------------------**/
+
     @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.REFRESH})
     @JoinTable(name = "user_project",
             joinColumns = { @JoinColumn(name = "fk_user") },
@@ -41,6 +57,7 @@ public class User {
      * No-Argument Konstruktor für Hibernate.
      */
     public User() {
+
 
     }
 
@@ -125,5 +142,53 @@ public class User {
 
     public void setProjects(List<Project> projects) {
         this.projects = projects;
+    }
+
+    public int getLvl() {
+        return lvl;
+    }
+
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getDamage() {
+        return damage;
+    }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public int getActiveMonsterId() {
+        return activeMonsterId;
+    }
+
+    public void setActiveMonsterId(int activeMonsterId) {
+        this.activeMonsterId = activeMonsterId;
+    }
+
+    public int getMaxExp() {
+        return maxExp;
+    }
+
+    public void setMaxExp(int maxExp) {
+        this.maxExp = maxExp;
+    }
+
+    public int getLvlPercentage() {
+        return lvlPercentage;
+    }
+
+    public void setLvlPercentage(int lvlPercentage) {
+        this.lvlPercentage = lvlPercentage;
     }
 }

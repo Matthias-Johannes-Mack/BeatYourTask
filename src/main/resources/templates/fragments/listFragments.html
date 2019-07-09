@@ -15,14 +15,27 @@
          <div class="spaltenkopf">
                 <!--uses contextvariable tasklists from TasklistView when called in TasklistView-->
              <!--/*@thymesVar id="Titel" type="java.lang.String"*/-->
-              <p class="Spaltentitel" th:text="${Titel}" style="color: white;"></p>
-             <button type="button" class="btn btn primary listbutton"
-                     data-target ="#editListModal" data-toggle="modal">Edit</button>
-             <button type="button" class="btn btn primary listbuttondelete"
-                     data-target ="#deleteListModal" data-toggle="modal">Delete</button>
+              <div class="Spaltentitel" th:text="${Titel}" style="color: white;"></div>
+             <button type="button" class="listbutton badge mr-3 badge-outline-light"
+                     data-target="#editListModal" data-toggle="modal"><i class="fa fa-edit"></i></button>
+             <button type="button" class="listbuttondelete badge mr-3 badge-outline-light"
+                     data-target="#deleteListModal" data-toggle="modal"><i class="fa fa-trash"></i></button>
          </div>
         <!--container der Tasks -->
         <ul class="taskContainer">
+          <!--/*@thymesVar id="tasks" type="de.beatyourtask.beatyourtask.model.Task"*/-->
+            <!--suppress ThymeleafVariablesResolveInspection -->
+             <li
+                     th:each="task : ${taskForList}"
+                     th:include="/fragments/TaskFragment :: taskFragment"
+                     th:with="Titel=${task.taskName},  Id=idtask_+${task.taskId}, validationId=${taskStat.count}, dueDate=${task.date}"
+                     th:remove="tag"
+             />
+
+            <!-- button zum öffnen des Modals zum hinzufügen eines neuen Tasks -->
+            <input type="button" class="addTaskButton btn btn-outline-light btn-sm btn-pill" id="addNewTaskButton"
+                   value="+" data-toggle="modal"
+                   data-target="#AddNewTaskModal"/>
         </ul>
     </li>
 </span>

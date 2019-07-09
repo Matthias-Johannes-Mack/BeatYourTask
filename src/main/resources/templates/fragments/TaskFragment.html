@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <th:block th:include="/fragments/TaskFragment"></th:block>
+
+</head>
+<body>
+<span th:fragment="taskFragment">
+        <!--/*@thymesVar id="Id" type="java.lang.String"*/-->
+        <li th:style="${task.done?'background-color: #17C670; border-color: #17C670 ':''}" class="task" th:id="${Id}">
+
+            <!--uses contextvariable tasklists from TasklistView when called in TasklistView-->
+            <!--suppress ThymeleafVariablesResolveInspection -->
+            <div class="row">
+                <div class="col-8">
+            <div class="Titel" th:text="${Titel}" style="color: black;"></div>
+                </div>
+                <div class="col-4">
+                    <div class="dropdown">
+                        <i class="fas fa-ellipsis-v" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"></i>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item editTaskButton">Edit</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{task/comments(taskId=${task.taskId})}">Comments</a>
+                            <a class="dropdown-item" th:href="@{task/assignees(taskId=${task.taskId})}">Assignees</a>
+                            <a class="dropdown-item" th:href="@{task/labels(taskId=${task.taskId})}">Labels</a>
+                            <a th:if="${!task.done}" class="dropdown-item"
+                               th:href="@{/projectoverview/decreaseHp(MonsterId=${MonsterId},taskId=${task.taskId})}"> Done?</a>
+                            <span th:if="${task.done}" class="dropdown-item"> Done? <i style="color: #17C670;"
+                                                                                       class="fas fa-check"></i></span>
+                        </div>
+                    </div>
+                </div>
+         </div>
+
+            <!-- date Elemente werden nur angezeigt wenn date != null-->
+            <!--suppress ThymeleafVariablesResolveInspection -->
+            <div th:if="${dueDate} != null" class="dateWrapper">
+             <i class="fa fa-calendar dateElement"></i>
+                <!--suppress ThymeleafVariablesResolveInspection -->
+             <div class="date dateElement" th:text="${dueDate}" style="color: lightslategrey;"></div>
+            </div>
+
+            <div class="labelWrapper">
+                <i th:each="label : ${task.labels}" th:style="'color:' + ${label.labelColor}" class="fas fa-tag"></i>
+            </div>
+
+
+
+        </li>
+</span>
+</body>
+</html>

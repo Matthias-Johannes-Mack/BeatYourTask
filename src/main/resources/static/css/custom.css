@@ -1,0 +1,21 @@
+.comment-date{
+    margin-bottom: 0rem;
+    font-size: small;
+}
+
+.comment-date:before{
+    font-family: "Font Awesome 5 Free";
+    content: "\f073";
+    display: inline-block;
+    padding-right: 3px;
+    font-weight: 900;
+}
+
+.comment-title{
+    margin-bottom: 0rem;
+    font-weight: 500;
+}
+
+.comment-text{
+    margin-bottom: 0rem;
+}

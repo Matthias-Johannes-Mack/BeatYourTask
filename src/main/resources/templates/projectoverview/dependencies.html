@@ -4,6 +4,11 @@
     <meta charset="UTF-8"/>
     <title th:text="${title}">Default Title</title>
 
+    <link
+            rel="stylesheet"
+            type="text/css"
+            th:href="@{/css/custom.css}"/>
+
     <!-- header -->
     <th:block th:include="/fragments/header_singed_in"></th:block>
 </head>

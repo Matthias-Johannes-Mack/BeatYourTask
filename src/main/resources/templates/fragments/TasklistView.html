@@ -11,13 +11,16 @@
     <title>Tasklistview with jQuery UI Sortable</title>
 
     <!-- Dependencys -->
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <!-- Dependencys -->
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
 
     <th:block th:include="/fragments/AddNewListModal"></th:block>
+    <th:block th:include="/fragments/AddNewTaskModal"></th:block>
     <th:block th:include="/fragments/editListModal"></th:block>
     <th:block th:include="/fragments/deleteListModal"></th:block>
+    <th:block th:include="/fragments/AddNewTaskModal"></th:block>
+    <th:block th:include="/fragments/editTaskModal"></th:block>
 
 
     <!-- Style for this fragment -->
@@ -29,10 +32,12 @@
             float: left;
             margin-right: -999em;
         }
+
         /* horizontale ausrichtung des ListenContainers*/
         #sortableListContainer > li {
             float: left;
         }
+
         /*Task */
         .task {
             background: #fff;
@@ -47,6 +52,7 @@
             box-shadow: 0 1px 0 rgba(9, 30, 66, .25);
             border-radius: 5px;
         }
+
         /* Spalte in der TaskContainer drinnen*/
         .spalte {
             padding-top: 0%;
@@ -55,6 +61,7 @@
             width: 270px;
             vertical-align: top;
         }
+
         /* Vorschau beim bewegen von Tasks */
         .highlightTask {
             opacity: 0.5;
@@ -68,6 +75,7 @@
             min-height: 75px;
             border-radius: 5px;
         }
+
         /* Vorschau beim bewegen von Spalten */
         .highlightSpalte {
             opacity: 0.5;
@@ -76,6 +84,7 @@
             height: 550px;
             width: 270px;
         }
+
         /*container für Tasks */
         .taskContainer {
             list-style-type: none;
@@ -84,11 +93,36 @@
             width: 100%;
             min-height: 500px;
             min-width: 150px;
+
+            text-align: center;
         }
+
         .spaltenkopf {
-            height: 50px;
             background: rgba(25, 25, 25, .1);
         }
+
+        /* für die tasks dateinhalte */
+        .dateElement {
+            float: left;
+            margin-right: 5px;
+            font-size: 11pt;
+        }
+
+        .dateWrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .labelWrapper {
+            display: flex;
+            align-items: center;
+        }
+        .labelWrapper i{
+            margin-right: 3px;
+        }
+
+
     </style>
 
 
@@ -96,16 +130,16 @@
     <!-- jquerry functions for this fragment -->
     <script>
         /*making sortable(drag and drop) work */
-        $(document).ready(function() {
+        $(document).ready(function () {
             /* Connect all lists */
             $("#sortableListContainer").sortable({
                 placeholder: "highlightSpalte",
                 //saves the new position when a list is moved
                 update: function sendAjaxWhenListMoved(event, ui) {
                     var listOrder = $(this).sortable('serialize');
-                    var jsonfile={json:JSON.stringify(listOrder)};
+                    var jsonfile = {json: JSON.stringify(listOrder)};
                     console.log("Liste bewegt!");
-                    console.log("Data: "+listOrder);
+                    console.log("Data: " + listOrder);
                     // Post
                     $.ajax({
                         type: 'POST',
@@ -116,12 +150,13 @@
                     console.log("ajax send!");
                 }
             });
+
             // send intial order of lists when page is loaded(when list is added/deleted)
             $(function sendInitalListPosition() {
                 var listOrder = $("#sortableListContainer").sortable('serialize');
-                var jsonfile={json:JSON.stringify(listOrder)};
+                var jsonfile = {json: JSON.stringify(listOrder)};
                 console.log("Initale Listen Position!");
-                console.log("Data: "+listOrder);
+                console.log("Data: " + listOrder);
                 // Post ajax
                 $.ajax({
                     type: 'POST',
@@ -131,33 +166,135 @@
                 });
                 console.log("ajax send!");
             });
+
+            // saves task order of the list that task was moved in
+            var taskOrderNewList;
+
             /* Connect all taskconatainer */
             $(".taskContainer").sortable({
                 connectWith: ".taskContainer",
                 placeholder: "highlightTask",
-                //saves the new position when a task is moved
-                update: function sendAjaxWhenTaskMoved(event, ui) {
-                    var data = $(this).sortable('serialize');
+
+                //functions for handeling when task is moved
+                update: function updateOnTaskMove(event, ui) {
+
                     console.log("Task bewegt!");
-                    /* Post
-                    $.ajax({
-                        data: data,
-                        type: 'POST',
-                        url: '/TODO'
-                    });
-                    */
+
+                    function getTaskOrderNewList(sortableList,ui){
+
+                        taskOrderNewList = sortableList.sortable('serialize');
+
+                    }
+                    getTaskOrderNewList($(this),ui);
+
+                },
+
+                start: function startTaskMove(event, ui) {
+                    item = ui.item;
+                    newList = oldList = ui.item.parent().parent();
+                },
+
+                stop: function stopTaskMove(event, ui) {
+
+                    var idOldList = oldList.attr('id');
+                    var idNewList = newList.attr('id');
+                    var idTask =  item.attr('id');
+                    var taskOrderOldList = $(this).sortable('serialize');
+                    // taskOrderNewList is a global variable (look above)
+
+
+                    console.log("Moved " + idTask + " from " + idOldList + " to " + idNewList);
+
+
+                   // task moved in same list
+                   if(oldList == newList) {
+                       console.log("task in gleicher Liste bewegt");
+                       console.log("taskorer: id: "+idOldList+" Order "+taskOrderOldList);
+
+                       // only needs to save the new order
+                       sendAjaxTaskOrder(idOldList, taskOrderOldList);
+
+                       // task moved in other list
+                   } else {
+                       console.log("task in andere Liste bewegt");
+                       console.log("taskorer Old: id: "+idOldList+" Order "+taskOrderOldList);
+                       console.log("taskorer New: id: "+idNewList+" Order "+taskOrderNewList);
+
+                        // Code for old tasklist
+                       sendAjaxTaskOrder(idOldList, taskOrderOldList);
+                       sendAjaxRemoveTaskFromList(idOldList, idTask)
+
+                       // Code for new Tasklist
+                       sendAjaxTaskOrder(idNewList, taskOrderNewList);
+                       sendAjaxMoveTaskToList(idNewList, idTask)
+
+                   }
+
+                    // sends the actual ajax request to save the new order
+                    function sendAjaxTaskOrder(idList, taskOrder) {
+                        var postData = idList+"&"+taskOrder;
+                        var jsonfile = {json: JSON.stringify(postData)};
+
+                        // Post
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ajaxSaveTaskOrder',
+                            data: jsonfile,
+                            dataType: "json"
+                        });
+
+                        console.log("ajax task send (New order): "+ postData)
+                    }
+
+                    // sends the actual ajax request when task is moved away from list
+                    function sendAjaxRemoveTaskFromList(idList, idTask) {
+                        var postData = idList+"&"+idTask;
+                        var jsonfile = {json: JSON.stringify(postData)};
+
+                        // Post
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ajaxRemovedTaskFromList',
+                            data: jsonfile,
+                            dataType: "json"
+                        });
+
+                        console.log("ajax task send (Moved Away): "+ postData)
+                    }
+
+                    // sends the actual ajax request when task is moved to new list
+                    function sendAjaxMoveTaskToList(idList, idTask) {
+                        var postData = idList+"&"+idTask;
+                        var jsonfile = {json: JSON.stringify(postData)};
+
+                        // Post
+                        $.ajax({
+                            type: 'POST',
+                            url: '/ajaxMovedTaskToNewList',
+                            data: jsonfile,
+                            dataType: "json"
+                        });
+
+                        console.log("ajax task send (Move to): "+ postData)
+                    }
+                },
+
+                change: function changeOnTaskMove(event, ui) {
+                    if(ui.sender) {
+                        newList = ui.placeholder.parent().parent();
+                    }
+
                 }
+
             }).disableSelection();
-            $(function sendInitalTaskPosition() {
-                //TODO
-            });
+
 
             //sets the id of the list in the edit list modal
-            $( ".listbutton").click(function() {
+            $(".listbutton").click(function () {
                 console.log("button clicked");
                 var parentID = $(this).closest('li').attr('id');
                 console.log(parentID);
-                var idString = parentID.replace("idspalte_","");
+                var idString = parentID.replace("idspalte_", "");
                 console.log(idString);
                 var idInt = parseInt(idString);
 
@@ -165,16 +302,64 @@
             });
 
             //sets the id of the list in the delete list modal
-            $( ".listbuttondelete").click(function() {
+            $(".listbuttondelete").click(function () {
                 console.log("button clicked");
                 var parentID = $(this).closest('li').attr('id');
                 console.log(parentID);
-                var idString = parentID.replace("idspalte_","");
+                var idString = parentID.replace("idspalte_", "");
                 console.log(idString);
                 var idInt = parseInt(idString);
 
                 $("#deleteListModal #listID").val(idInt);
             });
+
+            //sets the id of the list in which task shall be created in the new task modal
+            $(".addTaskButton").click(function () {
+                console.log("button clicked");
+                var parentID = $(this).closest('li').attr('id');
+                console.log("parentID: " + parentID);
+                var idString = parentID.replace("idspalte_", "");
+                console.log("parentID String: " + idString);
+                var idInt = parseInt(idString);
+
+                $("#AddNewTaskModal #listID").val(idInt);
+
+            });
+
+            $('.editTaskButton').on('click', function(event){
+                $('#editTaskModal').modal();
+
+                console.log("button clicked");
+                var parentID = $(this).closest('li').attr('id');
+                console.log("parentID: " + parentID);
+                var idString = parentID.replace("idtask_", "");
+                console.log("parentID String TASK: " + idString);
+                var idInt = parseInt(idString);
+
+                $("#editTaskModal #listID").val(idInt);
+            });
+
+
+            var startDate = new Date();
+            startDate.setDate(startDate.getDate());
+
+            $('#datepicker-task').datepicker({
+                startDate: startDate,
+                calendarWeeks: true,
+                autoclose: true,
+                todayHighlight: true
+            });
+
+            var startEditDate = new Date();
+            startEditDate.setDate(startEditDate.getDate());
+
+            $('#datepicker-editTask').datepicker({
+                startDate: startEditDate,
+                calendarWeeks: true,
+                autoclose: true,
+                todayHighlight: true
+            });
+
         });
     </script>
 
@@ -186,12 +371,13 @@
 <ul id="sortableListContainer" class="sortableListContainer">
 
     <!-- Loads Lists from database: uses contextvariable tasklists from Projectview when called in Projectview -->
+    <!-- gives listFragment a list with all the tasks in it: taskForList -->
 
     <!--/*@thymesVar id="tasklists" type="de.beatyourtask.beatyourtask.model.Tasklist"*/-->
     <!--suppress ThymeleafVariablesResolveInspection -->
     <li
             th:each="list: ${tasklists}" th:include="/fragments/listFragments :: listFragment"
-            th:with="Titel=${list.listName}, Color=${list.color}, Id=idspalte_+${list.listId}"
+            th:with="Titel=${list.listName}, Color=${list.color}, Id=idspalte_+${list.listId}, iteration=${listStat.index}, taskForList=${allTasks[iteration]}"
             th:remove="tag"
     />
 
@@ -227,7 +413,8 @@
     Ende Mock Listen -->
 
     <!-- button zum öffnen des Modals zum hinzufügen einer neuen Liste -->
-    <input type="button" class="btn btn-secondary btn-pill btn-sm" id="addNewListButton" value="+" name="addList" data-toggle="modal"
+    <input type="button" class="btn btn-secondary btn-pill btn-sm" id="addNewListButton" value="+" name="addList"
+           data-toggle="modal"
            data-target="#newListModal"/>
 
 

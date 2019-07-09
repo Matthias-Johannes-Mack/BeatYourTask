@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/">
+<head th:replace="task/headComments::commentHead"></head>
+<body class="shards-app-promo-page--1">
+<!--Background-->
+<div class="welcome d-flex justify-content-center flex-column">
+
+
+    <!-- Panel for showing the users-->
+    <div class="col-md-6">
+        <a class="btn btn-primary mb-4" th:href=@{/Project(ProjectId=${projectId})}><i class="fas fa-angle-left"></i> Back to Project</a>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title" th:text="${title}">Default Title</h4>
+
+                <!--Form for adding a comment-->
+                <div style="margin-bottom: 1rem;">
+                    <form method="post" th:object="${comment}" class="needs-validation" novalidate>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label th:for="commentTextarea">Message</label>
+                            <textarea th:errorclass="is-invalid" th:field="*{message}" class="form-control" id="commentTextarea" rows="2" maxlength="250" required></textarea>
+                            <div class="invalid-feedback"> Please type a comment!</div>
+                            <div class="valid-feedback"> Good comment! </div>
+                        </div>
+
+                        <!-- Submit Button-->
+                        <input  class="btn btn-primary" type="submit" value="Post Comment" />
+                    </form>
+                </div>
+
+                <!--table that displays all users of the project-->
+                <table class="table">
+                    <tr th:each="comment : ${comments}">
+                        <td>
+
+                            <p class="comment-date" th:text="${#dates.format(comment.createDate, 'dd-MM-yyyy ''at'' HH:mm')}"></p>
+                            <p class="comment-title" th:if="${comment.author.id == currentUser.id}" th:text="'You wrote:'"></p>
+                            <p class="comment-title" th:unless="${comment.author.id == currentUser.id}" th:text="${comment.author.surname} + ' ' + ${comment.author.lastname} + ' wrote:'"></p>
+                            <p style="word-break: break-all;" class="comment-text" th:utext="${comment.message}"></p>
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                            <a class="btn btn-danger" th:href=@{/task/removecomment(taskId=${taskId},commentId=${comment.id})} th:if="${comment.author.id == currentUser.id}"><i class="fa fa-minus-circle"></i></a>
+                            <!--Button for EditModal-->
+                            <a class="btn btn-primary eBtn" th:href="@{findOne/(commentId=${comment.id})}" th:if="${comment.author.id == currentUser.id}"><i class="fa fa-edit"></i></a>
+                            <!--/Button for EditModal-->
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+<!-- include the Footer -->
+<th:block th:include="/fragments/footer"></th:block>
+</html>

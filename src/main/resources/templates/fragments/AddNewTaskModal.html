@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- Script for Bootstrap Form validation -->
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // select all forms for Bootstrap validation
+                var forms = document.getElementsByClassName('needs-validation');
+                // iterate over and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+
+</head>
+<body>
+<!-- modal -->
+<div class="modal fade mt-5" id="AddNewTaskModal" tabindex="-1" role="dialog" data-keyboard="true" data-backdrop="true">
+
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger">
+                <h4 class="text-white mt-1">Create a new task</h4>
+                <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <!--/*@thymesVar id="newTaskAttribute" type="de.beatyourtask.beatyourtask.model.Task"*/-->
+            <form th:action="@{/addTask}" method="post"
+                  th:object="${newTaskAttribute}" class="needs-validation" novalidate>
+
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label>Titel</label>
+                        <input class="form-control" id="titel"
+                               name="tiel" th:field="*{taskName}" type="text" required>
+                        <div class="invalid-feedback"> Please choose a title!</div>
+                        <div class="valid-feedback"> Good title!</div>
+
+
+                        <label for="datepicker-task">Due date</label>
+                        <input type="text" class="form-control datepicker" th:field="*{date}" id="datepicker-task" placeholder="Due date">
+                    </div>
+                    <div>
+
+                    </div>
+
+
+                    <!--/*@thymesVar id="newTaskListAttribute" type="de.beatyourtask.beatyourtask.model.Tasklist"*/-->
+                    <div th:object="${newTaskListAttribute}">
+                        <input type="hidden" class="form-control" id="listID" th:field="*{listId}">
+                    </div>
+
+                    <br>
+
+                    <input type="submit" value="Submit" class="btn btn-danger "/>
+
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
