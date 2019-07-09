@@ -1,0 +1,63 @@
+<!-- created by wirefire Spring 19 -->
+<html xmlns:th="http://www.thymeleaf.org" xmlns:mvc="http://www.springframework.org/schema/mvc">
+<link rel="shortcut icon" th:href="@{/images/byt-logo.ico}">
+<head>
+    <meta charset="UTF-8">
+    <title>BeatYourTask</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- CSS Dependencies -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <link
+            rel="stylesheet"
+            type="text/css"
+            th:href="@{/css/shards-extras.min.css}"/>
+    <link
+            rel="stylesheet"
+            type="text/css"
+            th:href="@{/css/shards.min.css}"/>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+          integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+    <!-- JavaScript Dependencies: jQuery, Popper.js, Bootstrap JS, Shards JS -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js}"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script th:src="@{https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js}"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <script th:src="@{/js/shards.min.js}"></script>
+    <script th:src="@{/js/demo}"></script>
+
+    <!-- End Java-Script -->
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger mb-1">
+        <img th:src="@{/images/demo/shards-logo.svg}"
+             alt="BeatYourTask" class="mr-2 mb-auto"
+             height="30">
+        <!-- Navbar by wirefire -->
+        <a class="navbar-brand mb-auto" href="/projectoverview">BeatYourTask</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown-5"
+                aria-controls="navbarNavDropdown-5" aria-expanded="false" aria-label="Toggle navigation"><span
+                class="navbar-toggler-icon"></span></button>
+        <ul class="navbar-nav mb-auto">
+            <a class="nav-link nav-item active" href="/projectoverview">Projects
+                <span class="sr-only">(current)</span></a>
+        </ul>
+        <!-- the gamification snipped -->
+
+
+        <ul class="w-25"></ul>
+        <ul></ul>
+        <ul></ul>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a class="nav-link" href="/logout">Logout <i class="fa fa-lock"></i></a></li>
+        </ul>
+        </div>
+    </nav>
+
+    <!-- End Nav -->
+</head>
+</html>
