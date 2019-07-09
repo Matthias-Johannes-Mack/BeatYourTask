@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org/">
+<head th:replace="projectoverview/dependencies::head">
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!-- Script for Bootstrap Form validation -->
+    <script>
+        (function () {
+            'use strict';
+            window.addEventListener('load', function () {
+                // select all forms for Bootstrap validation
+                var forms = document.getElementsByClassName('needs-validation');
+                // iterate over and prevent submission
+                var validation = Array.prototype.filter.call(forms, function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (form.checkValidity() === false) {
+                            event.preventDefault();
+                            event.stopPropagation();
+                        }
+                        form.classList.add('was-validated');
+                    }, false);
+                });
+            }, false);
+        })();
+    </script>
+</head>
+<body class="shards-app-promo-page--1">
+<!--Background-->
+<div class="welcome d-flex justify-content-center flex-column">
+
+
+    <!-- modal -->
+    <div class="modal fade mt-5" id="AddLabelModal" tabindex="-1" role="dialog" data-keyboard="true" data-backdrop="true">
+
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header bg-danger">
+                    <h4 class="text-white mt-1">Create a new label</h4>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+
+                <!--/*@thymesVar id="newLabelAttribute" type="de.beatyourtask.beatyourtask.model.Label"*/-->
+                <form th:action="@{/addLabel(taskId=${task.taskId})}" method="post"
+                      th:object="${newLabelAttribute}" class="needs-validation" novalidate>
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label>Titel</label>
+                            <input class="form-control" id="titel"
+                                   name="tiel" th:field="*{labelName}" type="text" required>
+                            <div class="invalid-feedback"> Please choose a title! </div>
+                            <div class="valid-feedback"> Good title! </div>
+                        </div>
+                        <br>
+
+                        <div class="form-group">
+                            <label>Color</label>
+                            <select class="custom-select" id="SelectColorDropdown" th:field="*{labelColor}" type="text" required>
+                                HTML Colors
+                                <option value="">Choose a color</option>
+                                <option value="LightGreen">LightGreen</option>
+                                <option value="SlateBlue">SlateBlue</option>
+                                <option value="Orange">Orange</option>
+                                <option value="Tomato">Tomato</option>
+                                <option value="Yellow">Yellow</option>
+                                <option value="DarkTurquoise">DarkTurquoise</option>
+                                <option value="DeepSkyBlue">DeepSkyBlue</option>
+                                <option value="SlateGray">SlateGray</option>
+                            </select>
+
+                            <div class="invalid-feedback"> Please choose a color! </div>
+                            <div class="valid-feedback"> Looking good! </div>
+
+                            <br>
+                            <br>
+
+                            <input type="submit" value="Submit" class="btn btn-danger"/>
+                        </div>
+                    </div>
+                </form>
+
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!-- include the Footer -->
+<th:block th:include="/fragments/footer"></th:block>
+</html>

@@ -15,9 +15,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Controller handlling all requests for /task
@@ -40,6 +43,13 @@ public class TaskController {
 
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    LabelService labelService;
+
+    @Autowired
+    ProjectService projectService;
+
 
     /**
      * Shows all Assignees that are assigned to the task
@@ -87,15 +97,15 @@ public class TaskController {
      */
     @PostMapping("assignees{taskId}")
     public String processDisplayUsersForm(@RequestParam("taskId") Integer taskId, @ModelAttribute @Valid User user,
-                                          BindingResult result, Model model){
+                                          BindingResult result, Model model) {
 
         Task task = taskService.getTaskById(taskId);
         Integer projectId = task.getTasklist().getProject().getProjectId();
 
         // validate user
-        taskAddAssigneeValidator.validate(new AddUserDTO(user,taskId), result);
+        taskAddAssigneeValidator.validate(new AddUserDTO(user, taskId), result);
 
-        if(result.hasErrors()){
+        if (result.hasErrors()) {
             model.addAttribute("title", "Assignees");
             model.addAttribute("users", task.getAssignees());
             model.addAttribute("taskId", taskId);
@@ -133,7 +143,7 @@ public class TaskController {
      * @return redirect to assignees
      */
     @GetMapping("removeassignee{taskId, userId}")
-    public String processRemoveAssignee(@RequestParam("taskId") Integer taskId, @RequestParam("userId") Integer userId){
+    public String processRemoveAssignee(@RequestParam("taskId") Integer taskId, @RequestParam("userId") Integer userId) {
 
         taskService.getTaskById(taskId).removeUser(userService.getUserById(userId));
 
@@ -193,15 +203,189 @@ public class TaskController {
         Task task = taskService.getTaskById(taskId);
         Integer projectId = task.getTasklist().getProject().getProjectId();
 
+        if(result.hasErrors()){
+            model.addAttribute("title", "Comments");
+            model.addAttribute("comments", commentService.findAllByTask(task));
+            model.addAttribute("taskId", taskId);
+            model.addAttribute("projectId", projectId);
+            return "task/comments";
+        }
+
         comment.setAuthor(userService.getCurrentUser());
         comment.setOwnerTask(taskService.getTaskById(taskId));
-        comment.setMessage(comment.getMessage().replace("\n","<br />"));
+        comment.setMessage(comment.getMessage().replace("\n", "<br />"));
         comment.setCreateDate(new Date());
 
         // saving changes to database
         commentService.save(comment);
 
         return "redirect:/task/comments?taskId=" + taskId;
+    }
+
+
+    /**
+     * Shows all the labels linked to the task itself and the labels
+     * @param taskId
+     * @param model
+     * @return
+     */
+    @RequestMapping(value="labels{taskId}", method=RequestMethod.GET)
+    public String displayLabelsForm(@RequestParam("taskId") Integer taskId, Model model) {
+
+        Task task = taskService.getTaskById(taskId);
+        Integer projectId = task.getTasklist().getProject().getProjectId();
+
+        List<Label> labels = new ArrayList<Label>();
+        labels = task.getTasklist().getProject().getLabel();
+        labels.removeAll(task.getLabels());
+
+        model.addAttribute("title", "Labels");
+        model.addAttribute("tasklabels", task.getLabels());
+        model.addAttribute("projectlabels", labels);
+        model.addAttribute("taskId", taskId);
+        model.addAttribute("projectId", projectId);
+
+        return "task/labels";
+    }
+
+    @GetMapping("removelabel{taskId, labelId}")
+    public String processRemoveLabel(@RequestParam("taskId") Integer taskId, @RequestParam("labelId") Integer labelId) {
+
+        System.out.println("TaskId: " + taskId);
+        System.out.println("LabelId: " + labelId);
+
+        taskService.getTaskById(taskId).removeLabel(labelService.getLabelById(labelId));
+
+        // saving changes to database
+        taskService.saveTask(taskService.getTaskById(taskId));
+
+
+        return "redirect:/task/labels?taskId=" + taskId;
+    }
+
+    @GetMapping("addlabel{taskId, labelId}")
+    public String processAddLabel(@RequestParam("taskId") Integer taskId, @RequestParam("labelId") Integer labelId) {
+
+        taskService.getTaskById(taskId).addLabel(labelService.getLabelById(labelId));
+
+        // saving changes to database
+        taskService.saveTask(taskService.getTaskById(taskId));
+
+        return "redirect:/task/labels?taskId=" + taskId;
+    }
+
+    @GetMapping("addLabel{taskId}")
+    public String displayAddLabelForm(@RequestParam("taskId") Integer taskId, Model model) {
+
+        Task task = taskService.getTaskById(taskId);
+        Integer projectId = task.getTasklist().getProject().getProjectId();
+
+        model.addAttribute("title", "Labels");
+        model.addAttribute("labels", task.getLabels());
+        model.addAttribute("label", new Label());
+        model.addAttribute("taskId", taskId);
+        model.addAttribute("projectId", projectId);
+
+        return "task/addLabel";
+    }
+
+    @PostMapping("addLabel{taskId}")
+    public String processAddLabelForm(@RequestParam("taskId") Integer taskId, @ModelAttribute @Valid Label label,
+                                          BindingResult result, Model model) {
+
+        Task task = taskService.getTaskById(taskId);
+        Integer projectId = task.getTasklist().getProject().getProjectId();
+
+
+        if (result.hasErrors()) {
+            model.addAttribute("title", "Labels");
+            model.addAttribute("users", task.getLabels());
+            model.addAttribute("taskId", taskId);
+            model.addAttribute("projectId", projectId);
+            return "task/addLabel";
+        }
+
+
+        taskService.getTaskById(taskId).addLabel(label);
+        projectService.findById(projectId).setLabel(label);
+
+        System.out.println("Task-Labels: " + taskService.getTaskById(taskId).getLabels());
+        System.out.println("Project-Labels: " + projectService.findById(projectId).getLabel());
+
+        // saving changes to database
+        taskService.saveTask(taskService.getTaskById(taskId));
+        projectService.save(projectService.findById(projectId));
+
+        return "redirect:/task/labels?taskId=" + taskId;
+    }
+
+    @GetMapping("editLabel{taskId, labelId}")
+    public String displayEditLabelForm(@RequestParam("taskId") Integer taskId,@RequestParam("labelId") Integer labelId, Model model) {
+
+        Task task = taskService.getTaskById(taskId);
+        Integer projectId = task.getTasklist().getProject().getProjectId();
+
+        model.addAttribute("title", "Labels");
+        model.addAttribute("labels", task.getLabels());
+        model.addAttribute("label", new Label());
+        model.addAttribute("taskId", taskId);
+        model.addAttribute("projectId", projectId);
+
+        return "task/addLabel";
+    }
+
+    @PostMapping("editLabel{taskId, labelId}")
+    public String processEditLabelForm(@RequestParam("taskId") Integer taskId,@RequestParam("labelId") Integer labelId, @ModelAttribute @Valid Label label,
+                                      BindingResult result, Model model) {
+
+        Task task = taskService.getTaskById(taskId);
+        Integer projectId = task.getTasklist().getProject().getProjectId();
+
+
+        if (result.hasErrors()) {
+            model.addAttribute("title", "Labels");
+            model.addAttribute("users", task.getLabels());
+            model.addAttribute("taskId", taskId);
+            model.addAttribute("projectId", projectId);
+            return "task/addLabel";
+        }
+
+        labelService.getLabelById(labelId).setLabelName(label.getLabelName());
+        labelService.getLabelById(labelId).setLabelColor(label.getLabelColor());
+
+
+        System.out.println("Task-Labels: " + taskService.getTaskById(taskId).getLabels());
+        System.out.println("Project-Labels: " + projectService.findById(projectId).getLabel());
+
+        // saving changes to database
+        taskService.saveTask(taskService.getTaskById(taskId));
+        projectService.save(projectService.findById(projectId));
+
+        return "redirect:/task/labels?taskId=" + taskId;
+    }
+
+    @GetMapping("removeLabelPerm{taskId, labelId}")
+    public String processRemoveLabelPerm(@RequestParam("taskId") Integer taskId, @RequestParam("labelId") Integer labelId) {
+        Integer projectId =  taskService.getTaskById(taskId).getTasklist().getProject().getProjectId();
+
+        System.out.println("TaskId: " + taskId);
+        System.out.println("LabelId: " + labelId);
+
+
+        for (Tasklist tasklists : projectService.findById(projectId).getLists()) {
+            for (Task tasks : tasklists.getTasks()) {
+                tasks.removeLabel(labelService.getLabelById(labelId));
+                taskService.saveTask(tasks);
+            }
+        }
+        taskService.getTaskById(taskId).getTasklist().getProject().removeLabel(labelService.getLabelById(labelId));
+
+        // saving changes to database
+        taskService.saveTask(taskService.getTaskById(taskId));
+        projectService.save(projectService.findById(projectId));
+
+
+        return "redirect:/task/labels?taskId=" + taskId;
     }
 
 
