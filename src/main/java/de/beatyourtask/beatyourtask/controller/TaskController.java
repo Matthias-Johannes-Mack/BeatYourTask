@@ -473,7 +473,6 @@ public class TaskController {
     public CommentDTO findOne(Integer commentId){
 
         CommentDTO conComment = new CommentDTO().convert(commentService.findById(commentId));
-
         return conComment;
     }
 }
