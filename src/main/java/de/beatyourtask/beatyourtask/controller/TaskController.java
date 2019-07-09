@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -231,6 +230,20 @@ public class TaskController {
         model.addAttribute("projectlabels", labels);
         model.addAttribute("taskId", taskId);
         model.addAttribute("projectId", projectId);
+        // Stuff for the gamification like level, exp and the monster information
+        model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+        model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
+        model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
+        model.addAttribute("Damage", userService.getCurrentUser().getDamage());
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+        model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+        model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+        model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+        model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
+        //-------------------------------------------------------------------------------------------------
 
         return "task/labels";
     }
@@ -272,6 +285,20 @@ public class TaskController {
         model.addAttribute("label", new Label());
         model.addAttribute("taskId", taskId);
         model.addAttribute("projectId", projectId);
+        // Stuff for the gamification like level, exp and the monster information
+        model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+        model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
+        model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
+        model.addAttribute("Damage", userService.getCurrentUser().getDamage());
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+        model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+        model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+        model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+        model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
+        //-------------------------------------------------------------------------------------------------
 
         return "task/addLabel";
     }
@@ -289,6 +316,21 @@ public class TaskController {
             model.addAttribute("users", task.getLabels());
             model.addAttribute("taskId", taskId);
             model.addAttribute("projectId", projectId);
+            // Stuff for the gamification like level, exp and the monster information
+            model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+            model.addAttribute("Exp", userService.getCurrentUser().getExp());
+            model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
+            model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
+            model.addAttribute("Damage", userService.getCurrentUser().getDamage());
+            model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+            model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+            model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+            model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+            model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+            model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+            model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
+            //-------------------------------------------------------------------------------------------------
+
             return "task/addLabel";
         }
 
@@ -317,6 +359,21 @@ public class TaskController {
         model.addAttribute("label", new Label());
         model.addAttribute("taskId", taskId);
         model.addAttribute("projectId", projectId);
+        // Stuff for the gamification like level, exp and the monster information
+        model.addAttribute("Lvl", userService.getCurrentUser().getLvl());
+        model.addAttribute("Exp", userService.getCurrentUser().getExp());
+        model.addAttribute("maxExp", userService.getCurrentUser().getMaxExp());
+        model.addAttribute("lvlPercent", userService.getCurrentUser().getLvlPercentage());
+        model.addAttribute("Damage", userService.getCurrentUser().getDamage());
+        model.addAttribute("Surname", userService.getCurrentUser().getSurname());
+        model.addAttribute("Lastname", userService.getCurrentUser().getLastname());
+        model.addAttribute("MonsterId", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterId());
+        model.addAttribute("currentHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getCurrentLifePoints());
+        model.addAttribute("maxHp", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getLifepoints());
+        model.addAttribute("MonsterPic", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getMonsterPic());
+        model.addAttribute("percentage", monsterService.findMonsterById(userService.getCurrentUser().getActiveMonsterId()).getPercentageLeft());
+        //-------------------------------------------------------------------------------------------------
+
 
         return "task/addLabel";
     }
