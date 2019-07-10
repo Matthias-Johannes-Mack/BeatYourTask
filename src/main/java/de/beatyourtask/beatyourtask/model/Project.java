@@ -54,6 +54,7 @@ public class Project {
 
     public void removeTasklist(Tasklist tasklist) {
         this.tasklists.remove(tasklist);
+        tasklist.setProject(null);
     }
 
     /**

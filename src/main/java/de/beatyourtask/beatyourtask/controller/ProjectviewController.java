@@ -214,7 +214,10 @@ public class ProjectviewController {
         System.out.println("ProjectId: " + projectId);
 
         int id = newTaskListAttribute.getListId();
-        tasklistService.deleteTasklistById(id);
+        Project project = projectService.findById(Integer.parseInt(projectId));
+        project.removeTasklist(tasklistService.loadTasklistById(id));
+
+        projectService.save(project);
 
         return "redirect:/Project?ProjectId=" + projectId;
     }
